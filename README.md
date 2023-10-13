@@ -17,11 +17,17 @@ _Feature/Viviana
 git pull origin Feature/"TU-NOMBRE"
 
 # subir cambios
+
 **Agregar archivos**
+
 git add .
+
 **Agregar comentario de cambios**
+
 git commit -m "Comentarios"
+
 **Enviar**
+
 git push origin Feature/"TU-NOMBRE"
 
 
