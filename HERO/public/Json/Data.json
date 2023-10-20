@@ -1,0 +1,32 @@
+
+  {
+    "menu": [
+      {
+        "id": 1,
+        "title": "Pizza Pollo",
+        "subtitle":"With Special Cheese",
+        "detail": "Italian Pizza Pollo with special cheese is a favor can find only in",
+        "other":"Mr.Chef",
+        "image": "https://img.freepik.com/fotos-premium/pizza-sabrosa-fresca-pepperoni-aislado-blanco_136401-2336.jpg",
+        "valor":6.50,
+        "descount":6.5
+      },
+      {
+        "id": 2,
+        "title": "Pizza Pollo 2",
+        "subtitle":"With Special Cheese",
+        "detail": "Italian Pizza Pollo with special cheese is a favor can find only in",
+        "image": "https://img.freepik.com/fotos-premium/pizza-sabrosa-fresca-pepperoni-aislado-blanco_136401-2336.jpg",
+        "valor":6.50,
+        "descount":10
+      }
+    ],
+    "data":[
+      {
+        "id":1,
+        "number":"+38 (063) 98-75-615"
+      }
+    ]
+  }
+    
+   

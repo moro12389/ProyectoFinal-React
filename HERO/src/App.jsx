@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Loading } from './Components/loading'
+import { Hero } from './Components/Hero'
 
 
 
@@ -12,6 +13,7 @@ function App() {
   return (
     <>
         {/* <Loading></Loading> */}
+        <Hero></Hero>
         
     </>
   )
