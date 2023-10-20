@@ -6,6 +6,10 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'fondoAzul': 'url(/otro.svg)',
+        
+      },
       fontFamily: {
         roboto: ['Roboto', 'sans'],
         lobster: ['Lobster', 'cursive'],

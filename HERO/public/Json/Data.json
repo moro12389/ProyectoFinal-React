@@ -7,24 +7,39 @@
         "subtitle":"With Special Cheese",
         "detail": "Italian Pizza Pollo with special cheese is a favor can find only in",
         "other":"Mr.Chef",
-        "image": "https://img.freepik.com/fotos-premium/pizza-sabrosa-fresca-pepperoni-aislado-blanco_136401-2336.jpg",
+        "image": "/Products/platoPizza.png",
         "valor":6.50,
-        "descount":6.5
+        "descount":15.4
       },
       {
         "id": 2,
-        "title": "Pizza Pollo 2",
-        "subtitle":"With Special Cheese",
-        "detail": "Italian Pizza Pollo with special cheese is a favor can find only in",
-        "image": "https://img.freepik.com/fotos-premium/pizza-sabrosa-fresca-pepperoni-aislado-blanco_136401-2336.jpg",
-        "valor":6.50,
-        "descount":10
+        "title": "French Fries",
+        "subtitle":"50% Discount",
+        "detail": "Get a discount on french fries with puchases",
+        "other":"over $3",
+        "image": "/Products/papaFrita.png",
+        "valor":2,
+        "descount":50
+      },
+      {
+        "id": 3,
+        "title": "Falafel on a plate",
+        "subtitle":"With Special Spices",
+        "detail": "Unusual spices ordered by us straight from Israel will give you an unforgettable taste and aroma",
+        "other":"",
+        "image": "/Products/platoVegetariano.png",
+        "valor":4,
+        "descount":0
       }
     ],
     "data":[
       {
         "id":1,
-        "number":"+38 (063) 98-75-615"
+        "number":"+38 (063) 98-75-615",
+        "registerText":"Sing up and get",
+        "cuponText":"discount coupons!",
+        "boton1":"Buy Now",
+        "boton2":"Sing Up"
       }
     ]
   }
