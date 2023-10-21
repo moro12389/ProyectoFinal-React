@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+/* font-family: 'Lobster', sans-serif;
+font-family: 'Roboto', sans-serif; */
+
+@font-face {
+    font-family: 'Lobster';
+    src: url(./assets/fonts/Lobster/Lobster-Regular.ttf);
+    
+  }
+
+  @font-face {
+    font-family: 'Roboto';
+    src: url(./assets/fonts/Roboto/Roboto-Regular.ttf);
+    
+  }
+
+.headings{
+    font-family: 'Lobster';
+    
+}
+.text{
+    font-family: 'Roboto';
+    font-weight: 400;
+}
