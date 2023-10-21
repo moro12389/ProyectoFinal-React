@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'fondoAzul': 'url(/otro.svg)',
+        'fondoAzul': 'url(/otro2.svg)',
         
       },
       fontFamily: {

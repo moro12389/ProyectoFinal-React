@@ -24,33 +24,55 @@ const Hero = () => {
     }, []);
 
 
-    let ofert = 1
+    let ofert = 0
     let valorDesc = descMenu[ofert]?.valor * (1 - (descMenu[ofert]?.descount / 100))
 
     return (
-        <div className='flex flex-col-reverse ...
-                       md:flex md:m-0 md:p-0'>
-            <div className='md:w-[40vw] h-screen bg-gray-600 font-lobster flex justify-center items-center '>
-                <div className='md:max-w-[25vw] max-w-[70vw]' >
+        <div className='flex m-0 p-0'>
+            <div className='w-[50vw] h-screen bg-gray-600 font-lobster flex justify-center items-center 
+                            md:w-[40vw]'>
+                <div className='max-w-[35vw]
+                                md:max-w-[25vw]' >
                     <div>
-                        <p className='text-gray-900 text-4xl'> <strong>{descMenu[ofert]?.title}</strong></p>
-                        <p className='text-orange-500 text-2xl'>{descMenu[ofert]?.subtitle}</p>
-                        <p className='text-gray-400 font-roboto'>{descMenu[ofert]?.detail} <strong className='text-gray-900'>{descMenu[ofert]?.other}</strong></p>
+                        <p className='text-gray-900 text-2xl
+                                        md:text-4xl'>
+                            <strong>{descMenu[ofert]?.title}</strong>
+                        </p>
+                        <p className='text-orange-500 text-xl
+                                        md:text-2xl'>
+                            {descMenu[ofert]?.subtitle}
+                        </p>
+                        <p className='text-gray-400 font-roboto
+                                        md:text-xl'>
+                            {descMenu[ofert]?.detail} <strong className='text-gray-900'>{descMenu[ofert]?.other}</strong>
+                        </p>
                     </div>
 
-                    <div className='flex justify-start gap-10 content-between pt-4'>
-                        <div>
-                            <div className='text-gray-400 text-sm line-through'>
+                    <div className='gap-10 content-between pt-4 
+                                    md:flex md:justify-start '>
+                        <div className='flex space-x-3 items-center 
+                        md:flex'>
+                            <div className='text-gray-400 text-xs line-through
+                                            md:text-sm'>
                                 <p><strong>{descMenu[ofert]?.valor.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}</strong></p>
                             </div>
 
-                            <p className='text-xl'><strong>{valorDesc.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}</strong></p>
+                            <p className='text-lg
+                                        md:text-2xl'>
+                                <strong>{valorDesc.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}</strong>
+                                </p>
                         </div>
-                        <button className='bg-yellow-500 rounded-xl shadow-xl flex items-center px-5 hover:bg-yellow-400 hover:translate-x-[1px] hover:translate-y-[1px]'>
+
+                        <button className='bg-yellow-500 rounded-xl shadow-2xl flex items-center hover:bg-yellow-400 hover:translate-x-[1px] hover:translate-y-[1px]
+                                            px-4 py-2 mt-2
+                                            md:px-6'>
                             <div className='w-7 h-7 bg-white rounded-full flex items-center justify-center'>
                                 <img className='w-5 h-5' src={iconBolso} alt="" />
                             </div>
-                            <span className='ml-2'>{data.boton1}</span>
+                            <span className='ml-[1px]
+                                                md:ml-2'>
+                                {data.boton1}
+                                </span>
                         </button>
                     </div>
 
@@ -64,7 +86,8 @@ const Hero = () => {
                         ))}
                     </div>
 
-                    <div className='pt-20 flex items-center '>
+                    <div className='pt-20 flex items-center invisible
+                                    md:visible'>
                         <img className='scale-x-[-1] w-10' src={iconDelivery} alt="" />
                         <span className='ml-2 underline'> <strong>{data.number}</strong></span>
                     </div>
@@ -73,29 +96,41 @@ const Hero = () => {
 
 
             </div>
-            <div className='md:w-[60vw] md:h-screen'>
+            <div className='w-[50vw] h-screen bg-fondoAzul bg-cover bg-no-repeat
+                            md:w-[60vw]'>
 
                 <div className=''>
-                    <img
-                        className='z-[1] h-screen w-full object-cover'
+                    {/* <img
+                        className='z-[1] h-screen w-full object-cover
+                        
+                        xl:scale-y-[.] xl:scale-x-[1] xl:h-screen xl:w-full xl:object-cover
+                        
+                        '
                         src={fondo}
-                        alt="" />
+                        alt="" /> */}
                     <img
                         className='
-                        w-[20em] z-[2] absolute top-[2em] right-[3em]
-                        md:w-[20em] md:absolute md:top-[2em] md:right-[15em]
-                        lg:w-[20em] lg:absolute lg:top-[2em] lg:right-[20em]'
+                        w-[10em] z-[2] absolute top-[18em] right-[1em]
+                        md:w-[18em] md:absolute md:top-[12em] md:right-[5em]
+                        lg:w-[20em] lg:absolute lg:top-[8em] lg:right-[10em]
+                        xl:w-[25em] xl:absolute xl:top-[8em] xl:right-[20em]
+                        2xl:w-[30em] 2xl:absolute 2xl:top-[4em] 2xl:right-[20em]'
                         src={descMenu[ofert]?.image}
                         alt=""
                     />
-                    <div className='bg-white 
-                    h-[5em] w-[22em] rounded-xl absolute bottom-[15em] right-[2em] flex justify-center items-center gap-10 content-between p-4
-                    md:h-[5em] md:w-[22em] md:rounded-xl  md:absolute md:bottom-[6em] md:right-[2em] md:flex md:justify-center md:items-center md:gap-10 md:content-between md:p-4
-                    lg:h-[5em] lg:w-[22em] lg:rounded-lg  lg:absolute lg:bottom-[10em] lg:right-[2em] lg:flex lg:justify-center lg:items-center lg:gap-10 lg:content-between lg:p-4
+                    <div className='
+                    bg-[#080d22] w-[22em] rounded-xl absolute bottom-[1em] right-[0.3em] flex justify-center items-center gap-10 content-between p-4
+
+                    md:bg-white md:h-[4em] md:w-[20em] md:rounded-md  md:absolute md:bottom-[11em] md:right-[1em] md:flex md:justify-center md:items-center md:gap-10 md:content-between md:p-4
+                    lg:h-[5em] lg:w-[22em] lg:rounded-lg  lg:absolute lg:bottom-[10em] lg:right-[3em] lg:flex lg:justify-center lg:items-center lg:gap-10 lg:content-between lg:p-4
+                    xl:h-[5em] xl:w-[22em] xl:rounded-xl  xl:absolute xl:bottom-[10em] xl:right-[3em] xl:flex xl:justify-center xl:items-center xl:gap-10 xl:content-between xl:p-4
+                    2xl:h-[5em] 2xl:w-[22em] 2xl:rounded-xl  2xl:absolute 2xl:bottom-[10em] 2xl:right-[2em] 2xl:flex 2xl:justify-center 2xl:items-center 2xl:gap-10 2xl:content-between 2xl:p-4
                     '
                     >
                         <div>
-                            <p>{data.registerText}</p>
+                            <p className='text-white
+                                            md:text-black'>
+                                {data.registerText}</p>
                             <p className='text-orange-500'>{data.cuponText}</p>
                         </div>
                         <button className='bg-yellow-500 shadow-sm shadow-gray-500/50 hover:bg-yellow-400 hover:translate-x-[1px] hover:translate-y-[1px] 
@@ -104,12 +139,15 @@ const Hero = () => {
                         </button>
                     </div>
                     <div class="absolute 
-                                bottom-[11em] right-[5em] h-10 w-10
-                                md:bottom-[11em] md:right-[35em] md:h-10 md:w-10
-                                lg:bottom-[14em] lg:right-[26em] lg:h-10 lg:w-10">
+                                bottom-[11em] right-[5em] h-10 w-10 invisible
+
+                                md:bottom-[18em] md:right-[21em] md:h-10 md:w-10 md:visible
+                                lg:bottom-[16em] lg:right-[29em] lg:h-10 lg:w-10
+                                xl:bottom-[14em] xl:right-[35em] xl:h-10 xl:w-10
+                                2xl:bottom-[14em] 2xl:right-[45em] 2xl:h-10 2xl:w-10">
                         <div class="absolute w-2 h-2 -bottom-8 -left-6 bg-gray-300 rounded-full "></div>
                         <div class="absolute w-2 h-2 -bottom-5 -left-6 bg-gray-400 rounded-full opacity-50"></div>
-                        <div class="absolute w-2 h-2 -bottom-2 -left-6 bg-red-500 rounded-full opacity-25"></div>
+                        <div class="absolute w-2 h-2 -bottom-2 -left-6 bg-gray-500 rounded-full opacity-25"></div>
                         <div class="absolute w-2 h-2 -bottom-8 -left-8 rounded-full">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" stroke="currentColor" class="w-6 h-6 mx-auto text-white">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-9 9-9-9"></path>
