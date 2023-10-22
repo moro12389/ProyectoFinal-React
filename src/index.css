@@ -18,11 +18,14 @@ font-family: 'Roboto', sans-serif; */
     src: url(./assets/fonts/Roboto/Roboto-Regular.ttf);
     
   }
-  .bg-svg{
+/*   .bg-svg{
     background-image: url(assets/wave.svg);
     background-repeat: no-repeat;
+    position: absolute;
+    width: 100%;
     
-  }
+    
+  } */
 
 .headings{
     font-family: 'Lobster';
@@ -34,8 +37,7 @@ font-family: 'Roboto', sans-serif; */
     font-weight: 400;
     color: whitesmoke;
 }
-.bg{
-  position: absolute;
 
+h2.headings{
+  color: black;
 }
-
