@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Loading } from './Components/loading'
 import { Hero } from './Components/Hero'
+import { Cupons } from './Components/Cupons'
 
 
 function App() {
@@ -9,8 +10,8 @@ function App() {
   return (
     <>
         {/* <Loading></Loading> */}
-        <Hero></Hero>
-        
+        {/* <Hero></Hero> */}
+        <Cupons></Cupons>
     </>
   )
 }

@@ -29,8 +29,9 @@
         "other":"",
         "image": "/Products/platoVegetariano.png",
         "valor":4,
-        "descount":0
+        "descount":5
       }
+
     ],
     "data":[
       {
@@ -39,7 +40,8 @@
         "registerText":"Sing up and get",
         "cuponText":"discount coupons!",
         "boton1":"Buy Now",
-        "boton2":"Sing Up"
+        "boton2":"Sing Up",
+        "owner":"Mr.Chef"
       }
     ]
   }
