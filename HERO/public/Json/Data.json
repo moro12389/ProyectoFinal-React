@@ -1,49 +1,153 @@
-
-  {
-    "menu": [
-      {
-        "id": 1,
-        "title": "Pizza Pollo",
-        "subtitle":"With Special Cheese",
-        "detail": "Italian Pizza Pollo with special cheese is a favor can find only in",
-        "other":"Mr.Chef",
-        "image": "/Products/platoPizza.png",
-        "valor":6.50,
-        "descount":15.4
-      },
-      {
-        "id": 2,
-        "title": "French Fries",
-        "subtitle":"50% Discount",
-        "detail": "Get a discount on french fries with puchases",
-        "other":"over $3",
-        "image": "/Products/papaFrita.png",
-        "valor":2,
-        "descount":50
-      },
-      {
-        "id": 3,
-        "title": "Falafel on a plate",
-        "subtitle":"With Special Spices",
-        "detail": "Unusual spices ordered by us straight from Israel will give you an unforgettable taste and aroma",
-        "other":"",
-        "image": "/Products/platoVegetariano.png",
-        "valor":4,
-        "descount":5
-      }
-
-    ],
-    "data":[
-      {
-        "id":1,
-        "number":"+38 (063) 98-75-615",
-        "registerText":"Sing up and get",
-        "cuponText":"discount coupons!",
-        "boton1":"Buy Now",
-        "boton2":"Sing Up",
-        "owner":"Mr.Chef"
-      }
-    ]
-  }
-    
-   
+{
+  "menu": [
+    {
+      "id": 1,
+      "title": "Pizza Pollo",
+      "subtitle": "With Special Cheese",
+      "detail": "Italian Pizza Pollo with special cheese is a favor can find only in",
+      "other": "Mr.Chef",
+      "image": "/Products/platoPizza.png",
+      "valor": 6.50,
+      "descount": 15.4
+    },
+    {
+      "id": 2,
+      "title": "French Fries",
+      "subtitle": "50% Discount",
+      "detail": "Get a discount on french fries with puchases",
+      "other": "over $3",
+      "image": "/Products/papaFrita.png",
+      "valor": 2,
+      "descount": 50
+    },
+    {
+      "id": 3,
+      "title": "Falafel on a plate",
+      "subtitle": "With Special Spices",
+      "detail": "Unusual spices ordered by us straight from Israel will give you an unforgettable taste and aroma",
+      "other": "",
+      "image": "/Products/platoVegetariano.png",
+      "valor": 4,
+      "descount": 5
+    },
+    {
+      "id": 4,
+      "title": "ssssssssssssssssssste",
+      "subtitle": "With Special Spices",
+      "detail": "Unusual spices ordered by us straight from Israel will give you an unforgettable taste and aroma",
+      "other": "",
+      "image": "/Products/platoVegetariano.png",
+      "valor": 4,
+      "descount": 50
+    },
+    {
+      "id": 5,
+      "title": "dddddddddddddddd",
+      "subtitle": "With Special Spices",
+      "detail": "Unusual spices ordered by us straight from Israel will give you an unforgettable taste and aroma",
+      "other": "",
+      "image": "/Products/platoVegetariano.png",
+      "valor": 4,
+      "descount": 75
+    }
+  ],
+  "cupon": [
+    {
+      "id": 1,
+      "title": "standard",
+      "subtitle": "off any meal",
+      "stars": 2,
+      "descount": 10,
+      "colorTicket": "#606676",
+      "used": false
+    },
+    {
+      "id": 2,
+      "title": "pleasant",
+      "subtitle": "off any meal",
+      "stars": 3,
+      "descount": 25,
+      "colorTicket": "#050e28",
+      "used": false
+    },
+    {
+      "id": 3,
+      "title": "lucky",
+      "subtitle": "off any meal",
+      "stars": 4,
+      "descount": 50,
+      "colorTicket": "#f7d74b",
+      "used": false
+    },
+    {
+      "id": 4,
+      "title": "winner",
+      "subtitle": "off any meal",
+      "stars": 5,
+      "descount": 100,
+      "colorTicket": "#eb6917",
+      "used": false
+    }
+  ],
+  "points": [
+    {
+      "id": 1,
+      "points": 237,
+      "level": 11
+    }
+  ],
+  "levelsAwards": [
+    {"id": 1, "level": 3, "title": "Coupon -10% off any meal"},
+    {"id": 2, "level": 5, "title": "Coupon -25% off any meal"},
+    {"id": 3, "level": 8, "title": "Coupon -50% off any meal"},
+    {"id": 4, "level": 10, "title": "Free shawarma of your choice"},
+    {"id": 5, "level": 15, "title": "Kitchen board Mr.Chief"},
+    {"id": 6, "level": 17, "title": "Coupon -25% off any meal"},
+    {"id": 7, "level": 19, "title": "Coupon -50% off any meal"},
+    {"id": 8, "level": 21, "title": "75% off on your next meal"},
+    {"id": 9, "level": 25, "title": "Free shawarma of your choice"},
+    {"id": 10, "level": 27, "title": "Kitchen board Mr.Chief"},
+    {"id": 11, "level": 29, "title": "Coupon -25% off any meal"},
+    {"id": 12, "level": 31, "title": "Coupon -50% off any meal"},
+    {"id": 13, "level": 35, "title": "Coupon -50% off any meal"},
+    {"id": 14, "level": 37, "title": "Free shawarma of your choice"},
+    {"id": 15, "level": 39, "title": "Kitchen board Mr.Chief"},
+    {"id": 16, "level": 41, "title": "2x1 on any menu for a week"},
+    {"id": 17, "level": 45, "title": "Coupon -50% off any meal"},
+    {"id": 18, "level": 47, "title": "Coupon -50% off any meal"},
+    {"id": 19, "level": 49, "title": "Free shawarma of your choice"},
+    {"id": 20, "level": 51, "title": "Kitchen board Mr.Chief"},
+    {"id": 21, "level": 55, "title": "Coupon -25% off any meal"},
+    {"id": 22, "level": 57, "title": "Coupon -50% off any meal"},
+    {"id": 23, "level": 59, "title": "Coupon -50% off any meal"},
+    {"id": 24, "level": 61, "title": "20% off on your order for a month"},
+    {"id": 25, "level": 65, "title": "Kitchen board Mr.Chief"},
+    {"id": 26, "level": 67, "title": "Coupon -25% off any meal"},
+    {"id": 27, "level": 69, "title": "Coupon -50% off any meal"},
+    {"id": 28, "level": 71, "title": "Coupon -50% off any meal"},
+    {"id": 29, "level": 75, "title": "Free shawarma of your choice"},
+    {"id": 30, "level": 77, "title": "Kitchen board Mr.Chief"},
+    {"id": 31, "level": 79, "title": "Coupon -25% off any meal"},
+    {"id": 32, "level": 81, "title": "Free dinner for two once a month"},
+    {"id": 33, "level": 85, "title": "Coupon -50% off any meal"},
+    {"id": 34, "level": 87, "title": "Free shawarma of your choice"},
+    {"id": 35, "level": 89, "title": "Kitchen board Mr.Chief"},
+    {"id": 36, "level": 91, "title": "Coupon -25% off any meal"},
+    {"id": 37, "level": 95, "title": "Coupon -50% off any meal"},
+    {"id": 38, "level": 97, "title": "Coupon -50% off any meal"},
+    {"id": 39, "level": 99, "title": "Free shawarma of your choice"},
+    {"id": 40, "level": 100, "title": "Lunch or dinner free every week for a year"}
+  ]
+  ,
+  "data": [
+    {
+      "id": 1,
+      "number": "+38 (063) 98-75-615",
+      "registerText": "Sing up and get",
+      "cuponText": "discount coupons!",
+      "boton1": "Buy Now",
+      "boton2": "Sing Up",
+      "owner": "Mr.Chef"
+    }
+  ]
+}

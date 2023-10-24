@@ -8,7 +8,6 @@ export default {
     extend: {
       backgroundImage: {
         'fondoAzul': 'url(/otro2.svg)',
-        'ticket':'url(/ticket2.svg)'
 
       },
       fontFamily: {
