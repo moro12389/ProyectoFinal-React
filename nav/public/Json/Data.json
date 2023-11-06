@@ -1,0 +1,70 @@
+{
+  "carrito": [
+    {
+      "id": 1,
+      "title": "Pizza Pollo",
+      "subtitle": "With Special Cheese",
+      "detail": "Italian Pizza Pollo with special cheese is a favor can find only in",
+      "other": "Mr.Chef",
+      "image": "/Products/platoPizza.png",
+      "valor": 6.50,
+      "descount": 15.4
+    },
+    {
+      "id": 2,
+      "title": "French Fries",
+      "subtitle": "50% Discount",
+      "detail": "Get a discount on french fries with puchases",
+      "other": "over $3",
+      "image": "/Products/papaFrita.png",
+      "valor": 2,
+      "descount": 50
+    },
+    {
+      "id": 3,
+      "title": "Falafel on a plate",
+      "subtitle": "With Special Spices",
+      "detail": "Unusual spices ordered by us straight from Israel will give you an unforgettable taste and aroma",
+      "other": "",
+      "image": "/Products/platoVegetariano.png",
+      "valor": 4,
+      "descount": 5
+    },
+    {
+      "id": 4,
+      "title": "ssssssssssssssssssste",
+      "subtitle": "With Special Spices",
+      "detail": "Unusual spices ordered by us straight from Israel will give you an unforgettable taste and aroma",
+      "other": "",
+      "image": "/Products/platoVegetariano.png",
+      "valor": 4,
+      "descount": 50
+    }
+  ],
+  "bagDropdown":[
+    {
+      "id":1,
+      "image": "/img/shawarma-de-pollo.jpg",
+      "title": "Crazy Cheese",
+      "price": 3.95
+    },
+    {
+      "id":2,
+      "image": "/img/pepsi.jpg",
+      "title": "Pepsi 354ml",
+      "price": 1.35
+    },
+    {
+      "id":3,
+      "image": "/img/pepsi.jpg",
+      "title": "Pepsi 354ml",
+      "price": 1.35
+    },
+    {
+      "id":4,
+      "image": "/img/pepsi.jpg",
+      "title": "Pepsi 354ml",
+      "price": 1.35
+    }
+  ]
+}
