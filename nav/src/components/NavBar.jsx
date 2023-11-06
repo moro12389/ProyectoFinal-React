@@ -53,8 +53,8 @@ const NavBar = () => {
 
   const [isBagDropdownVisible, setIsBagDropdownVisible] = useState(false);
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+
+
 
   return (
     <>
