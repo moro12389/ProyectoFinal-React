@@ -4,7 +4,7 @@ import imgshawarma from "../assests/shawarma1.jpeg";
 import bolsitacompra from "../assests/icons-bolsitacompra.png";
 
 
-const East= () => {
+const East = () => {
  const [botonClick, setBotonClick] = useState(false);
  const handleBotonClick = () => {
  setBotonClick(true);
@@ -24,7 +24,7 @@ const East= () => {
              East
            </div>  
            
-           <div className="relative grid grid-cols-4 h-60 gap-6 mt-14 pt-18 p-4">
+           <div className="grid grid-cols-4 gap-4 m-4 pt-6">
              
              <div className="relative justify-center w-full h-60 mb-16 bg-gray-800 rounded-xl text-white text-center">
                  <div className="justify-center w-full h-40 mt-4 bg-gray-800 rounded-xl text-white text-center">
