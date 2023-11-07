@@ -70,11 +70,9 @@ const Cupons = () => {
                                 <p>Phone number: <strong className='text-gray-800'>(063) 979-6123</strong></p>
                             </div>
 
-
                             <h3 className='text-2xl font-lobster text-gray-800 my-[1em]'>
                                 Change password
                             </h3>
-
 
                             <form action='' className='2xl:flex 2xl:flex-col 2xl:items-cente'>
                                 <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder='* Current password' />
