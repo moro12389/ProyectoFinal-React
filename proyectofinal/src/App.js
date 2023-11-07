@@ -1,4 +1,5 @@
 import Menu from "./components/Menu";
+//import Probando from "./components/Probando";
 import Drinks from "./components/Drinks";
 import East from "./components/East";
 import New from "./components/New";
@@ -19,8 +20,7 @@ function App() {
           <Route path='/pizza' element={<Pizza/>} />
           <Route path='/shawarma' element={<Shawarma/>} />
           <Route path='/streetfood' element={<StreetFood/>} />
-          
-          </Routes>
+        </Routes>
       </BrowserRouter>
       
 
