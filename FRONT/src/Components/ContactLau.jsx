@@ -1,16 +1,31 @@
 
 
 
+// .headings{
+//     font-family: 'Lobster';
+//     font-weight: 400;
+//     letter-spacing: 0.1em;
+// }
+// *{
+//     font-family: 'Roboto';
+//     font-weight: 400;
+//     color: whitesmoke;
+// }
+
+// h2.headings{
+//   color: black;
+// }
+
 const Contact = () => {
     return(
-        <div className=" mx-auto  bg-[url('./assets/wave.svg')] p-4 bg-no-repeat bg-cover">
+        <div className=" mx-auto  bg-[url('./assets/wave.svg')] p-4 bg-no-repeat bg-cover font-roboto">
             <h2 className='headings pl-12 py-3 text-center'>Contacts</h2>
             <div className="flex items-center  ">
                 <div className="w-1/2 flex-col">
-                    <h3 className="headings">Delivery</h3>
+                    <h3 className="headings font-lobster font-normal">Delivery</h3>
                         <p>+54923232323322</p>
                    
-                    <h3 className="headings">Direccion</h3>
+                    <h3 className="headings font-lobster font-normal">Direccion</h3>
                     <div className='flex'>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 stroke-orange-500 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -18,7 +33,7 @@ const Contact = () => {
                         </svg>
                         <p className='pl-2'>Mi casa, 63, 93, hola</p>
                     </div>
-                    <h3 className="headings">Horarios de atencion:</h3>
+                    <h3 className="headings font-lobster font-normal">Horarios de atencion:</h3>
                     <div className='flex z-10 '>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 stroke-orange-500 h-9">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />

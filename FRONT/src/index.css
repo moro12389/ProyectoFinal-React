@@ -2,17 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-.headings{
-    font-family: 'Lobster';
-    font-weight: 400;
-    letter-spacing: 0.1em;
-}
-*{
-    font-family: 'Roboto';
-    font-weight: 400;
-    color: whitesmoke;
-}
-
-h2.headings{
-  color: black;
-}

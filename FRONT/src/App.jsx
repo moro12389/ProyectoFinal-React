@@ -6,6 +6,7 @@ import Menu from './Components/MenuViv';
 import Submenu from './Components/SubmenuViv';
 import { Contact } from './Components/ContactLau'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Checkout } from './Components/CheckoutRam';
 
 
 
@@ -33,9 +34,8 @@ function App() {
           
           */}
            
-          
+           <Route path='/' element={<Checkout/>} />
            
-      
 
           {/*
           <Route path='/' element={<NavBar/>} />
