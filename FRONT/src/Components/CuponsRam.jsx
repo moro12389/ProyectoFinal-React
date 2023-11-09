@@ -1,5 +1,5 @@
 
-import './Cupons'
+import './CuponsRam'
 import React, { useState, useEffect } from 'react';
 import iconOk from '/Icons/icons8-de-acuerdo.svg'
 import iconSinOk from '/Icons/iconSinOk.svg'
