@@ -28,7 +28,7 @@ const Submenu= () => {
              
                <div className="relative justify-center w-full h-60 mb-16 bg-gray-800 rounded-xl text-white text-center">
                    <div className="justify-center w-full h-40 mt-4 bg-gray-800 rounded-xl text-white text-center">
-                     <span className="text-2xl">Mini</span>
+                     <span className="text-2xl">Crazy Cheese</span>
                      <div className="w-full h-px bg-gray-300 my-4"></div>
                      <span className="">Ingredientes: pollo, verduras,<br/> 
                      especias,habas</span>

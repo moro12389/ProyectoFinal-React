@@ -13,6 +13,10 @@ const productosSchema=new mongoose.Schema({
         type:String,
         required:[true,'Por favor ingrese un los ingredientes'],
     },
+    pesoProducto:{
+        type:Number,
+        required:[true,'Por favor ingrese peso en Gramos del producto'],
+    },
     valorProducto:{
         type:Number,
         required:[true,'Por favor ingrese valor del producto'],
@@ -29,4 +33,4 @@ const productosSchema=new mongoose.Schema({
     timestamps:true
 })
 
-module.exports=mongoose.model('productos',productosSchema)
+module.exports=mongoose.model('productos',productosSchema);

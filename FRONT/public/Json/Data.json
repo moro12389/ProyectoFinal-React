@@ -8,7 +8,7 @@
       "subtitle": "With Special Cheese",
       "detail": "Italian Pizza Pollo with special cheese is a favor can find only in",
       "other": "Mr.Chef",
-      "image": "/Products/platoPizza.png",
+      "image": "/img/Products/platoPizza.png",
       "valor": 6.50,
       "descount": 15.4
     },
@@ -18,7 +18,7 @@
       "subtitle": "50% Discount",
       "detail": "Get a discount on french fries with puchases",
       "other": "over $3",
-      "image": "/Products/papaFrita.png",
+      "image": "/img/Products/papaFrita.png",
       "valor": 2,
       "descount": 50
     },
@@ -28,7 +28,7 @@
       "subtitle": "With Special Spices",
       "detail": "Unusual spices ordered by us straight from Israel will give you an unforgettable taste and aroma",
       "other": "",
-      "image": "/Products/platoVegetariano.png",
+      "image": "/img/Products/platoVegetariano.png",
       "valor": 4,
       "descount": 5
     },
@@ -38,7 +38,7 @@
       "subtitle": "With Special Spices",
       "detail": "Unusual spices ordered by us straight from Israel will give you an unforgettable taste and aroma",
       "other": "",
-      "image": "/Products/platoVegetariano.png",
+      "image": "/img/Products/platoVegetariano.png",
       "valor": 4,
       "descount": 50
     },
@@ -48,7 +48,7 @@
       "subtitle": "With Special Spices",
       "detail": "Unusual spices ordered by us straight from Israel will give you an unforgettable taste and aroma",
       "other": "",
-      "image": "/Products/platoVegetariano.png",
+      "image": "/img/Products/platoVegetariano.png",
       "valor": 4,
       "descount": 75
     }
@@ -218,17 +218,70 @@
   ],
 
 "VIVIANA":"",
+
+
+
+
+
 "categoryProduct":[
-  {
-    "id":1,
-    "image": "/img/nav/pepsi.jpg",
-    "categoryName":"Shaguarma"
-  },
-  {
-    "id":2,
-    "image": "/img/nav/pepsi.jpg",
-    "categoryName":"Pancho"
-  }
+  
+  [
+    {
+      "_id": "654e6b09bbe177b7c9bf40fa",
+      "nombreCategoria": "New",
+      "imgUrlCategoria": "/img/nav/pepsi.jpg",
+      "activeCategory": true,
+      "createdAt": "2023-11-10T17:40:25.165Z",
+      "updatedAt": "2023-11-10T17:40:25.165Z",
+      "__v": 0
+    },
+    {
+      "_id": "654e6b3abbe177b7c9bf40fc",
+      "nombreCategoria": "Shaguarma",
+      "imgUrlCategoria": "/img/nav/pepsi.jpg",
+      "activeCategory": true,
+      "createdAt": "2023-11-10T17:41:14.968Z",
+      "updatedAt": "2023-11-10T17:41:14.968Z",
+      "__v": 0
+    },
+    {
+      "_id": "654e6b43bbe177b7c9bf40fe",
+      "nombreCategoria": "Street Food",
+      "imgUrlCategoria": "/img/nav/pepsi.jpg",
+      "activeCategory": true,
+      "createdAt": "2023-11-10T17:41:23.137Z",
+      "updatedAt": "2023-11-10T17:41:23.137Z",
+      "__v": 0
+    },
+    {
+      "_id": "654e6b54bbe177b7c9bf4100",
+      "nombreCategoria": "Pizza",
+      "imgUrlCategoria": "/img/nav/pepsi.jpg",
+      "activeCategory": true,
+      "createdAt": "2023-11-10T17:41:40.054Z",
+      "updatedAt": "2023-11-10T17:41:40.054Z",
+      "__v": 0
+    },
+    {
+      "_id": "654e6b5abbe177b7c9bf4102",
+      "nombreCategoria": "Fast",
+      "imgUrlCategoria": "/img/nav/pepsi.jpg",
+      "activeCategory": true,
+      "createdAt": "2023-11-10T17:41:46.835Z",
+      "updatedAt": "2023-11-10T17:41:46.835Z",
+      "__v": 0
+    },
+    {
+      "_id": "654e6b5ebbe177b7c9bf4104",
+      "nombreCategoria": "Drinks",
+      "imgUrlCategoria": "/img/nav/pepsi.jpg",
+      "activeCategory": true,
+      "createdAt": "2023-11-10T17:41:50.900Z",
+      "updatedAt": "2023-11-10T17:41:50.900Z",
+      "__v": 0
+    }
+  ]
+    
 ],
 
 "producto":[

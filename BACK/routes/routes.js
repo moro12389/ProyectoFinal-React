@@ -7,6 +7,13 @@ const {
     cargarDatos,
     eliminarDatos,
     actualizarDatos,
+
+    obtenerCategorias,
+    obtenerCategoria,
+    cargarCategoria,
+    eliminarCategoria,
+    actualizarCategoria,
+
     register_get,
     register_post,
     register_getOne
@@ -14,14 +21,25 @@ const {
 
 // Productos
 
-router.get('/',obtenerDatos)
+router.get('/obtenerDatos',obtenerDatos)
 router.get('/obtenerProducto/:id',obtenerDato)
 
-router.post('/',cargarDatos)
+router.post('/cargarDatos',cargarDatos)
 
 router.delete('/eliminarProducto/:id',eliminarDatos)
 
 router.patch('/actualizarProducto/:id',actualizarDatos)
+
+// Categoria
+
+router.get('/obtenerCategorias',obtenerCategorias)
+router.get('/obtenerCategoria/:id',obtenerCategoria)
+
+router.post('/cargarCategoria',cargarCategoria)
+
+router.delete('/eliminarCategoria/:id',eliminarCategoria)
+
+router.patch('/actualizarCategoria/:id',actualizarCategoria)
 
 // Users
 

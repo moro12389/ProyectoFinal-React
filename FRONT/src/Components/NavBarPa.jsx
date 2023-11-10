@@ -35,8 +35,6 @@ const NavBar = () => {
       .catch(error => console.error('Error no se pudo obtener:', error));
   }, []);
 
-  console.log(carrito)
-
   const [dropdownClick, setdropdownClick] = useState(false);
 
   function handleClick() {

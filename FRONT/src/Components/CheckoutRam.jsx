@@ -1,13 +1,10 @@
 import BagDropdown from './BagDropdownPa';
 import './CheckoutRam'
 import React, { useState, useEffect } from 'react';
-import {
-    Link,
-} from "react-router-dom";
-import { motion } from 'framer-motion'
-import { Fragment } from 'react'
-import { Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
+import { useLocation } from 'react-router-dom';
+
+
+
 
 import Select from 'react-select'
 
@@ -29,6 +26,10 @@ const Checkout = () => {
     const [productCuantityPrice, setProductCuantityPrice] = useState(0);
     
 
+    const location = useLocation();
+  const data1 = location.state?.data;
+
+
     useEffect(() => {
         fetch('Json/Data.json')
             .then(response => {
@@ -39,18 +40,9 @@ const Checkout = () => {
             })
             .then(data => {
                 setData(data['checkout'][0]);
-                setBagDropdown(data['carritoCompra']
-                .map(item => ({
-                    value: item.id,
-                    level: item.level,
-                    label: item.title,
-                    used: item.used,
-                    stars: item.stars,
-                    discount: item.discount,
-                    colorTicket: item.colorTicket,
-                );
+                //setBagDropdown(bagDropdownNav.location.state)
 
-                const updatedData = data['levelsAwards'].map(item => ({
+                const updatedData1 = data['levelsAwards'].map(item => ({
                     value: item.id,
                     level: item.level,
                     label: item.title,
@@ -60,7 +52,7 @@ const Checkout = () => {
                     colorTicket: item.colorTicket,
                 }));
 
-                setTextDropdown(updatedData);
+                setTextDropdown(updatedData1);
 
             })
             .catch(error => console.error('Error no se pudo obtener:', error)); // Manejo de errores en caso de falla en la solicitud
@@ -95,27 +87,12 @@ const Checkout = () => {
         console.log(index, newQuantity)
         newQuantity = Math.max(1, newQuantity)
         if(operation==="-"){
-            console.log(newQuantity)
-            
-            
-
-            console.log(calcPrice,newQuantity)
-            calcPrice=calcPrice/newQuantity
             newQuantity--
-
-            console.log(newQuantity)
         }else{
-            console.log(newQuantity)
             newQuantity++
-            
-
-            console.log(calcPrice,newQuantity)
-            calcPrice=calcPrice*newQuantity
-
-            console.log(newQuantity)
         }
 
-        
+        calcPrice=calcPrice*newQuantity
 
         setBagDropdown(prevBagDropdown => {
             const updatedBagDropdown = [...prevBagDropdown];
@@ -125,10 +102,6 @@ const Checkout = () => {
         });
     };
 
-    const calculatePrice = (item) => {
-        const calc= item.quantity*item.price
-        return item.price=calc
-    };
 
     return (
         <>
@@ -217,7 +190,7 @@ const Checkout = () => {
                                                     +
                                                 </button>
                                                 
-                                                <span className=''>{item.price.toLocaleString('es-ES', {
+                                                <span className=''>{item.newPrice.toLocaleString('es-ES', {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
                                                 })}

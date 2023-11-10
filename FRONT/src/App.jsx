@@ -5,9 +5,8 @@ import { Cupons } from './Components/CuponsRam'
 import Menu from './Components/MenuViv';
 import Submenu from './Components/SubmenuViv';
 import { Contact } from './Components/ContactLau'
+import { Checkout } from './Components/CheckoutRam';
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-//import { Checkout } from './Components/CheckoutRam';
-
 
 
 
@@ -36,14 +35,14 @@ function App() {
            <Route path='/' element={
             <div>
               <NavBar/>
-              <Hero/>
+              {/* <Hero/> */}
               <Menu/>
-              <Contact/>
+              {/* <Contact/> */}
             </div>
            } />
-           <Route path='/cupons' element={<Cupons/>} />
+           {/* <Route path='/cupons' element={<Cupons/>} />
            <Route path='/submenu' element={<Submenu/>} />
-           {/* <Route path='/' element={<Checkout/>} /> */}
+           <Route path='/checkout' element={<Checkout/>} /> */}
            
 
           {/*
