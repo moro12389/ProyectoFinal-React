@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import iconsconfeti from "/img/menu/icons-confeti.png";
 import iconshawarma from "/img/menu/icons-shawarma1.png";
@@ -8,6 +8,7 @@ import iconskhachapuri from "/img/menu/icons-khachapuri.png";
 import iconscoctel from "/img/menu/icons-coctel1.png";
 
 const Menu = () => {
+  const [data, setData] = useState();
   useEffect(() => {
     fetch('Json/Data.json')
         .then(response => {
