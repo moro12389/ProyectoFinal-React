@@ -6,7 +6,7 @@ import Menu from './Components/MenuViv';
 import Submenu from './Components/SubmenuViv';
 import { Contact } from './Components/ContactLau'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { Checkout } from './Components/CheckoutRam';
+//import { Checkout } from './Components/CheckoutRam';
 
 
 
@@ -33,8 +33,17 @@ function App() {
           {/* anda ver responsive no esta ajustada la altura, parte de css en index.css
           
           */}
-           
-           <Route path='/' element={<Checkout/>} />
+           <Route path='/' element={
+            <div>
+              <NavBar/>
+              <Hero/>
+              <Menu/>
+              <Contact/>
+            </div>
+           } />
+           <Route path='/cupons' element={<Cupons/>} />
+           <Route path='/submenu' element={<Submenu/>} />
+           {/* <Route path='/' element={<Checkout/>} /> */}
            
 
           {/*

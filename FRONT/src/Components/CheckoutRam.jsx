@@ -19,13 +19,16 @@ function classNames(...classes) {
 
 const Checkout = () => {
     const [data, setData] = useState({ owner: '' });
-    const [bagDropdown, setbagDropdown] = useState([]);
+    const [bagDropdown, setBagDropdown] = useState([]);
     const [textDropdown, setTextDropdown] = useState([]);
     const [descuento, setDescuento] = useState(0)
     const [delivery, setDelivery] = useState(0)
     const [subTotalPrice, setSubTotalPrice] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
-    delivery
+
+    const [productCuantityPrice, setProductCuantityPrice] = useState(0);
+    
+
     useEffect(() => {
         fetch('Json/Data.json')
             .then(response => {
@@ -36,7 +39,16 @@ const Checkout = () => {
             })
             .then(data => {
                 setData(data['checkout'][0]);
-                setbagDropdown(data['bagDropdown']);
+                setBagDropdown(data['carritoCompra']
+                .map(item => ({
+                    value: item.id,
+                    level: item.level,
+                    label: item.title,
+                    used: item.used,
+                    stars: item.stars,
+                    discount: item.discount,
+                    colorTicket: item.colorTicket,
+                );
 
                 const updatedData = data['levelsAwards'].map(item => ({
                     value: item.id,
@@ -56,9 +68,11 @@ const Checkout = () => {
 
     useEffect(() => {
         const newSubTotalPrice = bagDropdown.reduce((total, item) => total + item.price, 0);
-        const TotalPrice=newSubTotalPrice-(newSubTotalPrice*(descuento/100))
+        const TotalPrice = newSubTotalPrice - (newSubTotalPrice * (descuento / 100))
+
         setSubTotalPrice(newSubTotalPrice);
         setTotalPrice(TotalPrice)
+
     }, [bagDropdown, descuento]);
 
     const handleChange = selectedOption => {
@@ -66,8 +80,8 @@ const Checkout = () => {
             setDescuento(selectedOption.discount)
         }
     };
-    const MyComponent = () => {
-        
+    const SelectCupon = () => {
+
 
         return (
             <Select
@@ -75,6 +89,45 @@ const Checkout = () => {
                 onChange={handleChange}
             />
         );
+    };
+
+    const handleQuantityChange = (index, newQuantity, calcPrice, operation) => {
+        console.log(index, newQuantity)
+        newQuantity = Math.max(1, newQuantity)
+        if(operation==="-"){
+            console.log(newQuantity)
+            
+            
+
+            console.log(calcPrice,newQuantity)
+            calcPrice=calcPrice/newQuantity
+            newQuantity--
+
+            console.log(newQuantity)
+        }else{
+            console.log(newQuantity)
+            newQuantity++
+            
+
+            console.log(calcPrice,newQuantity)
+            calcPrice=calcPrice*newQuantity
+
+            console.log(newQuantity)
+        }
+
+        
+
+        setBagDropdown(prevBagDropdown => {
+            const updatedBagDropdown = [...prevBagDropdown];
+            updatedBagDropdown[index].quantity = newQuantity;
+            updatedBagDropdown[index].newPrice = calcPrice;
+            return updatedBagDropdown;
+        });
+    };
+
+    const calculatePrice = (item) => {
+        const calc= item.quantity*item.price
+        return item.price=calc
     };
 
     return (
@@ -109,25 +162,25 @@ const Checkout = () => {
                     {/* hola */}
 
                 </div>
-                
-                    <div className='bg-gray-500 2xl:p-2 rounded-lg'>
-                        <div className='bg-white 2xl:p-4 rounded-lg h-full'>
-                            <p>{data.deTitle}</p>
-                            <form action='' className='2xl:flex 2xl:flex-col 2xl:items-cente'>
-                                <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={data.adPhone} />
-                                <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={data.adStreet} />
-                                <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={data.adHouse} />
-                                <div className='flex 2xl:justify-center 2xl:items-center'>
-                                    <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={data.adEntrance} /> <input type="checkbox" id="checkbox" /> <span className='text-sm'>{data.adCheck}</span>
-                                </div>
-                                <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={data.adComment} />
-                                <button className='bg-gray-200 2xl:rounded-xl 2xl:h-[2.5em] 2xl:w-full my-[1em] shadow-md shadow-gray-600'>
-                                    Save edit
-                                </button>
-                            </form>
-                        </div>
+
+                <div className='bg-gray-500 2xl:p-2 rounded-lg'>
+                    <div className='bg-white 2xl:p-4 rounded-lg h-full'>
+                        <p>{data.deTitle}</p>
+                        <form action='' className='2xl:flex 2xl:flex-col 2xl:items-cente'>
+                            <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={data.adPhone} />
+                            <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={data.adStreet} />
+                            <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={data.adHouse} />
+                            <div className='flex 2xl:justify-center 2xl:items-center'>
+                                <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={data.adEntrance} /> <input type="checkbox" id="checkbox" /> <span className='text-sm'>{data.adCheck}</span>
+                            </div>
+                            <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={data.adComment} />
+                            <button className='bg-gray-200 2xl:rounded-xl 2xl:h-[2.5em] 2xl:w-full my-[1em] shadow-md shadow-gray-600'>
+                                Save edit
+                            </button>
+                        </form>
                     </div>
-                
+                </div>
+
 
 
                 <div className='bg-gray-500 2xl:p-2 rounded-lg'>
@@ -146,24 +199,40 @@ const Checkout = () => {
                                                 <h4 className='mr-4'>{item.title}</h4>
                                             </div>
                                             <div className='flex mt-3 mb-6'>
-                                                <span className=' 2xl:w-6  2xl:h-6 rounded-[50%] bg-gray-300 2xl:text-center 2xl:items-center content-center 2xl:text-xl'>-</span>
-                                                <span className=' 2xl:mx-2'>1</span>
-                                                <span className=' 2xl:w-6  2xl:h-6  rounded-[50%] bg-yellow-300 2xl:mr-2  2xl:text-center content-center  2xl:text-xl'>+</span>
-                                                <span className=''>${item.price}</span>
+                                                {/* Botón para decrementar cantidad */}
+                                                <button
+                                                    className='2xl:w-6 2xl:h-6 rounded-[50%] bg-gray-300 2xl:text-center 2xl:items-center content-center 2xl:text-xl'
+                                                    onClick={() => handleQuantityChange(index, item.quantity, item.price, "-")}
+                                                >
+                                                    -
+                                                </button>
+
+                                                <span className='2xl:mx-2'>{item.quantity > 0 ? item.quantity : 1}</span>
+
+                                                {/* Botón para incrementar cantidad */}
+                                                <button
+                                                    className='2xl:w-6 2xl:h-6 rounded-[50%] bg-yellow-300 2xl:mr-2 2xl:text-center content-center 2xl:text-xl'
+                                                    onClick={() => handleQuantityChange(index, item.quantity, item.price, "+")}
+                                                >
+                                                    +
+                                                </button>
+                                                
+                                                <span className=''>{item.price.toLocaleString('es-ES', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                })}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
                                 ))}
-                                {/* <div className='flex flex-col justify-center items-center'>
-                                    <Link to='/checkout' className='px-4 py-2 bg-yellow-300 rounded-xl'>Checkout</Link>
-                                    <span className='text-center'>Total: ${totalPrice.toFixed(2)}</span>
-                                </div> */}
                             </div>
                         )}
 
 
-                        <MyComponent></MyComponent>
-                        <div className='flex flex-col text-gray-400 justify-around'>
+
+                        < div className='flex flex-col text-gray-400 justify-around w-full'>
+                            <SelectCupon></SelectCupon>
                             <div>
                                 <strong>Subtotal:</strong>
                                 <strong>
@@ -182,49 +251,49 @@ const Checkout = () => {
                             <div>
                                 <strong>Delivery:</strong>
                                 <strong className='text-orange-400'>${delivery.toLocaleString('es-ES', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    })}</strong>
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })}</strong>
                             </div>
 
                             <div>
                                 <strong>Total:</strong>
                                 <strong className='text-orange-400'>${totalPrice.toLocaleString('es-ES', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    })}</strong>
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })}</strong>
                             </div>
 
                         </div>
 
 
                     </div>
-                    
+
 
 
 
                 </div>
                 <div></div>
                 <div className='bg-gray-500 2xl:p-2 rounded-lg '>
-                        <div className='bg-white 2xl:p-4 rounded-lg h-full'>
-                            <strong>{data.titlePay}</strong>
-                            <div className='flex flex-row place-content-around  2xl:items-center'>
-                                <div className='bg-gray-500  w-28 h-18 rounded-lg '>
-                                    <div className='w-8 h-8 bg-green-500'></div>
-                                    <div>{data.payOp1}</div>
-                                    
-                                </div>
-                                <div className='bg-red-500 w-28 h-18 rounded-lg '>
-                                    <div className='w-8 h-8 bg-green-500'></div>
-                                    <div>{data.payOp2}</div>
-                                    
-                                </div>
-                            </div>
-                           
-                        </div>
-                    </div>
+                    <div className='bg-white 2xl:p-4 rounded-lg h-full'>
+                        <strong>{data.titlePay}</strong>
+                        <div className='flex flex-row place-content-around  2xl:items-center'>
+                            <div className='bg-gray-500  w-28 h-18 rounded-lg '>
+                                <div className='w-8 h-8 bg-green-500'></div>
+                                <div>{data.payOp1}</div>
 
-            </div>
+                            </div>
+                            <div className='bg-red-500 w-28 h-18 rounded-lg '>
+                                <div className='w-8 h-8 bg-green-500'></div>
+                                <div>{data.payOp2}</div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div >
 
         </>
     )

@@ -18,7 +18,7 @@ const BagDropdown = () => {
         return response.json();
       })
       .then(data => {
-        setbagDropdown(data['bagDropdown']);
+        setbagDropdown(data['carritoCompra']);
       })
       .catch(error => console.error('Error no se pudo obtener:', error));
   }, []);
