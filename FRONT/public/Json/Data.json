@@ -221,12 +221,12 @@
   "categoryProduct":[
     {
       "id":1,
-      "image": "/img/nav/pepsi.jpg",
+      "image": "/img/menu/shawarma1.jpeg",
       "categoryName":"Shaguarma"
     },
     {
       "id":2,
-      "image": "/img/nav/pepsi.jpg",
+      "image": "/img/menu/shawarma1.jpeg",
       "categoryName":"Pancho"
     }
   ],
