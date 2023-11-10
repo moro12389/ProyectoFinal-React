@@ -2,11 +2,16 @@ import { Loading } from './Components/LoadingRam'
 import NavBar from './Components/NavBarPa';
 import { Hero } from './Components/HeroRam'
 import { Cupons } from './Components/CuponsRam'
-import Menu from './Components/MenuViv';
+import {Menu} from './Components/MenuViv';
 import Submenu from './Components/SubmenuViv';
 import { Contact } from './Components/ContactLau'
 import { Checkout } from './Components/CheckoutRam';
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+<<<<<<< HEAD
+=======
+/* //import { Checkout } from './Components/CheckoutRam'; */
+
+>>>>>>> 720d761fa9c4bf8ca3cbadb015e52276a8b336cd
 
 
 
