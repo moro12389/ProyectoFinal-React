@@ -29,11 +29,13 @@ const NavBar = () => {
         return response.json();
       })
       .then(data => {
-        setCarrito(data['carrito']);
+        setCarrito(data['carritoCompra']);
       })
 
       .catch(error => console.error('Error no se pudo obtener:', error));
   }, []);
+
+  console.log(carrito)
 
   const [dropdownClick, setdropdownClick] = useState(false);
 
