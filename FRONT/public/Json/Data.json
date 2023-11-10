@@ -251,6 +251,28 @@
     }
   ],
 
-"VIVIANA":""
+"VIVIANA":{
+  "categoryProduct":[
+    {
+      "id":1,
+      "image": "/img/nav/pepsi.jpg",
+      "categoryName":"Shaguarma"
+    },
+    {
+      "id":2,
+      "image": "/img/nav/pepsi.jpg",
+      "categoryName":"Pancho"
+    }
+  ],
+  
+  "producto":[
+    { 
+    "id":1,
+    "image": "/img/nav/pepsi.jpg",
+    "title": "Pepsi 354ml",
+    "category":1
+    }
+  ]
+}
 
 }

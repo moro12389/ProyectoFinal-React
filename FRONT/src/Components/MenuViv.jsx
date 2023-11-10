@@ -8,6 +8,19 @@ import iconskhachapuri from "/img/menu/icons-khachapuri.png";
 import iconscoctel from "/img/menu/icons-coctel1.png";
 
 const Menu = () => {
+  useEffect(() => {
+    fetch('Json/Data.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('no se conecto');
+            }
+            return response.json();
+        })
+        .then(data => {
+            setData(data["VIVIANA"]["categoryProduct"]);
+        })})
+  console.log(data);
+
   return (
 
     <>
@@ -65,4 +78,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export {Menu};
