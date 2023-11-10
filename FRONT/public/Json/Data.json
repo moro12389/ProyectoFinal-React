@@ -217,7 +217,6 @@
     }
   ],
 
-<<<<<<< HEAD
 "VIVIANA":"",
 
 
@@ -293,30 +292,5 @@
   "category":1
   }
 ]
-=======
-"VIVIANA":{
-  "categoryProduct":[
-    {
-      "id":1,
-      "image": "/img/menu/shawarma1.jpeg",
-      "categoryName":"Shaguarma"
-    },
-    {
-      "id":2,
-      "image": "/img/menu/shawarma1.jpeg",
-      "categoryName":"Pancho"
-    }
-  ],
-  
-  "producto":[
-    { 
-    "id":1,
-    "image": "/img/nav/pepsi.jpg",
-    "title": "Pepsi 354ml",
-    "category":1
-    }
-  ]
-}
->>>>>>> 720d761fa9c4bf8ca3cbadb015e52276a8b336cd
 
 }
