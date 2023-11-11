@@ -2,11 +2,11 @@ import { Loading } from './Components/LoadingRam'
 import NavBar from './Components/NavBarPa';
 import { Hero } from './Components/HeroRam'
 import { Cupons } from './Components/CuponsRam'
-import {Menu} from './Components/MenuViv';
 import Submenu from './Components/SubmenuViv';
 import { Contact } from './Components/ContactLau'
 import { Checkout } from './Components/CheckoutRam';
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Menu from './Components/MenuViv';
 
 /* //import { Checkout } from './Components/CheckoutRam'; */
 
@@ -39,13 +39,13 @@ function App() {
             <div>
               <NavBar/>
               {/* <Hero/> */}
-              <Menu/>
+              <Menu></Menu>
               {/* <Contact/> */}
             </div>
            } />
-           {/* <Route path='/cupons' element={<Cupons/>} />
+          <Route path='/cupons' element={<Cupons/>} />
            <Route path='/submenu' element={<Submenu/>} />
-           <Route path='/checkout' element={<Checkout/>} /> */}
+           <Route path='/checkout' element={<Checkout/>} />
            
 
           {/*

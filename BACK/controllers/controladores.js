@@ -5,13 +5,24 @@ const db_users = require('../models/Users')
 
 // !!! Productos
     // Read all
-    const obtenerDatos = async (req, res) => {
+    const obtenerProductos = async (req, res) => {
         const resultado = await db_productos.find({})
         res.status(200).json(resultado)
     }
 
+    const obtenerProductosIdCategoria = async (req, res) => {
+        console.log(req.params.id)
+        const { id } = req.params
+        const resultado = await db_productos.find({ categoriaProducto: id })
+        console.log(resultado)
+        if (!resultado) {
+            return res.status(404).json({ error: 'no se encontro la informacion' })
+        }
+        res.status(200).json(resultado)
+    }
+
     // Read unique
-    const obtenerDato = async (req, res) => {
+    const obtenerProducto = async (req, res) => {
         console.log(req.params.id)
         const { id } = req.params
         const resultado = await db_productos.findById(id)
@@ -23,18 +34,21 @@ const db_users = require('../models/Users')
     }
 
     // Write
-    const cargarDatos = async (req, res) => {
-        const { nombreProducto, categoriaProducto, ingredientesProducto, valorProducto, ofertaDescuentoProducto, stockProducto } = req.body
+    const cargarProducto = async (req, res) => {
+        const { nombreProducto, categoriaProducto, ingredientesProducto, pesoProducto, valorProducto, ofertaDescuentoProducto, stockProducto, imgUrlProducto } = req.body
         let datosVacios = []
 
         if (!nombreProducto) {
-            datosVacios.push('nombreProduct')
+            datosVacios.push('nombreProducto')
         }
         if (!categoriaProducto) {
             datosVacios.push('categoriaProducto')
         }
         if (!ingredientesProducto) {
             datosVacios.push('ingredientesProducto')
+        }
+        if (!pesoProducto) {
+            datosVacios.push('pesoProducto')
         }
         if (!valorProducto) {
             datosVacios.push('valorProducto')
@@ -45,6 +59,9 @@ const db_users = require('../models/Users')
         if (!stockProducto) {
             datosVacios.push('stockProducto')
         }
+        if (!imgUrlProducto) {
+            datosVacios.push('imgUrlProducto')
+        }
 
         if (datosVacios.length > 0) {
             console.log(datosVacios)
@@ -53,7 +70,7 @@ const db_users = require('../models/Users')
 
 
         try {
-            const resultado = await db_productos.create({ nombreProducto, categoriaProducto, ingredientesProducto, valorProducto, ofertaDescuentoProducto, stockProducto })
+            const resultado = await db_productos.create({ nombreProducto, categoriaProducto, ingredientesProducto, pesoProducto, valorProducto, ofertaDescuentoProducto, stockProducto, imgUrlProducto })
             res.status(200).json(resultado)
         }
         catch (error) {
@@ -62,7 +79,7 @@ const db_users = require('../models/Users')
     }
 
     // Delete
-    const eliminarDatos = async (req, res) => {
+    const eliminarProducto = async (req, res) => {
 
         const { id } = req.params
         const resultado = await db_productos.findOneAndDelete({ _id: id })
@@ -76,7 +93,7 @@ const db_users = require('../models/Users')
     }
 
     // Update
-    const actualizarDatos = async (req, res) => {
+    const actualizarProducto = async (req, res) => {
         const { id } = req.params
         const resultado = await db_productos.findOneAndUpdate({ _id: id }, { ...req.body })
         res.status(200).json(resultado)
@@ -199,17 +216,18 @@ const db_users = require('../models/Users')
 
 
 module.exports = {
-    obtenerDatos,
-    obtenerDato,
-    cargarDatos,
-    eliminarDatos,
-    actualizarDatos,
-
     obtenerCategorias,
     obtenerCategoria,
     cargarCategoria,
     eliminarCategoria,
     actualizarCategoria,
+
+    obtenerProductos,
+    obtenerProductosIdCategoria,
+    obtenerProducto,
+    cargarProducto,
+    eliminarProducto,
+    actualizarProducto,
 
     register_get,
     register_post,

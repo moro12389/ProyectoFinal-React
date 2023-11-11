@@ -2,37 +2,28 @@ const express = require('express')
 const router=express.Router()
 
 const {
-    obtenerDatos,
-    obtenerDato,
-    cargarDatos,
-    eliminarDatos,
-    actualizarDatos,
-
     obtenerCategorias,
     obtenerCategoria,
     cargarCategoria,
     eliminarCategoria,
     actualizarCategoria,
 
+    obtenerProductos,
+    obtenerProductosIdCategoria,
+    obtenerProducto,
+    cargarProducto,
+    eliminarProducto,
+    actualizarProducto,
+
     register_get,
     register_post,
     register_getOne
 } = require('../controllers/controladores')
 
-// Productos
-
-router.get('/obtenerDatos',obtenerDatos)
-router.get('/obtenerProducto/:id',obtenerDato)
-
-router.post('/cargarDatos',cargarDatos)
-
-router.delete('/eliminarProducto/:id',eliminarDatos)
-
-router.patch('/actualizarProducto/:id',actualizarDatos)
-
 // Categoria
 
 router.get('/obtenerCategorias',obtenerCategorias)
+
 router.get('/obtenerCategoria/:id',obtenerCategoria)
 
 router.post('/cargarCategoria',cargarCategoria)
@@ -40,6 +31,20 @@ router.post('/cargarCategoria',cargarCategoria)
 router.delete('/eliminarCategoria/:id',eliminarCategoria)
 
 router.patch('/actualizarCategoria/:id',actualizarCategoria)
+
+// Productos
+
+router.get('/obtenerProductos',obtenerProductos)
+
+router.get('/obtenerProductosCategoria/:id',obtenerProductosIdCategoria)
+
+router.get('/obtenerProducto/:id',obtenerProducto)
+
+router.post('/cargarProducto',cargarProducto)
+
+router.delete('/eliminarProducto/:id',eliminarProducto)
+
+router.patch('/actualizarProducto/:id',actualizarProducto)
 
 // Users
 

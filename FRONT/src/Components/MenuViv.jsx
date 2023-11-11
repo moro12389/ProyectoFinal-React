@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import iconsconfeti from "/img/menu/icons-confeti.png";
-import iconshawarma from "/img/menu/icons-shawarma1.png";
-import iconspancho from "/img/menu/icons-pancho.png";
-import iconspizza from "/img/menu/icons-pizza2.png";
-import iconskhachapuri from "/img/menu/icons-khachapuri.png";
-import iconscoctel from "/img/menu/icons-coctel1.png";
 
-import axios from 'axios';
 
 const Menu = () => {
   const [data, setData] = useState([]);

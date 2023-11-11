@@ -28,6 +28,10 @@ const productosSchema=new mongoose.Schema({
         type:Number,
         required:[true,'Por favor ingrese el número de productos'],
     },
+    imgUrlProducto:{
+        type:String,
+        required:[true,'Por favor ingrese url imagen'],
+    },
 }
 ,{
     timestamps:true
