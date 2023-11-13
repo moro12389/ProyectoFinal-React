@@ -7,6 +7,9 @@ const Submenu = () => {
   const [botonClick, setBotonClick] = useState(false);
   const [data, setData] = useState([]);
   const [categoria, setCategoria] = useState("");
+  
+
+  const usuarioId = "654a9a52a98d90b8a059d045"
 
   const Categoria = [
     "654e6b3abbe177b7c9bf40fc",
@@ -17,11 +20,11 @@ const Submenu = () => {
     "654e7b08c149d1f652d2b4db"]
 
   //cambia el submenu
-  const cat=Categoria[5]
+  const cat=Categoria[3]
 
 
 
-  const handleBotonClick = () => {
+  const handleBotonClick = async(productoId, usuarioId, quantity) => {
     setBotonClick(true);
     setTimeout(() => {
       setBotonClick(false);
@@ -31,8 +34,37 @@ const Submenu = () => {
     if (img) {
       img.style.transform = 'translate(50vw, -50vh)';
     }
-  }
 
+    console.log(productoId," ", usuarioId," ", quantity)
+
+
+    try {
+
+      const URL = "http://localhost:5172/api/menu/cargarCarrito"; // Reemplaza con la ruta correcta
+      const response = await fetch(URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productoId,
+          usuarioId,
+          quantity,
+        }),
+      });
+
+      if (!response.ok) {
+        console.error('Error en la respuesta:', response.status, response.statusText);
+        throw new Error('No se pudo agregar al carrito');
+      }
+
+      // Manejar la respuesta del backend si es necesario
+      const responseData = await response.json();
+      console.log(responseData);
+    } catch (error) {
+      console.error('Error al agregar al carrito:', error);
+    }
+  }
 
 
   useEffect(() => {
@@ -113,9 +145,9 @@ const Submenu = () => {
               </p>
             </div>
             <button className={`py-2 px-4 mt-10 inline-flex items-center font-sans text-xm text-black bg-white rounded-lg border-2 border-black transition duration-300 ${botonClick ? 'bg-orange-700' : 'hover:bg-yellow-400 '}`}
-              onClick={handleBotonClick} >
+              onClick={()=>{handleBotonClick(data._id, usuarioId,1)}} >
               <img src={bolsitacompra} alt="" className="flex items-center p-1" />
-              <span>Add To Cart</span>
+              <span >Add To Cart</span>
             </button>
           </div>
         ))}

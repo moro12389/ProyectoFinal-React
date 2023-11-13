@@ -15,6 +15,12 @@ const {
     eliminarProducto,
     actualizarProducto,
 
+    obtenerCarrito,
+    cargarCarrito,
+    eliminarCarritoIdUser,
+    eliminarCarritoIdProduct,
+    actualizarCarrito,
+
     register_get,
     register_post,
     register_getOne
@@ -45,6 +51,19 @@ router.post('/cargarProducto',cargarProducto)
 router.delete('/eliminarProducto/:id',eliminarProducto)
 
 router.patch('/actualizarProducto/:id',actualizarProducto)
+
+// Carrito
+
+router.get('/obtenerCarrito',obtenerCarrito)
+
+router.post('/cargarCarrito',cargarCarrito)
+
+router.delete('/eliminarCarritoUser/:id',eliminarCarritoIdUser)
+
+router.delete('/eliminarCarritoUserProducto',eliminarCarritoIdProduct)
+
+router.patch('/actualizarCarrito',actualizarCarrito)
+
 
 // Users
 
