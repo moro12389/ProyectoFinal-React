@@ -20,19 +20,27 @@ function classNames(...classes) {
 const NavBar = () => {
   const [carrito, setCarrito] = useState([]);
 
-  useEffect(() => {
-    fetch('Json/Data.json')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('no se conecto');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setCarrito(data['carritoCompra']);
-      })
+  const usuarioId = "654a9a52a98d90b8a059d045"
 
-      .catch(error => console.error('Error no se pudo obtener:', error));
+  useEffect(() => {
+    const fetchData = async() => {
+      try {
+        const URL = "http://localhost:5172/api/menu/obtenerCarrito/"
+        const response = await fetch(`${URL}${usuarioId}`);
+
+        if (!response.ok) {
+          console.error('Error en la respuesta:', response.status, response.statusText);
+          throw new Error('No se pudo obtener la respuesta esperada');
+        }
+
+        const data = await response.json();
+        setCarrito(data);
+        console.log(data)
+      } catch (error) {
+        console.error('Error no se pudo obtener:', error);
+      }
+    };
+    fetchData();
   }, []);
 
   const [dropdownClick, setdropdownClick] = useState(false);

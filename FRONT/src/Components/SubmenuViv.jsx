@@ -50,6 +50,7 @@ const Submenu = () => {
           productoId,
           usuarioId,
           quantity,
+          option:true,
         }),
       });
 

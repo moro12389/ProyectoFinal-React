@@ -214,7 +214,7 @@ const register_post = async (req, res) => {
 // !!! Carrito
 
 const obtenerCarrito = async (req, res) => {
-    const { usuarioId } = req.body
+    const { usuarioId } = req.params
     const resultado = await db_carrito.find({ usuarioId: usuarioId })
     console.log(resultado)
     if (!resultado) {
@@ -223,9 +223,10 @@ const obtenerCarrito = async (req, res) => {
     res.status(200).json(resultado)
 }
 
+
 // Write
 const cargarCarrito = async (req, res) => {
-    const { usuarioId, productoId, quantity } = req.body;
+    const { usuarioId, productoId, quantity, option } = req.body;
     let datosVacios = [];
 
     if (!usuarioId) {
@@ -252,7 +253,7 @@ const cargarCarrito = async (req, res) => {
             productoId,
         });
 
-        if (existingCartItem[0]) {
+        if (existingCartItem[0] && option) {
             // Si ya existe, actualizar la cantidad
             await db_carrito.findOneAndUpdate(
                 { productoId, usuarioId },

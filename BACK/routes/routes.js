@@ -54,7 +54,7 @@ router.patch('/actualizarProducto/:id',actualizarProducto)
 
 // Carrito
 
-router.get('/obtenerCarrito',obtenerCarrito)
+router.get('/obtenerCarrito/:usuarioId',obtenerCarrito)
 
 router.post('/cargarCarrito',cargarCarrito)
 
