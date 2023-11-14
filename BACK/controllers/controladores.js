@@ -178,6 +178,9 @@ const actualizarCategoria = async (req, res) => {
     console.log(resultado)
 }
 
+
+
+
 // !!! Usuarios
 
 //ver respuesta de usuario reg
@@ -201,15 +204,62 @@ const register_getOne = async (req, res) => {
 //resepcion respuesta de usuario
 const register_post = async (req, res) => {
     console.log(req.body)
-    const { email, nombre, password } = req.body
+    const { email, nombre, password,
+        phone,
+        street,
+        house,
+        entrance,
+        commentOrder,
+        housePrivate } = req.body
 
-    try {
-        const user = await db_users.create({ email, password, nombre })
-        res.status(201).json(user)
-    } catch (error) {
-        const errors = handleError(error)
+
+    const existingUser = await db_users.find({ email });
+    
+    if (existingUser[0]) {
+        // Si ya existe, actualizar dato de usuario
+        const idUser = existingUser[0]._id.toString()
+        try {
+            const user = await db_users.findOneAndUpdate(
+                { _id: idUser, email },
+                {
+                    $set: {
+                        phone,
+                        street,
+                        house,
+                        entrance,
+                        commentOrder,
+                        housePrivate,
+                    }
+                }
+            );
+            res.status(201).json(user)
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    } else {
+        try {
+            const user = await db_users.create({
+                email, password, nombre,
+                phone: "",
+                street: "",
+                house: "",
+                entrance: "",
+                commentOrder: "",
+                housePrivate: false,
+            })
+            res.status(201).json(user)
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
     }
+
 }
+
+
+
+
+
+
 
 // !!! Carrito
 
@@ -258,8 +308,8 @@ const cargarCarrito = async (req, res) => {
             await db_carrito.findOneAndUpdate(
                 { productoId, usuarioId },
                 { $set: { quantity: existingCartItem[0].quantity + quantity } }
-              );
-  
+            );
+
             res.status(200).json(existingCartItem)
         } else {
             // Si no existe, crear un nuevo registro

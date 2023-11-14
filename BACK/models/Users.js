@@ -3,21 +3,48 @@ const bcrypt= require('bcrypt')
 const {isEmail}=require('validator')
 
 const userSchema=new mongoose.Schema({
+    // login
     nombre:{
         type:String,
-        required:[true,'Por favor ingrese un nombre'],
+        required:[false,'Por favor ingrese un nombre'],
     },
     email:{
         type:String,
-        required:[true,'Por favor ingrese un email'],
+        required:[false,'Por favor ingrese un email'],
         unique:true,
         lowercase:true,
         validate:[isEmail,'Porfavor ingrese un email valido']
     },
     password:{
         type:String,
-        required:[true,'Por favor ingrese un password'],
+        required:[false,'Por favor ingrese un password'],
         minLength:[6,'Ingrese un minimo de 6 digitos'],
+    },
+
+    // data user form in Checkout
+    phone:{
+        type:String,
+        required:[false,'Por favor ingrese un nombre telefono'],
+    },
+    street:{
+        type:String,
+        required:[false,'Por favor ingrese dirección'],
+    },
+    house:{
+        type:String,
+        required:[false,'Por favor ingrese número de casa'],
+    },
+    entrance:{
+        type:String,
+        required:[false,'Por favor completar entrada'],
+    },
+    commentOrder:{
+        type:String,
+        required:[false,'Por favor ingrese comentario'],
+    },
+    housePrivate:{
+        type:Boolean,
+        required:[false,'Por favor seleccione si es propiedad privada'],
     },
 })
 

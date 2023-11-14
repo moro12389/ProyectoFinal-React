@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Link,
+  Link
 } from "react-router-dom";
 import { motion } from "framer-motion"
 import { Checkout } from './CheckoutRam';
@@ -14,8 +14,8 @@ const BagDropdown = () => {
 
   const [preCarrito, setPreCarrito] = useState([]);
   const [carrito, setCarrito] = useState([]);
-  const usuarioId = "654a9a52a98d90b8a059d045"
 
+  const usuarioId = "654a9a52a98d90b8a059d045"
 
 
   useEffect(() => {
@@ -126,7 +126,6 @@ const BagDropdown = () => {
   }, [data, bagDropdown]);
 
 
-
   const checkOut = async () => {
     //Borra productos userId de base de dato
     try {
@@ -181,18 +180,12 @@ const BagDropdown = () => {
         console.error('Error al agregar al carrito:', error);
       }
     });
-
-
+    window.location.href = '/checkout';
   }
 
 
 
-
-
-
-
-
-  console.log("Carrito: ", carrito)
+  // console.log("Carrito: ", carrito)
 
   return (
     <motion.div className='bg-white z-[3] max-h-[400px] overflow-y-auto w-1/5 border shadow-xl absolute right-40 xll:w-1/3 xll:right-20 xl:right-12 lg:w-1/2 lg:right-6 sm:w-[100%] sm:right-0'
@@ -248,14 +241,11 @@ const BagDropdown = () => {
                 </div>
               ))}
               <div className='flex flex-col justify-center items-center'>
-                <Link
-                  onClick={() => checkOut()}
-                  to={{
-                    pathname: '/checkout',
-                  }}
+                <button
+                  onClick={async() =>{await checkOut()}}
                   className='px-4 py-2 bg-yellow-300 rounded-xl'>
                   Checkout
-                </Link>
+                </button>
 
 
                 <span className='text-center'>Total: ${totalPrice.toFixed(2)}</span>
