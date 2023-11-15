@@ -187,7 +187,15 @@ const actualizarCategoria = async (req, res) => {
 const register_get = async (req, res) => {
     const datos = await db_users.find({})
     res.status(200).json(datos)
-    //res.render('register')
+}
+
+const register_getEmail = async (req, res) => {
+    const { email } = req.params
+    const datos = await db_users.find({email:email})
+    if (!datos) {
+        return res.status(404).json({ error: 'no se encontro la informacion' })
+    }
+    res.status(200).json(datos)
 }
 
 const register_getOne = async (req, res) => {
@@ -383,5 +391,6 @@ module.exports = {
 
     register_get,
     register_post,
-    register_getOne
+    register_getOne,
+    register_getEmail
 }

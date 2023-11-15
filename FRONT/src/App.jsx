@@ -9,6 +9,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Menu from './Components/MenuViv';
 import Footer from './Components/Footer';
 import About from './Components/About/About';
+import Login from './Components/Login';
+import Register from './Components/Register';
 
 /* //import { Checkout } from './Components/CheckoutRam'; */
 
@@ -16,10 +18,12 @@ import About from './Components/About/About';
 function App() {
   return (
     <div className='App'>
+      
       <BrowserRouter>
         <Routes>
           <Route path='/' element={
             <div>
+              
               <NavBar />
               <Hero />
               <Menu></Menu>
@@ -30,6 +34,24 @@ function App() {
 
               <Footer />
             </div>
+          } />
+          <Route path='/login' element={
+            <div>
+              <NavBar />
+              <Login/>
+              <Footer />
+            </div>
+
+
+          } />
+          <Route path='/register' element={
+            <div>
+              <NavBar />
+              <Register/>
+              <Footer />
+            </div>
+
+
           } />
           <Route path='/cupons' element={
             <div>

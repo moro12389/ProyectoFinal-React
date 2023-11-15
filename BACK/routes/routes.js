@@ -23,7 +23,8 @@ const {
 
     register_get,
     register_post,
-    register_getOne
+    register_getOne,
+    register_getEmail
 } = require('../controllers/controladores')
 
 // Categoria
@@ -71,6 +72,9 @@ router.get('/registerUser_get',register_get)
 
 router.get('/registerUser_getOne/:id',register_getOne)
 
+router.get('/register_getEmail/:email',register_getEmail)
+
 router.post('/registerUser_add',register_post)
+
 
 module.exports=router

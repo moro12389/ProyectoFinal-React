@@ -19,13 +19,6 @@ function classNames(...classes) {
 }
 
 
-
-
-
-
-
-
-
 const NavBar = () => {
   const [carrito, setCarrito] = useState([]);
   let location =useLocation();

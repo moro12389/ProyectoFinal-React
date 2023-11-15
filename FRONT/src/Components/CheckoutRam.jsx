@@ -31,6 +31,12 @@ const Checkout = () => {
 
     const [userData, setUserData] = useState([]);
 
+
+    const [idCanastaProducto, setIdCanastaProducto] = useState({
+        _idUnicaProducto: Date.now().toString(),
+      });
+
+
     const usuarioId = "654a9a52a98d90b8a059d045"
 
 
@@ -188,6 +194,7 @@ const Checkout = () => {
             quantity: item.quantity,
         }));
 
+
         Data.forEach(async (element) => {
             // Pushea datos finales a carrito userId base de dato
             try {
@@ -198,11 +205,11 @@ const Checkout = () => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
+                        carritoId:idCanastaProducto,
                         productoId: element.productoId,
                         usuarioId: element.usuarioId,
                         quantity: element.quantity,
                         delivery,
-                        option: false,
                     }),
                 });
 
@@ -284,43 +291,11 @@ const Checkout = () => {
         }
     };
 
-
-
-
-
-
-
-
-
-
-
-
-
-    console.log("bagDropdown ", bagDropdown)
-    console.log("preCarrito  ", preCarrito)
-    console.log("carrito  ", carrito)
-    console.log("data ", data)
-    console.log("subTotalPrice ", subTotalPrice)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // console.log("bagDropdown ", bagDropdown)
+    // console.log("preCarrito  ", preCarrito)
+    // console.log("carrito  ", carrito)
+    // console.log("data ", data)
+    // console.log("subTotalPrice ", subTotalPrice)
 
     useEffect(() => {
         fetch('Json/Data.json')
@@ -332,7 +307,6 @@ const Checkout = () => {
             })
             .then(data => {
                 setDataText(data['checkout'][0]);
-                //setBagDropdown(bagDropdownNav.location.state)
 
                 const updatedData1 = data['levelsAwards'].map(item => ({
                     value: item.id,
@@ -381,7 +355,6 @@ const Checkout = () => {
 
                 <div>
                     {/* hola */}
-
                 </div>
 
                 <div className={`bg-gray-500 2xl:p-2 rounded-lg ${checkboxSeleccionado ? 'visible' : 'hidden'}`}>
@@ -392,7 +365,8 @@ const Checkout = () => {
                             <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={dataText.adStreet} value={userData.street} name="street" onChange={(e) => setUserData({ ...userData, street: e.target.value })} />
                             <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={dataText.adHouse} value={userData.house} name="house" onChange={(e) => setUserData({ ...userData, house: e.target.value })} />
                             <div className='flex 2xl:justify-center 2xl:items-center'>
-                                <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={dataText.adEntrance} value={userData.entrance} name="entrance" onChange={(e) => setUserData({ ...userData, entrance: e.target.value })} /> <input type="checkbox" id="checkbox" name="housePrivate" checked={userData.housePrivate} onChange={(e) => {setUserData({ ...userData, housePrivate: e.target.value })}} /> <span className='text-sm'>{dataText.adCheck}</span>
+                                <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={dataText.adEntrance} value={userData.entrance} name="entrance" onChange={(e) => setUserData({ ...userData, entrance: e.target.value })} /> 
+                                <input type="checkbox" id="checkbox" name="housePrivate" checked={userData.housePrivate} onChange={(e) => {setUserData({ ...userData, housePrivate: e.target.checked })}} /> <span className='text-sm'>{dataText.adCheck}</span>
                             </div>
                             <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={dataText.adComment} value={userData.commentOrder} name="commentOrder" onChange={(e) => setUserData({ ...userData, commentOrder: e.target.value })} />
                             <button className='bg-gray-200 2xl:rounded-xl 2xl:h-[2.5em] 2xl:w-full my-[1em] shadow-md shadow-gray-600'

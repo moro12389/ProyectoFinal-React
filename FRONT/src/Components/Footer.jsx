@@ -3,8 +3,8 @@ import { Icon } from '@iconify/react';
 import footerLogo from '/img/footer/logofooter.png'
 import creditCards from '/img/footer/creditcards.png'
 
-const Footer = () => {
 
+const Footer = () => {
   // const footerMenu = ["Home", "Menu", "About Us", "Contacts"]
 
   const footerMenu = { "/": "Home", "/menu": "Menu", "/about": "About Us", "/contacts": "Contacts" }
