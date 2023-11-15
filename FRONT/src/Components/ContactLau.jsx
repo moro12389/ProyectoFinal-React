@@ -18,7 +18,7 @@
 
 const Contact = () => {
     return(
-        <div className=" mx-auto  bg-[url('./assets/wave.svg')] p-4 bg-no-repeat bg-cover font-roboto">
+        <div className="max-h-[40vh] mx-auto  bg-[url('./assets/wave.svg')] p-4 bg-no-repeat bg-cover font-roboto">
             <h2 className='headings pl-12 py-3 text-center'>Contacts</h2>
             <div className="flex items-center  ">
                 <div className="w-1/2 flex-col">

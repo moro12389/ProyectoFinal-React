@@ -3,7 +3,7 @@ import {
   Link
 } from "react-router-dom";
 import { motion } from "framer-motion"
-import { Checkout } from './CheckoutRam';
+import { Checkout } from '../CheckoutRam';
 
 
 

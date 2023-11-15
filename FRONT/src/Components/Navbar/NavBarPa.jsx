@@ -7,6 +7,7 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
 import { Icon } from '@iconify/react';
 import {
   Link,
+  useLocation
 } from "react-router-dom";
 import { motion } from 'framer-motion'
 import BagDropdown from './BagDropdownPa';
@@ -17,8 +18,20 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+
+
+
+
+
+
+
+
 const NavBar = () => {
   const [carrito, setCarrito] = useState([]);
+  let location =useLocation();
+
+  //user
+ // const usuarioId = location.state.userId
 
   const usuarioId = "654a9a52a98d90b8a059d045"
 

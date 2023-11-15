@@ -1,28 +1,21 @@
 import React, { useState, useEffect } from "react";
 //import {motion} from "framer-motion";
 import bolsitacompra from "/img/menu/icons-bolsitacompra.png";
+import { useLocation } from "react-router-dom";
 
 
 const Submenu = () => {
   const [botonClick, setBotonClick] = useState(false);
   const [data, setData] = useState([]);
   const [categoria, setCategoria] = useState("");
-  
 
-  const usuarioId = "654a9a52a98d90b8a059d045"
+  let location =useLocation();
 
-  const Categoria = [
-    "654e6b3abbe177b7c9bf40fc",
-    "654e6b09bbe177b7c9bf40fa",
-    "654e6b43bbe177b7c9bf40fe",
-    "654e6b5abbe177b7c9bf4102",
-    "654e6b5ebbe177b7c9bf4104",
-    "654e7b08c149d1f652d2b4db"]
+  //user
+  const usuarioId = location.state.userId
 
-  //cambia el submenu
-  const cat=Categoria[3]
-
-
+  //cambia el submenu CATEGORIA
+  const cat=location.state.id
 
   const handleBotonClick = async(productoId, usuarioId, quantity) => {
     setBotonClick(true);
