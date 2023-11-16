@@ -20,65 +20,45 @@ function App() {
     <div className='App'>
       
       <BrowserRouter>
+        <NavBar />
         <Routes>
           <Route path='/' element={
-            <div>
-              
-              <NavBar />
+            <>
               <Hero />
-              <Menu></Menu>
-
+              <Menu/>
               <About/>
-
               <Contact/> 
-
-              <Footer />
-            </div>
+            </>
           } />
           <Route path='/login' element={
-            <div>
-              <NavBar />
+            <>
               <Login/>
-              <Footer />
-            </div>
-
-
+            </>
           } />
           <Route path='/register' element={
-            <div>
-              <NavBar />
+            <>
               <Register/>
-              <Footer />
-            </div>
-
-
+            </>
           } />
           <Route path='/cupons' element={
-            <div>
-              <NavBar />
+            <>
               <Cupons />
-              <Footer />
-            </div>
-
-
+            </>
           } />
           <Route path='/submenu' element={
-            <div>
-              <NavBar />
+            <>
               <Submenu />
-              <Footer />
-            </div>
+            </>
 
           } />
           <Route path='/checkout' element={
-            <div>
-              <NavBar />
+            <>
               <Checkout />
-              <Footer />
-            </div>
+            </>
           } />
 
         </Routes>
+        <Footer />
       </BrowserRouter>
     </div>
 
