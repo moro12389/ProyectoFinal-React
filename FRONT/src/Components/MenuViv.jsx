@@ -32,7 +32,7 @@ const Menu = () => {
   return (
     <>
       <div className="text-center text-4xl sm:text-2xl p-4 sm:p-1">
-        Dur Menu
+        Dur Menu ss
       </div>
       <div className="grid grid-cols-3 sm:grid-cols-2 gap-2 sm:gap-1 m-3 mt-8">
         {data.map((card, key) => (
