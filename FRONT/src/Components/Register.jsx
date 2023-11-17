@@ -15,7 +15,7 @@ const Register = () => {
     } else {
       console.log('No existe usuario')
       try {
-        const URL = "http://localhost:5172/api/menu/registerUser_add"; // Reemplaza con la ruta correcta
+        const URL = "https://back-ashy-sigma.vercel.app/api/menu/registerUser_add"; // Reemplaza con la ruta correcta
         const response = await fetch(URL, {
           method: "POST",
           headers: {

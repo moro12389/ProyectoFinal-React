@@ -10,7 +10,7 @@ const Menu = () => {
     const fetchData = async () => {
       try {
 
-        const response = await fetch('http://localhost:5172/api/menu/obtenerCategorias');
+        const response = await fetch('https://back-ashy-sigma.vercel.app/api/menu/obtenerCategorias');
 
         if (!response.ok) {
           console.error('Error en la respuesta:', response.status, response.statusText);
@@ -32,7 +32,7 @@ const Menu = () => {
   return (
     <>
       <div className="text-center text-4xl sm:text-2xl p-4 sm:p-1">
-        Dur Menu eee
+        Dur Menu
       </div>
       <div className="grid grid-cols-3 sm:grid-cols-2 gap-2 sm:gap-1 m-3 mt-8">
         {data.map((card, key) => (

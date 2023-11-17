@@ -47,7 +47,7 @@ const Checkout = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const URL = "http://localhost:5172/api/menu/registerUser_getOne/"
+                const URL = "https://back-ashy-sigma.vercel.app/api/menu/registerUser_getOne/"
                 const response = await fetch(`${URL}${usuarioId}`);
 
                 if (!response.ok) {

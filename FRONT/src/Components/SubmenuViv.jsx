@@ -33,7 +33,7 @@ const Submenu = () => {
 
     try {
 
-      const URL = "http://localhost:5172/api/menu/cargarCarrito"; // Reemplaza con la ruta correcta
+      const URL = "https://back-ashy-sigma.vercel.app/api/menu/cargarCarrito"; // Reemplaza con la ruta correcta
       const response = await fetch(URL, {
         method: "POST",
         headers: {
@@ -65,7 +65,7 @@ const Submenu = () => {
 
     const fetchData = async(cat) => {
       try {
-        const URL = "http://localhost:5172/api/menu/obtenerProductosCategoria/"
+        const URL = "https://back-ashy-sigma.vercel.app/api/menu/obtenerProductosCategoria/"
         const response = await fetch(`${URL}${cat}`);
 
         if (!response.ok) {
@@ -86,7 +86,7 @@ const Submenu = () => {
     useEffect(() => {
     const fetchCategoria = async (cat) => {
       try {
-        const URL = "http://localhost:5172/api/menu/obtenerCategoria/"
+        const URL = "https://back-ashy-sigma.vercel.app/api/menu/obtenerCategoria/"
         
         const response = await fetch(`${URL}${cat}`);
 
