@@ -36,9 +36,30 @@ const Checkout = () => {
         _idUnicaProducto: Date.now().toString(),
       });
 
+      const [usuarioId, setUsuarioId] = useState("");
 
-    const usuarioId = "654a9a52a98d90b8a059d045"
-
+      useEffect(() => {
+        
+        const fetchData = async() => {
+          try {
+            const URL = "http://localhost:5172/api/menu/userId"
+            const response = await fetch(`${URL}`,{ 
+              method: "GET",
+              credentials: 'include',
+            });
+    
+            if (!response.ok) {
+              console.error('Error en la respuesta:', response.status, response.statusText);
+              throw new Error('No se pudo obtener la respuesta esperada');
+            }
+            const data = await response.json();
+            setUsuarioId(data.usuario.userId)
+          } catch (error) {
+            console.error('Error no se pudo obtener:', error);
+          }
+        };
+        fetchData();
+      }, []);
 
 
 
@@ -57,13 +78,12 @@ const Checkout = () => {
 
                 const data = await response.json();
                 setUserData(data);
-                console.log(data)
             } catch (error) {
                 console.error('Error no se pudo obtener:', error);
             }
         };
         fetchData();
-    }, [])
+    }, [usuarioId])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -84,7 +104,7 @@ const Checkout = () => {
             }
         };
         fetchData();
-    }, []);
+    }, [usuarioId]);
 
     useEffect(() => {
 
@@ -106,7 +126,7 @@ const Checkout = () => {
             }
         };
         fetchData();
-    }, []);
+    }, [usuarioId]);
 
 
 
@@ -383,7 +403,7 @@ const Checkout = () => {
                 <div className='bg-gray-500 2xl:p-2 rounded-lg'>
                     <div className='bg-white 2xl:p-3  2xl:flex 2xl:flex-col 2xl:justify-center 2xl:items-center rounded-lg'>
                         {carrito.length > 0 && (
-                            <div>
+                            <div className='z-[3] max-h-[400px] w-full overflow-y-auto '>
                                 {carrito.map((item, index) => (
                                     <div key={index} className='flex flex-row'>
 
@@ -476,6 +496,7 @@ const Checkout = () => {
 
 
                 </div>
+                
                 <div></div>
                 <div className='bg-gray-500 2xl:p-2 rounded-lg '>
                     <div className='bg-white 2xl:p-4 rounded-lg h-full'>

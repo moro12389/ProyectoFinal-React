@@ -1,5 +1,6 @@
 const express = require('express')
 const router=express.Router()
+const cors = require('cors')
 
 const {
     obtenerCategorias,
@@ -24,7 +25,12 @@ const {
     register_get,
     register_post,
     register_getOne,
-    register_getEmail
+    register_getEmail,
+    login,
+    logOut,
+
+    verifyToken,
+    userIdToken,
 } = require('../controllers/controladores')
 
 // Categoria
@@ -43,7 +49,7 @@ router.patch('/actualizarCategoria/:id',actualizarCategoria)
 
 router.get('/obtenerProductos',obtenerProductos)
 
-router.get('/obtenerProductosCategoria/:id',obtenerProductosIdCategoria)
+router.get('/obtenerProductosCategoria/:id',verifyToken,obtenerProductosIdCategoria)
 
 router.get('/obtenerProducto/:id',obtenerProducto)
 
@@ -75,6 +81,16 @@ router.get('/registerUser_getOne/:id',register_getOne)
 router.get('/register_getEmail/:email',register_getEmail)
 
 router.post('/registerUser_add',register_post)
+
+router.get('/userId',verifyToken,userIdToken)
+
+
+router.post('/login',cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+}),login)
+
+router.get('/userId',logOut)
 
 
 module.exports=router

@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom';
 
 const Register = () => {
   const [userData, setUserData] = useState([]);
+  const [mostraPassword,setMostrarPassword]=useState(false)
 
 
   const register = async () => {
-    const access=await existe()
+    const access = await existe()
     console.log(access)
-    if (access){
+    if (access) {
       console.log('Ya existe usuario')
       throw new Error('Ya existe usuario');
     } else {
@@ -22,12 +23,12 @@ const Register = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            nombre:userData.nombre,
-            email:userData.email,
-            password:userData.password
+            nombre: userData.nombre,
+            email: userData.email,
+            password: userData.password
           }),
         });
-  
+
         if (!response.ok) {
           console.error('Error en la respuesta:', response.status, response.statusText);
           throw new Error('No se pudo agregar Usuario');
@@ -39,7 +40,7 @@ const Register = () => {
         console.error('Error al agregar al Usuario:', error);
       }
     }
-    
+
   }
 
   // ras@gmail.com
@@ -48,30 +49,33 @@ const Register = () => {
     try {
       const URL = "http://localhost:5172/api/menu/register_getEmail/";
       const response = await fetch(`${URL}${userData.email}`);
-  
+
       if (!response.ok) {
         console.error('Error en la respuesta:', response.status, response.statusText);
         throw new Error('Error al comprobar email');
-      } 
+      }
 
-        const responseData = await response.json();
-        console.log(responseData[0])
-        if(responseData[0]==undefined){
-          console.log(false)
-          return false
-        } else {
-          console.log(true)
-          return true
-        }
-        
+      const responseData = await response.json();
+      console.log(responseData[0])
+      if (responseData[0] == undefined) {
+        console.log(false)
+        return false
+      } else {
+        console.log(true)
         return true
-      
+      }
     } catch (error) {
       console.error('Error al comprobar email:', error);
 
     }
   }
-  
+
+  function enviarPassword(e) {
+    e.preventDefault()
+
+    setMostrarPassword(!mostraPassword)
+
+  }
 
 
   return (
@@ -93,19 +97,22 @@ const Register = () => {
           <form>
             <div className='flex flex-col items-center mt-8'>
               <li className='text-blue-900 text-sm hover:text-yellow-400 w-[70%]'>
-                <input type="text" className='border-b-2  mb-2  w-full hover:border-yellow-400' placeholder='Apellido y Nombre' name="nombre" onChange={(e) => setUserData({ ...userData, nombre: e.target.value })}/>
+                <input type="text" className='border-b-2  mb-2  w-full hover:border-yellow-400' placeholder='Apellido y Nombre' name="nombre" onChange={(e) => setUserData({ ...userData, nombre: e.target.value })} />
               </li>
               <li className='text-blue-900 text-sm hover:text-yellow-400 w-[70%]'>
-                <input type="text" className='border-b-2  mb-2  w-full hover:border-yellow-400' placeholder='Email' name="email" onChange={(e) => setUserData({ ...userData, email: e.target.value })}/>
+                <input type="text" className='border-b-2  mb-2  w-full hover:border-yellow-400' placeholder='Email' name="email" onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
               </li>
               <li className='text-blue-900 text-sm hover:text-yellow-400 w-[70%]'>
-                <input type="text" className='border-b-2 mb-2 w-full form-control hover:border-yellow-400' placeholder='Password' name="password" onChange={(e) => setUserData({ ...userData, password: e.target.value })}/>
+                <input type={mostraPassword ? "text" : "password"} className='border-b-2 mb-2 w-full form-control hover:border-yellow-400' placeholder='Password' name="password" onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
+
+                <button onClick={enviarPassword}>{mostraPassword ? 'ocutar' : 'mostrar'} password</button>
+
               </li>
               <label className="flex justify-center items-center mb-4 w-[70%] mt-2">
                 <input type="checkbox" className="mr-2" />
                 I accept Terms of Use
               </label>
-              <button className='whitespace-nowrap  border py-1 px-36 rounded-xl bg-gray-200 shadow-sm shadow-gray-500 xl:px-28 lg:px-24 sm:px-24' onClick={()=>register()}>Register Now</button>
+              <button className='whitespace-nowrap  border py-1 px-36 rounded-xl bg-gray-200 shadow-sm shadow-gray-500 xl:px-28 lg:px-24 sm:px-24' onClick={() => register()}>Register Now</button>
             </div>
           </form>
           <div>

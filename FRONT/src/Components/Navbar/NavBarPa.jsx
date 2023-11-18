@@ -6,12 +6,11 @@ import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
 import { Icon } from '@iconify/react';
 import {
-  Link,
-  useLocation
+  Link
 } from "react-router-dom";
 import { motion } from 'framer-motion'
 import BagDropdown from './BagDropdownPa';
-
+import Cookies from 'js-cookie'
 
 
 function classNames(...classes) {
@@ -21,18 +20,74 @@ function classNames(...classes) {
 
 const NavBar = () => {
   const [carrito, setCarrito] = useState([]);
-  let location =useLocation();
+  const [usuarioId, setUsuarioId] = useState("");
+  const [miCookieValor, setMiCookieValor] = useState("");
 
-  //user
- // const usuarioId = location.state.userId
-
-  const usuarioId = "654a9a52a98d90b8a059d045"
+  const [dropdownClick, setdropdownClick] = useState(false);
 
   useEffect(() => {
-    const fetchData = async() => {
+    const fetchData = async () => {
+      try {
+        const URL = "http://localhost:5172/api/menu/userId"
+        const response = await fetch(`${URL}`, {
+          method: "GET",
+          credentials: 'include',
+        });
+
+        if (!response.ok) {
+          console.error('Error en la respuesta:', response.status, response.statusText);
+          throw new Error('No se pudo obtener la respuesta esperada');
+        }
+        const data = await response.json();
+        setUsuarioId(data.usuario.userId)
+      } catch (error) {
+        console.error('Error no se pudo obtener:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    // Función para obtener todas las cookies
+    const obtenerCookie = async (nombre) => {
+      const cookies = await document.cookie.split(';');
+      for (const cookie of cookies) {
+        const [clave, valor] = await cookie.trim().split('=');
+        if (clave === nombre) {
+          return valor;
+        }
+      }
+      return null;
+    };
+
+    (async () => {
+      const token = await obtenerCookie('token-session');
+      setMiCookieValor(token)
+    })();
+
+    console.log(miCookieValor)
+
+    // VERRRRRRRRRRRRRRRRRRRRRR
+   
+    // const temporizadorId = setTimeout(() => {
+    //   if (miCookieValor == ''  && !(window.location.pathname === "/login")) {
+    //     window.location.href = "/login";
+    //     return () => clearTimeout(temporizadorId);
+    //   }
+    // }, 1000)
+   
+
+  }, [usuarioId]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
       try {
         const URL = "http://localhost:5172/api/menu/obtenerCarrito/"
-        const response = await fetch(`${URL}${usuarioId}`);
+        const response = await fetch(`${URL}${usuarioId}`, {
+          method: "GET",
+          credentials: 'include',
+        });
 
         if (!response.ok) {
           console.error('Error en la respuesta:', response.status, response.statusText);
@@ -47,9 +102,31 @@ const NavBar = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [usuarioId]);
 
-  const [dropdownClick, setdropdownClick] = useState(false);
+
+  const loginLogout= async()=>{
+    if(usuarioId==""){
+      window.location.href = "/login"
+    }else{
+      try {
+        const URL = "http://localhost:5172/api/menu/logOut"
+        const response = await fetch(`${URL}`, {
+          method: "POST",
+          credentials: 'include',
+        });
+
+        if (!response.ok) {
+          console.error('Error en la respuesta:', response.status, response.statusText);
+          throw new Error('No se pudo obtener la respuesta esperada');
+        }
+      } catch (error) {
+        console.error('Error no se pudo obtener:', error);
+      }
+    }
+  }
+
+
 
   function handleClick() {
     setdropdownClick(!dropdownClick)
@@ -127,9 +204,11 @@ const NavBar = () => {
         {/* Nav */}
 
         <div className='flex flex-row items-center justify-around sm:justify-around'>
-          <div className=''>
-            <img src={Logo} alt="" className="lg:ml-16 sm:w-24 sm:ml-12 xs:w-16 xs:ml-9" />
-          </div>
+          <Link to="/">
+            <div className="button-like-container" >
+              <img src={Logo} alt="" className="lg:ml-16 sm:w-24 sm:ml-12 xs:w-16 xs:ml-9" />
+            </div>
+          </Link>
 
 
           <div className='hidden lg:flex lg:flex-row lg:items-center md:hidden sm:hidden xs:hidden'>
@@ -200,10 +279,10 @@ const NavBar = () => {
           </div>
 
           <div className='flex flex-row items-center py-2 font-roboto'>
-            <Link to="/login" className='mr-4 border-2  border-gray-600 px-6 py-1 rounded-2xl sm:px-2 sm:mr-2 sm:ml-3 xs:ml-1 xs:mr-1'>Login</Link>
+            <Link onClick={()=>loginLogout()} className='mr-4 border-2  border-gray-600 px-6 py-1 rounded-2xl sm:px-2 sm:mr-2 sm:ml-3 xs:ml-1 xs:mr-1'>{usuarioId==""?"Login":"LogOut"}</Link>
 
             <div>
-              <div className="relative" onClick={() => setIsBagDropdownVisible(!isBagDropdownVisible)}>
+              <div className="relative" onClick={() => usuarioId !== "" && setIsBagDropdownVisible(!isBagDropdownVisible)}>
                 <Icon icon="uil:shopping-bag" width="40" />
                 <div className="absolute top-3 right-2 w-6 h-6 rounded-full flex items-center justify-center text-black text-xs font-bold cursor-pointer">
                   {carrito.length}
@@ -211,7 +290,7 @@ const NavBar = () => {
               </div>
 
               {isBagDropdownVisible && <BagDropdown />}
-              
+
             </div>
           </div>
         </div>

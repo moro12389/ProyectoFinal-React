@@ -8,11 +8,35 @@ const Submenu = () => {
   const [botonClick, setBotonClick] = useState(false);
   const [data, setData] = useState([]);
   const [categoria, setCategoria] = useState("");
-
   let location =useLocation();
 
-  //user
-  const usuarioId = location.state.userId
+  const [usuarioId, setUsuarioId] = useState("");
+
+  useEffect(() => {
+    
+    const fetchData = async() => {
+      try {
+        const URL = "http://localhost:5172/api/menu/userId"
+        const response = await fetch(`${URL}`,{ 
+          method: "GET",
+          credentials: 'include',
+        });
+
+        if (!response.ok) {
+          console.error('Error en la respuesta:', response.status, response.statusText);
+          throw new Error('No se pudo obtener la respuesta esperada');
+        }
+        const data = await response.json();
+        setUsuarioId(data.usuario.userId)
+      } catch (error) {
+        console.error('Error no se pudo obtener:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  
+
 
   //cambia el submenu CATEGORIA
   const cat=location.state.id
@@ -66,7 +90,10 @@ const Submenu = () => {
     const fetchData = async(cat) => {
       try {
         const URL = "http://localhost:5172/api/menu/obtenerProductosCategoria/"
-        const response = await fetch(`${URL}${cat}`);
+        const response = await fetch(`${URL}${cat}`,{
+          method: 'GET',
+          credentials: 'include',
+        });
 
         if (!response.ok) {
           console.error('Error en la respuesta:', response.status, response.statusText);

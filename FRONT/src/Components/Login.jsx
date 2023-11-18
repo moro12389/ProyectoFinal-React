@@ -1,8 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
 
+
 const Login = () => {
+  const [userData, setUserData] = useState([]);
+  const [mostraPassword, setMostrarPassword] = useState(false)
+  // const axios = require('axios');
+
+  //http://localhost:5172/api/menu/login
+
+  console.log("userdata", userData)
+
+  function enviarPassword(e) {
+    e.preventDefault()
+    setMostrarPassword(!mostraPassword)
+  }
+
+
+
+  const login = async () => {
+    try {
+      const URL = "http://localhost:5172/api/menu/login";
+      const response = await fetch(URL, {
+        method: "POST",
+        body: JSON.stringify({
+          email: userData.email,
+          password: userData.password,
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: 'include',
+      });
+  
+      if (!response.ok) {
+        console.error('Error en la respuesta:', response.status, response.statusText);
+        throw new Error('No se pudo iniciar sesión');
+      }else{
+        window.location.href = "/";
+      }
+  
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+    }
+  };
+
 
 
   return (
@@ -23,12 +66,13 @@ const Login = () => {
           <hr className="w-full bg-gray-200 h-[0.5] border" />
           <div className='flex flex-col items-center mt-8'>
             <li className='text-blue-900 text-sm hover:text-yellow-400 w-[70%]'>
-              <input type="text" className='border-b-2 focus:outline-none mb-2 w-full hover:border-yellow-400' placeholder='Email' />
+              <input type="text" className='border-b-2 focus:outline-none mb-2 w-full hover:border-yellow-400' placeholder='Email' name='email' onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
             </li>
             <li className='text-blue-900 text-sm hover:text-yellow-400 w-[70%]'>
-              <input type="text" className='border-b-2  mb-2 w-full hover:border-yellow-400' placeholder='Password' />
+              <input type={mostraPassword ? "text" : "password"} className='border-b-2  mb-2 w-full hover:border-yellow-400' placeholder='Password' name='password' onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
+              <button onClick={enviarPassword}>{mostraPassword ? 'ocutar' : 'mostrar'} password</button>
             </li>
-            <button className='border py-1 px-36 rounded-xl bg-gray-200 shadow-sm shadow-gray-500 mt-4 xll:px-44 xl:px-36 lg:px-28'>Enter</button>
+            <button className='border py-1 px-36 rounded-xl bg-gray-200 shadow-sm shadow-gray-500 mt-4 xll:px-44 xl:px-36 lg:px-28' onClick={() => login()}>Enter</button>
           </div>
           <div className='flex justify-end pb-2 mr-2'>
             <div className='w-10 h-10 bg-white shadow-sm shadow-gray-600 rounded-full flex items-center justify-center cursor-pointer' >
@@ -43,3 +87,4 @@ const Login = () => {
 };
 
 export default Login;
+

@@ -15,7 +15,31 @@ const BagDropdown = () => {
   const [preCarrito, setPreCarrito] = useState([]);
   const [carrito, setCarrito] = useState([]);
 
-  const usuarioId = "654a9a52a98d90b8a059d045"
+  const [usuarioId, setUsuarioId] = useState("");
+
+
+  useEffect(() => {
+    const fetchData = async() => {
+      try {
+        const URL = "http://localhost:5172/api/menu/userId"
+        const response = await fetch(`${URL}`,{ 
+          method: "GET",
+          credentials: 'include',
+        });
+
+        if (!response.ok) {
+          console.error('Error en la respuesta:', response.status, response.statusText);
+          throw new Error('No se pudo obtener la respuesta esperada');
+        }
+        const data = await response.json();
+        setUsuarioId(data.usuario.userId)
+      } catch (error) {
+        console.error('Error no se pudo obtener:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
 
 
   useEffect(() => {
@@ -23,7 +47,10 @@ const BagDropdown = () => {
     const fetchData = async () => {
       try {
         const URL = "http://localhost:5172/api/menu/obtenerCarrito/"
-        const response = await fetch(`${URL}${usuarioId}`);
+        const response = await fetch(`${URL}${usuarioId}`,{ 
+          method: "GET",
+          credentials: 'include',
+        });
 
         if (!response.ok) {
           console.error('Error en la respuesta:', response.status, response.statusText);
@@ -38,7 +65,7 @@ const BagDropdown = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [usuarioId]);
 
   useEffect(() => {
 
