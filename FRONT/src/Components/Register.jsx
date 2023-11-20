@@ -48,7 +48,10 @@ const Register = () => {
     event.preventDefault();
     try {
       const URL = "http://localhost:5172/api/menu/register_getEmail/";
-      const response = await fetch(`${URL}${userData.email}`);
+      const response = await fetch(`${URL}${userData.email}`,{
+        method: "GET",
+        credentials: 'include',
+    });
 
       if (!response.ok) {
         console.error('Error en la respuesta:', response.status, response.statusText);

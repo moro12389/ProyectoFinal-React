@@ -18,11 +18,10 @@ function classNames(...classes) {
 }
 
 
+
 const NavBar = () => {
   const [carrito, setCarrito] = useState([]);
   const [usuarioId, setUsuarioId] = useState("");
-  const [miCookieValor, setMiCookieValor] = useState("");
-
   const [dropdownClick, setdropdownClick] = useState(false);
 
   useEffect(() => {
@@ -35,6 +34,11 @@ const NavBar = () => {
         });
 
         if (!response.ok) {
+          console.log(window.location.pathname)
+          console.log(!(window.location.pathname=='/login'))
+          if(!(window.location.pathname=='/login')){
+            window.location.href = "/login"
+          }  
           console.error('Error en la respuesta:', response.status, response.statusText);
           throw new Error('No se pudo obtener la respuesta esperada');
         }
@@ -46,38 +50,6 @@ const NavBar = () => {
     };
     fetchData();
   }, []);
-
-  useEffect(() => {
-    // Función para obtener todas las cookies
-    const obtenerCookie = async (nombre) => {
-      const cookies = await document.cookie.split(';');
-      for (const cookie of cookies) {
-        const [clave, valor] = await cookie.trim().split('=');
-        if (clave === nombre) {
-          return valor;
-        }
-      }
-      return null;
-    };
-
-    (async () => {
-      const token = await obtenerCookie('token-session');
-      setMiCookieValor(token)
-    })();
-
-    console.log(miCookieValor)
-
-    // VERRRRRRRRRRRRRRRRRRRRRR
-   
-    // const temporizadorId = setTimeout(() => {
-    //   if (miCookieValor == ''  && !(window.location.pathname === "/login")) {
-    //     window.location.href = "/login";
-    //     return () => clearTimeout(temporizadorId);
-    //   }
-    // }, 1000)
-   
-
-  }, [usuarioId]);
 
 
   useEffect(() => {
@@ -105,10 +77,10 @@ const NavBar = () => {
   }, [usuarioId]);
 
 
-  const loginLogout= async()=>{
-    if(usuarioId==""){
-      window.location.href = "/login"
-    }else{
+  const loginLogout = async () => {
+    if (usuarioId == "") {
+      
+    } else {
       try {
         const URL = "http://localhost:5172/api/menu/logOut"
         const response = await fetch(`${URL}`, {
@@ -279,7 +251,7 @@ const NavBar = () => {
           </div>
 
           <div className='flex flex-row items-center py-2 font-roboto'>
-            <Link onClick={()=>loginLogout()} className='mr-4 border-2  border-gray-600 px-6 py-1 rounded-2xl sm:px-2 sm:mr-2 sm:ml-3 xs:ml-1 xs:mr-1'>{usuarioId==""?"Login":"LogOut"}</Link>
+            <Link onClick={() => loginLogout()} className='mr-4 border-2  border-gray-600 px-6 py-1 rounded-2xl sm:px-2 sm:mr-2 sm:ml-3 xs:ml-1 xs:mr-1'>{usuarioId == "" ? "Login" : "LogOut"}</Link>
 
             <div>
               <div className="relative" onClick={() => usuarioId !== "" && setIsBagDropdownVisible(!isBagDropdownVisible)}>

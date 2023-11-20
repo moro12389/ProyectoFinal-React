@@ -341,8 +341,6 @@ const logOut = () => {
 
 const verifyToken = (req, res, next) => {
     const tokens = req.headers.cookie;
-    
-
     if (!tokens) {
         return res.status(401).json({ message: 'No se proporcionó un token de sesión.' });
     }
@@ -362,8 +360,6 @@ const userIdToken = (req, res) => {
     const informacionUsuario = req.user;
     res.json({ usuario: informacionUsuario });
 }
-
-
 
 // !!! Carrito
 

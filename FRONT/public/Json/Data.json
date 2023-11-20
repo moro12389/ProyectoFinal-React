@@ -103,6 +103,7 @@
       "level": 3,
       "title": "Coupon -10% off any meal",
       "used": false,
+      "unlock":true,
       "stars": 2,
       "discount": 10,
       "colorTicket": "#FF5733"
@@ -112,6 +113,7 @@
       "level": 5,
       "title": "Coupon -25% off any meal",
       "used": false,
+      "unlock":true,
       "stars": 3,
       "discount": 25,
       "colorTicket": "#3366FF"
@@ -121,6 +123,7 @@
       "level": 8,
       "title": "Coupon -50% off any meal",
       "used": false,
+      "unlock":true,
       "stars": 4,
       "discount": 50,
       "colorTicket": "#33FF57"
@@ -130,6 +133,7 @@
       "level": 10,
       "title": "Free shawarma of your choice",
       "used": false,
+      "unlock":false,
       "stars": 5,
       "discount": 100,
       "colorTicket": "#FF9900"
@@ -139,6 +143,7 @@
       "level": 15,
       "title": "Kitchen board Mr.Chief",
       "used": false,
+      "unlock":false,
       "stars": 6,
       "discount": 0,
       "colorTicket": "#9900CC"
@@ -148,6 +153,7 @@
       "level": 17,
       "title": "Coupon -25% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 3,
       "discount": 25,
       "colorTicket": "#3366FF"
@@ -157,6 +163,7 @@
       "level": 19,
       "title": "Coupon -50% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 4,
       "discount": 50,
       "colorTicket": "#FF5733"
@@ -166,6 +173,7 @@
       "level": 21,
       "title": "75% off on your next meal",
       "used": false,
+      "unlock":false,
       "stars": 5,
       "discount": 75,
       "colorTicket": "#9900CC"
@@ -175,6 +183,7 @@
       "level": 25,
       "title": "Free shawarma of your choice",
       "used": false,
+      "unlock":false,
       "stars": 6,
       "discount": 100,
       "colorTicket": "#FF9900"
@@ -184,6 +193,7 @@
       "level": 27,
       "title": "Kitchen board Mr.Chief",
       "used": false,
+      "unlock":false,
       "stars": 7,
       "discount": 0,
       "colorTicket": "#9900CC"
@@ -193,6 +203,7 @@
       "level": 29,
       "title": "Coupon -25% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 3,
       "discount": 25,
       "colorTicket": "#3366FF"
@@ -202,6 +213,7 @@
       "level": 31,
       "title": "Coupon -50% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 4,
       "discount": 50,
       "colorTicket": "#FF5733"
@@ -211,6 +223,7 @@
       "level": 35,
       "title": "Coupon -50% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 4,
       "discount": 50,
       "colorTicket": "#33FF57"
@@ -220,6 +233,7 @@
       "level": 37,
       "title": "Free shawarma of your choice",
       "used": false,
+      "unlock":false,
       "stars": 6,
       "discount": 100,
       "colorTicket": "#FF9900"
@@ -229,6 +243,7 @@
       "level": 39,
       "title": "Kitchen board Mr.Chief",
       "used": false,
+      "unlock":false,
       "stars": 7,
       "discount": 0,
       "colorTicket": "#9900CC"
@@ -238,6 +253,7 @@
       "level": 41,
       "title": "2x1 on any menu for a week",
       "used": false,
+      "unlock":false,
       "stars": 5,
       "discount": 50,
       "colorTicket": "#3366FF"
@@ -247,6 +263,7 @@
       "level": 45,
       "title": "Coupon -50% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 4,
       "discount": 50,
       "colorTicket": "#FF5733"
@@ -256,6 +273,7 @@
       "level": 47,
       "title": "Coupon -50% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 4,
       "discount": 50,
       "colorTicket": "#33FF57"
@@ -265,6 +283,7 @@
       "level": 49,
       "title": "Free shawarma of your choice",
       "used": false,
+      "unlock":false,
       "stars": 6,
       "discount": 100,
       "colorTicket": "#FF9900"
@@ -274,6 +293,7 @@
       "level": 51,
       "title": "Kitchen board Mr.Chief",
       "used": false,
+      "unlock":false,
       "stars": 7,
       "discount": 0,
       "colorTicket": "#9900CC"
@@ -283,6 +303,7 @@
       "level": 55,
       "title": "Coupon -25% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 3,
       "discount": 25,
       "colorTicket": "#FF5733"
@@ -292,6 +313,7 @@
       "level": 57,
       "title": "Coupon -50% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 4,
       "discount": 50,
       "colorTicket": "#3366FF"
@@ -301,6 +323,7 @@
       "level": 59,
       "title": "Coupon -50% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 4,
       "discount": 50,
       "colorTicket": "#33FF57"
@@ -310,6 +333,7 @@
       "level": 61,
       "title": "20% off on your order for a month",
       "used": false,
+      "unlock":false,
       "stars": 5,
       "discount": 20,
       "colorTicket": "#FF5733"
@@ -319,6 +343,7 @@
       "level": 65,
       "title": "Kitchen board Mr.Chief",
       "used": false,
+      "unlock":false,
       "stars": 7,
       "discount": 0,
       "colorTicket": "#3366FF"
@@ -328,6 +353,7 @@
       "level": 67,
       "title": "Coupon -25% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 3,
       "discount": 25,
       "colorTicket": "#33FF57"
@@ -337,6 +363,7 @@
       "level": 69,
       "title": "Coupon -50% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 4,
       "discount": 50,
       "colorTicket": "#FF5733"
@@ -346,6 +373,7 @@
       "level": 71,
       "title": "Coupon -50% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 4,
       "discount": 50,
       "colorTicket": "#3366FF"
@@ -355,6 +383,7 @@
       "level": 75,
       "title": "Free shawarma of your choice",
       "used": false,
+      "unlock":false,
       "stars": 6,
       "discount": 100,
       "colorTicket": "#FF9900"
@@ -364,6 +393,7 @@
       "level": 77,
       "title": "Kitchen board Mr.Chief",
       "used": false,
+      "unlock":false,
       "stars": 7,
       "discount": 0,
       "colorTicket": "#9900CC"
@@ -373,6 +403,7 @@
       "level": 79,
       "title": "Coupon -25% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 3,
       "discount": 25,
       "colorTicket": "#33FF57"
@@ -382,6 +413,7 @@
       "level": 81,
       "title": "Free dinner for two once a month",
       "used": false,
+      "unlock":false,
       "stars": 5,
       "discount": 100,
       "colorTicket": "#FF5733"
@@ -391,6 +423,7 @@
       "level": 85,
       "title": "Coupon -50% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 4,
       "discount": 50,
       "colorTicket": "#3366FF"
@@ -400,6 +433,7 @@
       "level": 87,
       "title": "Free shawarma of your choice",
       "used": false,
+      "unlock":false,
       "stars": 6,
       "discount": 100,
       "colorTicket": "#FF9900"
@@ -409,6 +443,7 @@
       "level": 89,
       "title": "Kitchen board Mr.Chief",
       "used": false,
+      "unlock":false,
       "stars": 7,
       "discount": 0,
       "colorTicket": "#9900CC"
@@ -418,6 +453,7 @@
       "level": 91,
       "title": "Coupon -25% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 3,
       "discount": 25,
       "colorTicket": "#33FF57"
@@ -427,6 +463,7 @@
       "level": 95,
       "title": "Coupon -50% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 4,
       "discount": 50,
       "colorTicket": "#FF5733"
@@ -436,6 +473,7 @@
       "level": 97,
       "title": "Coupon -50% off any meal",
       "used": false,
+      "unlock":false,
       "stars": 4,
       "discount": 50,
       "colorTicket": "#3366FF"
@@ -445,6 +483,7 @@
       "level": 99,
       "title": "Free shawarma of your choice",
       "used": false,
+      "unlock":false,
       "stars": 6,
       "discount": 100,
       "colorTicket": "#FF9900"
@@ -454,6 +493,7 @@
       "level": 100,
       "title": "Lunch or dinner free every week for a year",
       "used": false,
+      "unlock":false,
       "stars": 7,
       "discount": 100,
       "colorTicket": "#9900CC"

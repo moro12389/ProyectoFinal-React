@@ -5,10 +5,40 @@ import iconDelivery from '/Icons/icons8-fast-delivery-64.png'
 
 import { motion } from "framer-motion"
 
+
+
 const Hero = () => {
     const [descMenu, setDescMenu] = useState([]); // Define un estado para almacenar la información de las tarjetas de trabajo
     const [data, setData] = useState({ number: '' });
     const [ofert, setOfert] = useState(0);
+
+// ///////////////////////
+//     const [miCookieValor, setMiCookieValor] = useState("");
+
+//     useEffect(() => {
+//         const obtenerCookie = async (nombre) => {
+//             const cookies = await document.cookie.split(';');
+//             for (const cookie of cookies) {
+//                 const [clave, valor] = await cookie.trim().split('=');
+//                 if (clave === nombre) {
+//                     return valor;
+//                 }
+//             }
+//             return null;
+//         };
+//         (async () => {
+//             var token = await obtenerCookie('token-session')
+//             setMiCookieValor(token)
+//             console.log(token)
+//             setTimeout(()=>{if (miCookieValor == '' || miCookieValor == null) {
+//                 window.location.href = "/login"
+//             }}, 5000)
+//             token = await obtenerCookie('token-session')
+            
+//         })();
+        
+//     });
+// /////////////////////
 
     useEffect(() => {
         fetch('Json/Data.json')

@@ -11,7 +11,10 @@ const Menu = () => {
     const fetchData = async () => {
       try {
 
-        const response = await fetch('http://localhost:5172/api/menu/obtenerCategorias');
+        const response = await fetch('http://localhost:5172/api/menu/obtenerCategorias',{
+          method: "GET",
+          credentials: 'include',
+      });
 
         if (!response.ok) {
           console.error('Error en la respuesta:', response.status, response.statusText);

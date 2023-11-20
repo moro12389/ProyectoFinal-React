@@ -28,48 +28,72 @@ const Checkout = () => {
     const [delivery, setDelivery] = useState(20)
 
     const [dataText, setDataText] = useState([]);
-
     const [userData, setUserData] = useState([]);
 
+    const [checkboxSeleccionado, setCheckboxSeleccionado] = useState(true);
 
     const [idCanastaProducto, setIdCanastaProducto] = useState({
         _idUnicaProducto: Date.now().toString(),
-      });
+    });
 
-      const [usuarioId, setUsuarioId] = useState("");
+    const [usuarioId, setUsuarioId] = useState("");
+    const [selectedOption, setSelectedOption] = useState(null);
 
-      useEffect(() => {
-        
-        const fetchData = async() => {
-          try {
-            const URL = "http://localhost:5172/api/menu/userId"
-            const response = await fetch(`${URL}`,{ 
-              method: "GET",
-              credentials: 'include',
-            });
-    
-            if (!response.ok) {
-              console.error('Error en la respuesta:', response.status, response.statusText);
-              throw new Error('No se pudo obtener la respuesta esperada');
+
+
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+            try {
+                const URL = "http://localhost:5172/api/menu/userId"
+                const response = await fetch(`${URL}`, {
+                    method: "GET",
+                    credentials: 'include',
+                });
+
+                if (!response.ok) {
+                    console.error('Error en la respuesta:', response.status, response.statusText);
+                    throw new Error('No se pudo obtener la respuesta esperada');
+                }
+                const data = await response.json();
+                setUsuarioId(data.usuario.userId)
+            } catch (error) {
+                console.error('Error no se pudo obtener:', error);
             }
-            const data = await response.json();
-            setUsuarioId(data.usuario.userId)
-          } catch (error) {
-            console.error('Error no se pudo obtener:', error);
-          }
+        };
+        const fetchData1 = async () => {
+            try {
+                const URL = "http://localhost:5172/api/menu/obtenerCarrito/"
+                const response = await fetch(`${URL}${usuarioId}`, {
+                    method: "GET",
+                    credentials: 'include',
+                });
+
+                if (!response.ok) {
+                    console.error('Error en la respuesta:', response.status, response.statusText);
+                    throw new Error('No se pudo obtener la respuesta esperada');
+                }
+
+                const data = await response.json();
+                setBagDropdown(data);
+                console.log(data)
+            } catch (error) {
+                console.error('Error no se pudo obtener:', error);
+            }
         };
         fetchData();
-      }, []);
-
-
-
-    const [checkboxSeleccionado, setCheckboxSeleccionado] = useState(true);
+        fetchData1();
+    }, [usuarioId]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const URL = "http://localhost:5172/api/menu/registerUser_getOne/"
-                const response = await fetch(`${URL}${usuarioId}`);
+                const response = await fetch(`${URL}${usuarioId}`, {
+                    method: "GET",
+                    credentials: 'include',
+                });
 
                 if (!response.ok) {
                     console.error('Error en la respuesta:', response.status, response.statusText);
@@ -86,32 +110,14 @@ const Checkout = () => {
     }, [usuarioId])
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const URL = "http://localhost:5172/api/menu/obtenerCarrito/"
-                const response = await fetch(`${URL}${usuarioId}`);
-
-                if (!response.ok) {
-                    console.error('Error en la respuesta:', response.status, response.statusText);
-                    throw new Error('No se pudo obtener la respuesta esperada');
-                }
-
-                const data = await response.json();
-                setBagDropdown(data);
-                console.log(data)
-            } catch (error) {
-                console.error('Error no se pudo obtener:', error);
-            }
-        };
-        fetchData();
-    }, [usuarioId]);
-
-    useEffect(() => {
 
         const fetchData = async () => {
             try {
                 const URL = "http://localhost:5172/api/menu/obtenerProductos"
-                const response = await fetch(`${URL}`);
+                const response = await fetch(`${URL}`, {
+                    method: "GET",
+                    credentials: 'include',
+                });
 
                 if (!response.ok) {
                     console.error('Error en la respuesta:', response.status, response.statusText);
@@ -172,16 +178,16 @@ const Checkout = () => {
     }, [carrito, descuento, checkboxSeleccionado]);
 
     const handleChange = selectedOption => {
-        if (selectedOption) {
-            setDescuento(selectedOption.discount)
-        }
+        setSelectedOption(selectedOption)
+        setDescuento(() => selectedOption.discount);
+
     };
+
     const SelectCupon = () => {
-
-
         return (
             <Select
                 options={textDropdown}
+                value={selectedOption}
                 onChange={handleChange}
             />
         );
@@ -225,7 +231,7 @@ const Checkout = () => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        carritoId:idCanastaProducto,
+                        carritoId: idCanastaProducto,
                         productoId: element.productoId,
                         usuarioId: element.usuarioId,
                         quantity: element.quantity,
@@ -297,7 +303,7 @@ const Checkout = () => {
                     email: userData.email,
                 }),
             });
-    
+
             // Manejar la respuesta según sea necesario
             if (response.ok) {
                 // Éxito
@@ -311,12 +317,6 @@ const Checkout = () => {
         }
     };
 
-    // console.log("bagDropdown ", bagDropdown)
-    // console.log("preCarrito  ", preCarrito)
-    // console.log("carrito  ", carrito)
-    // console.log("data ", data)
-    // console.log("subTotalPrice ", subTotalPrice)
-
     useEffect(() => {
         fetch('Json/Data.json')
             .then(response => {
@@ -328,11 +328,12 @@ const Checkout = () => {
             .then(data => {
                 setDataText(data['checkout'][0]);
 
-                const updatedData1 = data['levelsAwards'].map(item => ({
+                const updatedData1 = data['levelsAwards'].filter(item => item.unlock === true).map(item => ({
                     value: item.id,
                     level: item.level,
                     label: item.title,
                     used: item.used,
+                    unlock: item.unlock,
                     stars: item.stars,
                     discount: item.discount,
                     colorTicket: item.colorTicket,
@@ -385,12 +386,12 @@ const Checkout = () => {
                             <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={dataText.adStreet} value={userData.street} name="street" onChange={(e) => setUserData({ ...userData, street: e.target.value })} />
                             <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={dataText.adHouse} value={userData.house} name="house" onChange={(e) => setUserData({ ...userData, house: e.target.value })} />
                             <div className='flex 2xl:justify-center 2xl:items-center'>
-                                <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={dataText.adEntrance} value={userData.entrance} name="entrance" onChange={(e) => setUserData({ ...userData, entrance: e.target.value })} /> 
-                                <input type="checkbox" id="checkbox" name="housePrivate" checked={userData.housePrivate} onChange={(e) => {setUserData({ ...userData, housePrivate: e.target.checked })}} /> <span className='text-sm'>{dataText.adCheck}</span>
+                                <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={dataText.adEntrance} value={userData.entrance} name="entrance" onChange={(e) => setUserData({ ...userData, entrance: e.target.value })} />
+                                <input type="checkbox" id="checkbox" name="housePrivate" checked={userData.housePrivate} onChange={(e) => { setUserData({ ...userData, housePrivate: e.target.checked }) }} /> <span className='text-sm'>{dataText.adCheck}</span>
                             </div>
                             <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder={dataText.adComment} value={userData.commentOrder} name="commentOrder" onChange={(e) => setUserData({ ...userData, commentOrder: e.target.value })} />
                             <button className='bg-gray-200 2xl:rounded-xl 2xl:h-[2.5em] 2xl:w-full my-[1em] shadow-md shadow-gray-600'
-                            onClick={()=>enviarFormulario()}
+                                onClick={() => enviarFormulario()}
                             >
                                 Save edit
                             </button>
@@ -403,7 +404,7 @@ const Checkout = () => {
                 <div className='bg-gray-500 2xl:p-2 rounded-lg'>
                     <div className='bg-white 2xl:p-3  2xl:flex 2xl:flex-col 2xl:justify-center 2xl:items-center rounded-lg'>
                         {carrito.length > 0 && (
-                            <div className='z-[3] max-h-[400px] w-full overflow-y-auto '>
+                            <div className='z-[0] max-h-[400px] w-full overflow-y-auto '>
                                 {carrito.map((item, index) => (
                                     <div key={index} className='flex flex-row'>
 
@@ -457,7 +458,6 @@ const Checkout = () => {
                             <SelectCupon></SelectCupon>
                             <div>
                                 <strong>Subtotal:</strong>
-                                {console.log(checkboxSeleccionado)}
                                 <strong>
                                     ${subTotalPrice.toLocaleString('es-ES', {
                                         minimumFractionDigits: 2,
@@ -496,7 +496,7 @@ const Checkout = () => {
 
 
                 </div>
-                
+
                 <div></div>
                 <div className='bg-gray-500 2xl:p-2 rounded-lg '>
                     <div className='bg-white 2xl:p-4 rounded-lg h-full'>

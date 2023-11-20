@@ -57,7 +57,7 @@ const Submenu = () => {
 
     try {
 
-      const URL = "http://localhost:5172/api/menu/cargarCarrito"; // Reemplaza con la ruta correcta
+      const URL = "http://localhost:5172/api/menu/cargarCarrito";
       const response = await fetch(URL, {
         method: "POST",
         headers: {
@@ -115,7 +115,10 @@ const Submenu = () => {
       try {
         const URL = "http://localhost:5172/api/menu/obtenerCategoria/"
         
-        const response = await fetch(`${URL}${cat}`);
+        const response = await fetch(`${URL}${cat}`,{
+          method: "GET",
+          credentials: 'include',
+      });
 
         if (!response.ok) {
           console.error('Error en la respuesta:', response.status, response.statusText);
