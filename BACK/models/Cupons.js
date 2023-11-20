@@ -9,14 +9,6 @@ const cuponsSchema=new mongoose.Schema({
         type:Number,
         required:[true,'Por favor ingrese el nivel al que corresponde'],
     },
-    used:{
-        type:Boolean,
-        required:[true,'Por favor ingrese si fue usado o no el cupon'],
-    },
-    unlock:{
-        type:Boolean,
-        required:[true,'Por favor ingrese si el cupon esta desbloqueado para uso'],
-    },
     stars:{
         type:Number,
         required:[true,'Por favor ingrese la cantidad de estrellas'],

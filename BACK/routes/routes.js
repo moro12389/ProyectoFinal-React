@@ -21,6 +21,7 @@ const {
     eliminarCarritoIdUser,
     eliminarCarritoIdProduct,
     actualizarCarrito,
+    finalizarCompra,
 
     register_get,
     register_post,
@@ -28,6 +29,7 @@ const {
     register_getEmail,
     login,
     logOut,
+    actualizarCuponUsado,
 
     verifyToken,
     userIdToken,
@@ -77,6 +79,7 @@ router.delete('/eliminarCarritoUserProducto',eliminarCarritoIdProduct)
 
 router.patch('/actualizarCarrito',actualizarCarrito)
 
+router.post('/finalizarCompra',finalizarCompra)
 
 // Users
 
@@ -97,6 +100,8 @@ router.post('/login',cors({
 }),login)
 
 router.get('/userId',logOut)
+
+router.post('/agregarCuponUsado/:cuponId', verifyToken, actualizarCuponUsado)
 
 // Cupons
 

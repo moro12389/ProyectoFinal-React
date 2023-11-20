@@ -49,7 +49,13 @@ const userSchema=new mongoose.Schema({
     puntosCompras:{
         type:Number,
         required:[false,'Por favor seleccione puntos de compras'],
+    },
+    cuponesUsados:{
+        type:Array,
+        required:[false,'Por favor seleccione cupones usados'],
     }
+},{
+    timestamps:true
 })
 
 userSchema.pre('save', async function(next){

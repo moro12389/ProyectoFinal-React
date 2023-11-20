@@ -11,6 +11,8 @@ const Cupons = () => {
     const [levels, setLevels] = useState([]);
     const [usuarioId, setUsuarioId] = useState("");
 
+    const [cuponesUsados, setCuponesUsados] = useState([]);
+
     useEffect(() => {
 
         const fetchData = async () => {
@@ -51,8 +53,29 @@ const Cupons = () => {
                 console.error('Error no se pudo obtener:', error);
             }
         };
+
+        const fetchData2 = async () => {
+            try {
+                const URL = "http://localhost:5172/api/menu/registerUser_getOne/"
+                const response = await fetch(`${URL}${usuarioId}`, {
+                    method: "GET",
+                    credentials: 'include',
+                });
+
+                if (!response.ok) {
+                    console.error('Error en la respuesta:', response.status, response.statusText);
+                    throw new Error('No se pudo obtener la respuesta esperada');
+                }
+
+                const data = await response.json();
+                setCuponesUsados(data.cuponesUsados)
+            } catch (error) {
+                console.error('Error no se pudo obtener:', error);
+            }
+        };
         fetchData();
         fetchData1();
+        fetchData2();
     }, [usuarioId]);
 
 
@@ -88,22 +111,38 @@ const Cupons = () => {
                 return response.json();
             })
             .then(data => {
-                const updatedData1 = data.map(item => ({
-                    value: item.id,
-                    level: item.level,
-                    label: item.title,
-                    used: item.used,
-                    unlock: item.unlock,
-                    stars: item.stars,
-                    discount: item.discount,
-                    colorTicket: item.colorTicket,
-                }));
+                const Data1 = data
+                    .map(item => ({
+                        value: item.id,
+                        level: item.level,
+                        label: item.title,
+                        used: item.used,
+                        unlock: item.unlock,
+                        stars: item.stars,
+                        discount: item.discount,
+                        colorTicket: item.colorTicket,
+                    }));
 
-                setLevels(updatedData1)
+                    //  
+                    const Data2 = data
+                        .filter(item => (!(cuponesUsados.includes(item._id))) &&(item.level <= (points / 500)))
+                        .map(item => ({
+                            value: item.id,
+                            level: item.level,
+                            label: item.title,
+                            used: item.used,
+                            unlock: item.unlock,
+                            stars: item.stars,
+                            discount: item.discount,
+                            colorTicket: item.colorTicket,
+                        }));
+
+                setLevels(Data1)
+                setCupons(Data2)
 
             })
             .catch(error => console.error('Error no se pudo obtener:', error)); // Manejo de errores en caso de falla en la solicitud
-    }, []);
+    }, [changeColor]);
 
     // const color="rgb(235, 105, 23)"
     function changeColor(color) {
@@ -220,95 +259,44 @@ const Cupons = () => {
                 <div className="overflow-y-auto max-h-[450px] scrollbar-w-200 scrollbar-track-gray-100 scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full">
                     <div className='2xl:grid 2xl:grid-cols-2 2xl:gap-4 2xl:justify-center 2xl:items-center 2xl:p-[1em] 2xl:px-[19.5%]'>
 
-                        {levels.map((card, index) => (
+                        {cupons.map((card, index) => (
                             <div>
+                                <div key={index} className='bg-green-600 2xl:h-[12em] 2xl:w-[30vw]' style={{
+                                    background: `url('data:image/svg+xml,${encodeURIComponent(changeColor(card.colorTicket))}')`,
+                                    backgroundSize: 'cover',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    paddingBottom: '1em'
 
-                                {((card.unlock == true)) && (card.used == false) ? (
-                                    <div key={index} className='bg-green-600 2xl:h-[12em] 2xl:w-[30vw]' style={{
-                                        background: `url('data:image/svg+xml,${encodeURIComponent(changeColor(card.colorTicket))}')`,
-                                        backgroundSize: 'cover',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        paddingBottom: '1em'
+                                }}>
+                                    <div className=' 2xl:h-[65%] 2xl:w-[50%] 2xl:flex 2xl:justify-center 2xl:items-center'>
+                                        <div className=' 2xl:text-sm'>
+                                            {Array.from({ length: card.stars }, (_, i) => (
+                                                <div key={i} className='2xl:text-white'>✰</div>
+                                            ))}
+                                        </div>
 
-                                    }}>
-                                        <div className=' 2xl:h-[65%] 2xl:w-[50%] 2xl:flex 2xl:justify-center 2xl:items-center'>
-                                            <div className=' 2xl:text-sm'>
-                                                {Array.from({ length: card.stars }, (_, i) => (
-                                                    <div key={i} className='2xl:text-white'>✰</div>
-                                                ))}
+                                        <div className=' 2xl:w-[100%] 2xl:flex-col 2xl:justify-center 2xl:items-center 2xl:text-center'>
+                                            <div className='2xl:text-lg font-lobster text-white uppercase'>
+                                                <strong>{card.label}</strong>
                                             </div>
-
-                                            <div className=' 2xl:w-[100%] 2xl:flex-col 2xl:justify-center 2xl:items-center 2xl:text-center'>
-                                                <div className='2xl:text-lg font-lobster text-white uppercase'>
-                                                    <strong>{card.label}</strong>
-                                                </div>
-                                                <div className='2xl:text-2xl font-lobster text-white mt-[4px]'>
-                                                    {card.discount === 100 || card.discount === 0 ? (
-                                                        <strong>Free</strong>
-                                                    ) : (
-                                                        <strong>-{card.discount}%</strong>
-                                                    )}
-                                                </div>
-                                            </div>
-
-                                            <div className='2xl:text-sm'>
-                                                {Array.from({ length: card.stars }, (_, i) => (
-                                                    <div key={i} className='2xl:text-white'>✰</div>
-                                                ))}
+                                            <div className='2xl:text-lg font-lobster text-white mt-[4px]'>
+                                                {card.discount === 100 || card.discount === 0 ? (
+                                                    <strong>Free</strong>
+                                                ) : (
+                                                    <strong>-{card.discount}%</strong>
+                                                )}
                                             </div>
                                         </div>
 
-
+                                        <div className='2xl:text-sm'>
+                                            {Array.from({ length: card.stars }, (_, i) => (
+                                                <div key={i} className='2xl:text-white'>✰</div>
+                                            ))}
+                                        </div>
                                     </div>
-                                )
-                                    : (
-                                        <div key={index} className='bg-green-600 2xl:h-[12em] 2xl:w-[30vw]' style={{
-                                            background: `url('data:image/svg+xml,${encodeURIComponent(changeColor("#9b9b9b"))}')`,
-                                            backgroundSize: 'cover',
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            paddingBottom: '1em',
-                                            filter: 'blur(1px)'
-                                        }}>
-                                            <div className=' 2xl:h-[65%] 2xl:w-[50%] 2xl:flex 2xl:justify-center 2xl:items-center'>
-                                                <div className=' 2xl:text-sm'>
-                                                    {Array.from({ length: card.stars }, (_, i) => (
-                                                        <div key={i} className='2xl:text-white'>✰</div>
-                                                    ))}
-                                                </div>
-
-                                                <div className=' 2xl:w-[100%] 2xl:flex-col 2xl:justify-center 2xl:items-center 2xl:text-center'>
-                                                    <div className='2xl:text-lg font-lobster text-white uppercase'>
-                                                        <strong>{card.label}</strong>
-                                                    </div>
-                                                    <div className='2xl:text-2xl font-lobster text-white mt-[4px]'>
-                                                        {card.discount === 100 || card.discount === 0 ? (
-                                                            <strong>Free</strong>
-                                                        ) : (
-                                                            <strong>-{card.discount}%</strong>
-                                                        )}
-                                                    </div>
-                                                    <div className='2xl:text-lg font-lobster text-red-600 uppercase'>
-                                                        <strong>Usado</strong>
-                                                    </div>
-                                                </div>
-
-
-                                                <div className='2xl:text-sm'>
-                                                    {Array.from({ length: card.stars }, (_, i) => (
-                                                        <div key={i} className='2xl:text-white'>✰</div>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    )}
-
-
+                                </div>
                             </div>
                         ))}
 

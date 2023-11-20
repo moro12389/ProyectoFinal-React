@@ -3,7 +3,7 @@ const db_categorias = require('../models/Categorias')
 const db_users = require('../models/Users')
 const db_carrito = require('../models/Carrito')
 const db_cupons = require('../models/Cupons')
-
+const db_compras = require('../models/Compra')
 
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -141,7 +141,6 @@ const actualizarProducto = async (req, res) => {
     res.status(200).json(resultado)
     console.log(resultado)
 }
-
 
 // !!! Categoria
 // Read all
@@ -294,6 +293,7 @@ const register_post = async (req, res) => {
                 commentOrder: "",
                 housePrivate: false,
                 puntosCompras: 0,
+                cuponesUsados: []
             })
             res.status(201).json(user)
         } catch (error) {
@@ -330,7 +330,7 @@ const login = async (req, res) => {
         // envia a cookie
         res.cookie('token-session', token, { expiresIn: '2h' });
 
-        res.status(201).json({ token })
+        res.status(201).json("LoginOK")
     } catch (error) {
         if (error.code === 11000) {
             res.status(409).json({ mensaje: 'usuario YA ESTA registrado', })
@@ -340,7 +340,8 @@ const login = async (req, res) => {
     }
 }
 const logOut = () => {
-    res.clearCookie("token-session");
+    res.clearCookie("token-session")
+    res.json(sessionClose);
 }
 
 const verifyToken = (req, res, next) => {
@@ -363,6 +364,27 @@ const verifyToken = (req, res, next) => {
 const userIdToken = (req, res) => {
     const informacionUsuario = req.user;
     res.json({ usuario: informacionUsuario });
+}
+
+const actualizarCuponUsado = async (req, res) => {
+    const userId = req.user;
+    console.log(userId.userId)
+    const { cuponId } = req.params
+    console.log(cuponId)
+    try {
+        const user = await db_users.findOneAndUpdate(
+            { _id: userId.userId },
+            {
+                $addToSet: {
+                    "cuponesUsados": cuponId
+                }
+            },
+            { new: true }
+        );
+        res.status(201).json(user)
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 }
 
 // !!! Carrito
@@ -464,6 +486,59 @@ const actualizarCarrito = async (req, res) => {
     console.log(resultado)
 }
 
+const finalizarCompra = async () => {
+    const { usuarioId, productoId, quantity, option } = req.body;
+    let datosVacios = [];
+
+    if (!usuarioId) {
+        datosVacios.push("usuarioId");
+    }
+    if (!productoId) {
+        datosVacios.push("productoId");
+    }
+    if (!quantity) {
+        datosVacios.push("quantity");
+    }
+
+    if (datosVacios.length > 0) {
+        console.log(datosVacios);
+        return res
+            .status(400)
+            .json({ error: "Por favor ingrese los datos de los campos ", datosVacios });
+    }
+
+    try {
+        // Buscar si ya existe el producto para el usuario
+        const existingCartItem = await db_carrito.find({
+            usuarioId,
+            productoId,
+        });
+
+        if (existingCartItem[0] && option) {
+            // Si ya existe, actualizar la cantidad
+            await db_carrito.findOneAndUpdate(
+                { productoId, usuarioId },
+                { $set: { quantity: existingCartItem[0].quantity + quantity } }
+            );
+
+            res.status(200).json(existingCartItem)
+        } else {
+            // Si no existe, crear un nuevo registro
+            const resultado = await db_carrito.create({
+                usuarioId,
+                productoId,
+                quantity,
+
+            });
+            res.status(200).json(resultado);
+        }
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+
+
+}
+
 
 // !!! Cupons
 
@@ -484,7 +559,7 @@ const obtenerCupon = async (req, res) => {
 
 // Write
 const cargarCupon = async (req, res) => {
-    const { title, level, used, unlock, stars, discount, colorTicket } = req.body
+    const { title, level, stars, discount, colorTicket } = req.body
     let datosVacios = []
 
     if (!title) {
@@ -492,12 +567,6 @@ const cargarCupon = async (req, res) => {
     }
     if (!level) {
         datosVacios.push('level')
-    }
-    if (!used) {
-        datosVacios.push('used')
-    }
-    if (!unlock) {
-        datosVacios.push('unlock')
     }
     if (!stars) {
         datosVacios.push('stars')
@@ -517,7 +586,7 @@ const cargarCupon = async (req, res) => {
 
     try {
         const resultado = await db_cupons.create(
-            { title, level, used, unlock, stars, discount, colorTicket }
+            { title, level, stars, discount, colorTicket }
         )
         res.status(200).json(resultado)
     }
@@ -566,6 +635,7 @@ module.exports = {
     eliminarCarritoIdUser,
     eliminarCarritoIdProduct,
     actualizarCarrito,
+    finalizarCompra,
 
     register_get,
     register_post,
@@ -573,6 +643,7 @@ module.exports = {
     register_getEmail,
     login,
     logOut,
+    actualizarCuponUsado,
 
     verifyToken,
     userIdToken,
