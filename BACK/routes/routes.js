@@ -31,6 +31,12 @@ const {
 
     verifyToken,
     userIdToken,
+
+    obtenerCupones,
+    obtenerCupon,
+    cargarCupon,
+    eliminarCupon,
+    actualizarCupon,
 } = require('../controllers/controladores')
 
 // Categoria
@@ -91,6 +97,19 @@ router.post('/login',cors({
 }),login)
 
 router.get('/userId',logOut)
+
+// Cupons
+
+router.get('/obtenerCupones',obtenerCupones)
+
+router.get('/obtenerCupon/:id',obtenerCupon)
+
+router.post('/cargarCupon',cargarCupon)
+
+router.delete('/eliminarCupon/:id',eliminarCupon)
+
+router.patch('/actualizarCupon/:id',actualizarCupon)
+
 
 
 module.exports=router

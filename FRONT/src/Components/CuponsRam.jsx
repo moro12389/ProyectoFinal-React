@@ -9,6 +9,51 @@ const Cupons = () => {
     const [cupons, setCupons] = useState([]);
     const [points, setPoints] = useState(0);
     const [levels, setLevels] = useState([]);
+    const [usuarioId, setUsuarioId] = useState("");
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+            try {
+                const URL = "http://localhost:5172/api/menu/userId"
+                const response = await fetch(`${URL}`, {
+                    method: "GET",
+                    credentials: 'include',
+                });
+
+                if (!response.ok) {
+                    console.error('Error en la respuesta:', response.status, response.statusText);
+                    throw new Error('No se pudo obtener la respuesta esperada');
+                }
+                const data = await response.json();
+                setUsuarioId(data.usuario.userId)
+            } catch (error) {
+                console.error('Error no se pudo obtener:', error);
+            }
+        };
+        const fetchData1 = async () => {
+            try {
+                const URL = "http://localhost:5172/api/menu/registerUser_getOne/"
+                const response = await fetch(`${URL}${usuarioId}`, {
+                    method: "GET",
+                    credentials: 'include',
+                });
+
+                if (!response.ok) {
+                    console.error('Error en la respuesta:', response.status, response.statusText);
+                    throw new Error('No se pudo obtener la respuesta esperada');
+                }
+
+                const data = await response.json();
+                setPoints(data.puntosCompras)
+                console.log(data.puntosCompras)
+            } catch (error) {
+                console.error('Error no se pudo obtener:', error);
+            }
+        };
+        fetchData();
+        fetchData1();
+    }, [usuarioId]);
 
 
     useEffect(() => {
@@ -21,12 +66,42 @@ const Cupons = () => {
             })
             .then(data => {
                 setData(data['data'][0]);
-                setCupons(data['cupon']);
-                setPoints(data['points'][0]);
-                setLevels(data['levelsAwards']);
+
+
             })
 
 
+            .catch(error => console.error('Error no se pudo obtener:', error)); // Manejo de errores en caso de falla en la solicitud
+    }, []);
+
+
+
+    useEffect(() => {
+        fetch('http://localhost:5172/api/menu/obtenerCupones', {
+            method: "GET",
+            credentials: 'include',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('no se conecto');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const updatedData1 = data.map(item => ({
+                    value: item.id,
+                    level: item.level,
+                    label: item.title,
+                    used: item.used,
+                    unlock: item.unlock,
+                    stars: item.stars,
+                    discount: item.discount,
+                    colorTicket: item.colorTicket,
+                }));
+
+                setLevels(updatedData1)
+
+            })
             .catch(error => console.error('Error no se pudo obtener:', error)); // Manejo de errores en caso de falla en la solicitud
     }, []);
 
@@ -42,7 +117,7 @@ const Cupons = () => {
     }
 
 
-    console.log(cupons)
+
     return (
         <>
             <div className='2xl:p-4'>
@@ -93,20 +168,20 @@ const Cupons = () => {
                                     Buyer level
                                 </h3>
                                 <div className='flex'>
-                                    <p className='text-gray-600 2xl:w-[50%]'>Your level: <strong className='text-gray-800 mr-[1em]'>{points.level}</strong></p>
+                                    <p className='text-gray-600 2xl:w-[50%]'>Your level: <strong className='text-gray-800 mr-[1em]'>{Math.floor(points / 500)}</strong></p>
                                     <div class="w-full bg-gray-300 rounded-lg">
 
                                         <div class="h-full bg-orange-500  rounded-lg animate-waiting"
-                                            style={{ width: `calc((${points.points} / 500) * 100%)` }}
+                                            style={{ width: `calc((${points - (500 * Math.floor(points / 500))} / 500) * 100%)` }}
                                         >
                                         </div>
                                         <div class="h-full flex justify-between">
-                                            <strong className='text-orange-500'>{points.points}</strong>
+                                            <strong className='text-orange-500'>{points - (500 * Math.floor(points / 500))}</strong>
                                             500
                                         </div>
 
                                     </div>
-                                    <strong className='text-gray-800 ml-[1em]'>{points.level + 1}</strong>
+                                    <strong className='text-gray-800 ml-[1em]'>{Math.floor(points / 500) + 1}</strong>
                                 </div>
 
 
@@ -120,12 +195,12 @@ const Cupons = () => {
                                 <ul className="overflow-y-auto max-h-[190px] scrollbar-w-20 scrollbar-track-gray-100 scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full">
                                     {levels.map((list, index) => (
                                         <li key={index} className="flex 2xl:py-1 2xl:px-1">
-                                            {list.level <= points.level ? (
+                                            {list.level <= Math.floor(points / 500) ? (
                                                 <img className="2xl:pr-3" src={iconOk} alt="" />
                                             ) : (
                                                 <img className="2xl:pr-3" src={iconSinOk} alt="" />
                                             )}
-                                            <p>Level {list.level}: {list.title}</p>
+                                            <p>Level {list.level}: {list.label}</p>
                                         </li>
                                     ))}
                                 </ul>
@@ -142,52 +217,103 @@ const Cupons = () => {
                 <h1 className='2xl:flex 2xl:justify-center 2xl:items-center 2xl:text-4xl font-lobster 2xl:pt-[3em]'>
                     Yours coupons
                 </h1>
+                <div className="overflow-y-auto max-h-[450px] scrollbar-w-200 scrollbar-track-gray-100 scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full">
+                    <div className='2xl:grid 2xl:grid-cols-2 2xl:gap-4 2xl:justify-center 2xl:items-center 2xl:p-[1em] 2xl:px-[19.5%]'>
 
-                <div className='2xl:grid 2xl:grid-cols-2 2xl:gap-4 2xl:justify-center 2xl:items-center 2xl:p-[1em] 2xl:px-[19.5%]'>
+                        {levels.map((card, index) => (
+                            <div>
 
-                    {cupons.map((card, index) => (
-                        <div key={index} className='bg-green-600 2xl:h-[12em] 2xl:w-[30vw]' style={{
-                            background: `url('data:image/svg+xml,${encodeURIComponent(changeColor(card.colorTicket))}')`,
-                            backgroundSize: 'cover',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            paddingBottom: '1em'
+                                {((card.unlock == true)) && (card.used == false) ? (
+                                    <div key={index} className='bg-green-600 2xl:h-[12em] 2xl:w-[30vw]' style={{
+                                        background: `url('data:image/svg+xml,${encodeURIComponent(changeColor(card.colorTicket))}')`,
+                                        backgroundSize: 'cover',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        paddingBottom: '1em'
 
-                        }}>
-                            <div className=' 2xl:h-[65%] 2xl:w-[50%] 2xl:flex 2xl:justify-center 2xl:items-center'>
-                                <div className=' 2xl:text-sm'>
-                                    {Array.from({ length: card.stars }, (_, i) => (
-                                        <div key={i} className='2xl:text-white'>✰</div>
-                                    ))}
-                                </div>
+                                    }}>
+                                        <div className=' 2xl:h-[65%] 2xl:w-[50%] 2xl:flex 2xl:justify-center 2xl:items-center'>
+                                            <div className=' 2xl:text-sm'>
+                                                {Array.from({ length: card.stars }, (_, i) => (
+                                                    <div key={i} className='2xl:text-white'>✰</div>
+                                                ))}
+                                            </div>
 
-                                <div className=' 2xl:w-[100%] 2xl:flex-col 2xl:justify-center 2xl:items-center 2xl:text-center'>
-                                    <div className='2xl:text-lg font-lobster text-white uppercase'>
-                                        <strong>{card.title}</strong>
+                                            <div className=' 2xl:w-[100%] 2xl:flex-col 2xl:justify-center 2xl:items-center 2xl:text-center'>
+                                                <div className='2xl:text-lg font-lobster text-white uppercase'>
+                                                    <strong>{card.label}</strong>
+                                                </div>
+                                                <div className='2xl:text-2xl font-lobster text-white mt-[4px]'>
+                                                    {card.discount === 100 || card.discount === 0 ? (
+                                                        <strong>Free</strong>
+                                                    ) : (
+                                                        <strong>-{card.discount}%</strong>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            <div className='2xl:text-sm'>
+                                                {Array.from({ length: card.stars }, (_, i) => (
+                                                    <div key={i} className='2xl:text-white'>✰</div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+
                                     </div>
-                                    <div className='2xl:text-2xl font-lobster text-white mt-[4px]'>
-                                        {card.descount === 100 ? (
-                                            <strong>Free</strong>
-                                        ) : (
-                                            <strong>-{card.descount}%</strong>
-                                        )}
-                                    </div>
-                                    <div className='2xl:text-[10px] text-white'>
-                                        <strong>{card.subtitle}</strong>
-                                    </div>
-                                </div>
+                                )
+                                    : (
+                                        <div key={index} className='bg-green-600 2xl:h-[12em] 2xl:w-[30vw]' style={{
+                                            background: `url('data:image/svg+xml,${encodeURIComponent(changeColor("#9b9b9b"))}')`,
+                                            backgroundSize: 'cover',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            paddingBottom: '1em',
+                                            filter: 'blur(1px)'
+                                        }}>
+                                            <div className=' 2xl:h-[65%] 2xl:w-[50%] 2xl:flex 2xl:justify-center 2xl:items-center'>
+                                                <div className=' 2xl:text-sm'>
+                                                    {Array.from({ length: card.stars }, (_, i) => (
+                                                        <div key={i} className='2xl:text-white'>✰</div>
+                                                    ))}
+                                                </div>
 
-                                <div className='2xl:text-sm'>
-                                    {Array.from({ length: card.stars }, (_, i) => (
-                                        <div key={i} className='2xl:text-white'>✰</div>
-                                    ))}
-                                </div>
+                                                <div className=' 2xl:w-[100%] 2xl:flex-col 2xl:justify-center 2xl:items-center 2xl:text-center'>
+                                                    <div className='2xl:text-lg font-lobster text-white uppercase'>
+                                                        <strong>{card.label}</strong>
+                                                    </div>
+                                                    <div className='2xl:text-2xl font-lobster text-white mt-[4px]'>
+                                                        {card.discount === 100 || card.discount === 0 ? (
+                                                            <strong>Free</strong>
+                                                        ) : (
+                                                            <strong>-{card.discount}%</strong>
+                                                        )}
+                                                    </div>
+                                                    <div className='2xl:text-lg font-lobster text-red-600 uppercase'>
+                                                        <strong>Usado</strong>
+                                                    </div>
+                                                </div>
+
+
+                                                <div className='2xl:text-sm'>
+                                                    {Array.from({ length: card.stars }, (_, i) => (
+                                                        <div key={i} className='2xl:text-white'>✰</div>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    )}
+
+
                             </div>
+                        ))}
 
+                    </div>
 
-                        </div>
-                    ))}
 
                 </div>
 

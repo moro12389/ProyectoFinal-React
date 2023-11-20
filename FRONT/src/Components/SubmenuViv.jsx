@@ -20,7 +20,7 @@ const Submenu = () => {
         const response = await fetch(`${URL}`,{ 
           method: "GET",
           credentials: 'include',
-        });
+        })
 
         if (!response.ok) {
           console.error('Error en la respuesta:', response.status, response.statusText);

@@ -24,59 +24,59 @@ function App() {
           <Route path='/' element={
             <div>
               
-              <NavBar />
-              <Hero />
+              <NavBar/>
+              <Hero/>
               <Menu></Menu>
 
               <About/>
 
               <Contact/> 
 
-              <Footer />
+              <Footer/>
             </div>
-          } />
+          }/>
           <Route path='/login' element={
             <div>
-              <NavBar />
+              <NavBar/>
               <Login/>
-              <Footer />
+              <Footer/>
             </div>
 
 
-          } />
+          }/>
           <Route path='/register' element={
             <div>
-              <NavBar />
+              <NavBar/>
               <Register/>
-              <Footer />
+              <Footer/>
             </div>
 
 
-          } />
+          }/>
           <Route path='/cupons' element={
             <div>
-              <NavBar />
-              <Cupons />
-              <Footer />
+              <NavBar/>
+              <Cupons/>
+              <Footer/>
             </div>
 
 
-          } />
+          }/>
           <Route path='/submenu' element={
             <div>
-              <NavBar />
-              <Submenu />
-              <Footer />
+              <NavBar/>
+              <Submenu/>
+              <Footer/>
             </div>
 
-          } />
+          }/>
           <Route path='/checkout' element={
             <div>
-              <NavBar />
-              <Checkout />
-              <Footer />
+              <NavBar/>
+              <Checkout/>
+              <Footer/>
             </div>
-          } />
+          }/>
 
         </Routes>
       </BrowserRouter>

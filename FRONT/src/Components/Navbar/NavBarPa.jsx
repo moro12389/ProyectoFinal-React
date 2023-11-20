@@ -35,10 +35,10 @@ const NavBar = () => {
 
         if (!response.ok) {
           console.log(window.location.pathname)
-          console.log(!(window.location.pathname=='/login'))
-          if(!(window.location.pathname=='/login')){
+          console.log(!(window.location.pathname == '/login'))
+          if (!(window.location.pathname == '/login')) {
             window.location.href = "/login"
-          }  
+          }
           console.error('Error en la respuesta:', response.status, response.statusText);
           throw new Error('No se pudo obtener la respuesta esperada');
         }
@@ -49,7 +49,7 @@ const NavBar = () => {
       }
     };
     fetchData();
-  }, []);
+  });
 
 
   useEffect(() => {
@@ -79,7 +79,7 @@ const NavBar = () => {
 
   const loginLogout = async () => {
     if (usuarioId == "") {
-      
+
     } else {
       try {
         const URL = "http://localhost:5172/api/menu/logOut"
@@ -242,8 +242,14 @@ const NavBar = () => {
                 </Menu.Items>
               </Transition>
             </Menu>
-            <li className='mx-16 py-2 text-sm font-semibold sm:mx-0 sm:mr-4 sm:whitespace-nowrap xl:block lg:hidden sm:hidden'>About Us</li>
-            <li className='py-2 text-sm font-semibold xl:block lg:hidden sm:hidden'>Contacts</li>
+            <li className='mx-16 py-2 text-sm font-semibold sm:mx-0 sm:mr-4 sm:whitespace-nowrap xl:block lg:hidden sm:hidden'>
+              <Link to={(window.location.pathname === '/cupons') ? "http://localhost:5173/#about" : "#about"}>
+                About Us
+              </Link>
+            </li>
+            <li className='py-2 text-sm font-semibold xl:block lg:hidden sm:hidden'>
+              Contacts
+            </li>
           </ul>
           <div className='flex flex-row py-2'>
             <Icon icon="devicon:facebook" className='mr-4 xs:mr-1' width="30" />

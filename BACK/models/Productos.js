@@ -32,6 +32,11 @@ const productosSchema=new mongoose.Schema({
         type:String,
         required:[true,'Por favor ingrese url imagen'],
     },
+    pointProducto:{
+        type:Number,
+        required:[false,'Por favor ingrese punto por compra'],
+    },
+    
 }
 ,{
     timestamps:true

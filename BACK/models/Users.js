@@ -46,6 +46,10 @@ const userSchema=new mongoose.Schema({
         type:Boolean,
         required:[false,'Por favor seleccione si es propiedad privada'],
     },
+    puntosCompras:{
+        type:Number,
+        required:[false,'Por favor seleccione puntos de compras'],
+    }
 })
 
 userSchema.pre('save', async function(next){

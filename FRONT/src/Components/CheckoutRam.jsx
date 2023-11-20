@@ -43,7 +43,6 @@ const Checkout = () => {
 
 
     useEffect(() => {
-
         const fetchData = async () => {
             try {
                 const URL = "http://localhost:5172/api/menu/userId"
@@ -318,7 +317,10 @@ const Checkout = () => {
     };
 
     useEffect(() => {
-        fetch('Json/Data.json')
+        fetch('http://localhost:5172/api/menu/obtenerCupones', {
+            method: "GET",
+            credentials: 'include',
+        })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('no se conecto');
@@ -326,9 +328,9 @@ const Checkout = () => {
                 return response.json();
             })
             .then(data => {
-                setDataText(data['checkout'][0]);
+                
 
-                const updatedData1 = data['levelsAwards'].filter(item => item.unlock === true).map(item => ({
+                const updatedData1 = data.filter(item => item.unlock === true && item.used === false).map(item => ({
                     value: item.id,
                     level: item.level,
                     label: item.title,
@@ -339,7 +341,35 @@ const Checkout = () => {
                     colorTicket: item.colorTicket,
                 }));
 
-                setTextDropdown(updatedData1);
+                setTextDropdown(updatedData1)
+
+            })
+            .catch(error => console.error('Error no se pudo obtener:', error)); // Manejo de errores en caso de falla en la solicitud
+    }, []);
+
+    useEffect(() => {
+        fetch('Json/Data.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('no se conecto');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setDataText(data['checkout'][0]);
+
+                // const updatedData1 = data['levelsAwards'].filter(item => item.unlock === true).map(item => ({
+                //     value: item.id,
+                //     level: item.level,
+                //     label: item.title,
+                //     used: item.used,
+                //     unlock: item.unlock,
+                //     stars: item.stars,
+                //     discount: item.discount,
+                //     colorTicket: item.colorTicket,
+                // }));
+
+                // setTextDropdown(updatedData1);
 
             })
             .catch(error => console.error('Error no se pudo obtener:', error)); // Manejo de errores en caso de falla en la solicitud
@@ -467,7 +497,10 @@ const Checkout = () => {
                             </div>
 
                             <div>
-                                <strong>Cupon:</strong>
+                                <Link to="/cupons">
+                                    <strong>Cupon:</strong>
+                                </Link>
+                                
                                 <strong className='text-orange-400'>-{descuento}%</strong>
                             </div>
 
