@@ -48,12 +48,8 @@ const NavBar = () => {
         console.error('Error no se pudo obtener:', error);
       }
     };
-    fetchData();
-  });
 
-
-  useEffect(() => {
-    const fetchData = async () => {
+    const fetchData2 = async () => {
       try {
         const URL = "http://localhost:5172/api/menu/obtenerCarrito/"
         const response = await fetch(`${URL}${usuarioId}`, {
@@ -72,9 +68,16 @@ const NavBar = () => {
       } catch (error) {
         console.error('Error no se pudo obtener:', error);
       }
-    };
-    fetchData();
-  }, [usuarioId]);
+    }
+
+    try {
+      fetchData()
+      fetchData2()
+    } catch (error) {
+      console.error("Error CADENA Nav:", error);
+    }
+    
+  },[usuarioId]);
 
 
   const loginLogout = async () => {

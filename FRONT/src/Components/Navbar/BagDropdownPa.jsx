@@ -157,7 +157,10 @@ const BagDropdown = () => {
     //Borra productos userId de base de dato
     try {
       const URL = "http://localhost:5172/api/menu/eliminarCarritoUser/"; // Reemplaza con la ruta correcta
-      const response = await fetch(`${URL}${usuarioId}`,{ method:"DELETE"});
+      const response = await fetch(URL,{ 
+        method:"DELETE",
+        credentials: "include",
+      });
 
       if (!response.ok) {
         console.error('Error en la respuesta:', response.status, response.statusText);
@@ -178,8 +181,11 @@ const BagDropdown = () => {
       quantity: item.quantity,
     }));
 
+    console.log("datass",Data)
+
     Data.forEach(async (element) => {
       // Pushea datos finales a carrito userId base de dato
+      console.log("datass",Data)
       try {
         const URL = "http://localhost:5172/api/menu/cargarCarrito"; // Reemplaza con la ruta correcta
         const response = await fetch(URL, {
@@ -191,7 +197,7 @@ const BagDropdown = () => {
             productoId: element.productoId,
             usuarioId: element.usuarioId,
             quantity: element.quantity,
-            option:false,
+            option:true,
           }),
         });
 

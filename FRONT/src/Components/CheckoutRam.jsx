@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import './CheckoutRam'
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 import Select from 'react-select'
 
@@ -15,37 +15,40 @@ function classNames(...classes) {
 
 
 const Checkout = () => {
-    const [textDropdown, setTextDropdown] = useState([]);
+    const [textDropdown, setTextDropdown] = useState([])
 
     const [descuento, setDescuento] = useState(0)
-    const [subTotalPrice, setSubTotalPrice] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(0);
+    const [subTotalPrice, setSubTotalPrice] = useState(0)
+    const [totalPrice, setTotalPrice] = useState(0)
 
-    const [preCarrito, setPreCarrito] = useState([]);
-    const [carrito, setCarrito] = useState([]);
-    const [data, setData] = useState([]);
-    const [bagDropdown, setBagDropdown] = useState([]);
+    const [preCarrito, setPreCarrito] = useState([])
+    const [carrito, setCarrito] = useState([])
+    const [data, setData] = useState([])
+    const [bagDropdown, setBagDropdown] = useState([])
 
     const [delivery, setDelivery] = useState(20)
 
-    const [dataText, setDataText] = useState([]);
-    const [userData, setUserData] = useState([]);
+    const [dataText, setDataText] = useState([])
+    const [userData, setUserData] = useState([])
 
-    const [checkboxSeleccionado, setCheckboxSeleccionado] = useState(true);
+    const [checkboxSeleccionado, setCheckboxSeleccionado] = useState(true)
 
     const [idCanastaProducto, setIdCanastaProducto] = useState({
         _idUnicaProducto: Date.now().toString(),
-    });
+    })
 
-    const [usuarioId, setUsuarioId] = useState("");
-    const [selectedOption, setSelectedOption] = useState(null);
-
-
-    const [puntosUser, setPuntosUser] = useState(0);
-    const [cuponesUsados, setCuponesUsados] = useState([]);
+    const [usuarioId, setUsuarioId] = useState("")
+    const [selectedOption, setSelectedOption] = useState(null)
 
 
-    const [pagoModal, setPagoModal] = useState(false);
+    const [puntosUser, setPuntosUser] = useState(0)
+    const [cuponesUsados, setCuponesUsados] = useState([])
+
+
+    const [pagoModal, setPagoModal] = useState(false)
+
+    const [compraArray, setCompraArray] = useState([])
+
 
 
 
@@ -56,65 +59,69 @@ const Checkout = () => {
                 const response = await fetch(`${URL}`, {
                     method: "GET",
                     credentials: 'include',
-                });
+                })
 
                 if (!response.ok) {
-                    console.error('Error en la respuesta:', response.status, response.statusText);
-                    throw new Error('No se pudo obtener la respuesta esperada');
+                    console.error('Error en la respuesta:', response.status, response.statusText)
+                    throw new Error('No se pudo obtener la respuesta esperada')
                 }
-                const data = await response.json();
+                const data = await response.json()
                 setUsuarioId(data.usuario.userId)
             } catch (error) {
-                console.error('Error no se pudo obtener:', error);
+                console.error('Error no se pudo obtener:', error)
             }
-        };
+        }
         const fetchData1 = async () => {
             try {
                 const URL = "http://localhost:5172/api/menu/obtenerCarrito/"
                 const response = await fetch(`${URL}${usuarioId}`, {
                     method: "GET",
                     credentials: 'include',
-                });
+                })
 
                 if (!response.ok) {
-                    console.error('Error en la respuesta:', response.status, response.statusText);
-                    throw new Error('No se pudo obtener la respuesta esperada');
+                    console.error('Error en la respuesta:', response.status, response.statusText)
+                    throw new Error('No se pudo obtener la respuesta esperada')
                 }
 
-                const data = await response.json();
-                setBagDropdown(data);
+                const data = await response.json()
+                setBagDropdown(data)
                 console.log(data)
             } catch (error) {
-                console.error('Error no se pudo obtener:', error);
+                console.error('Error no se pudo obtener:', error)
             }
-        };
+        }
         const fetchData2 = async () => {
             try {
                 const URL = "http://localhost:5172/api/menu/registerUser_getOne/"
                 const response = await fetch(`${URL}${usuarioId}`, {
                     method: "GET",
                     credentials: 'include',
-                });
+                })
 
                 if (!response.ok) {
-                    console.error('Error en la respuesta:', response.status, response.statusText);
-                    throw new Error('No se pudo obtener la respuesta esperada');
+                    console.error('Error en la respuesta:', response.status, response.statusText)
+                    throw new Error('No se pudo obtener la respuesta esperada')
                 }
 
-                const data = await response.json();
-                setPuntosUser(data.puntosCompras);
+                const data = await response.json()
+                setPuntosUser(data.puntosCompras)
                 setCuponesUsados(data.cuponesUsados)
             } catch (error) {
-                console.error('Error no se pudo obtener:', error);
+                console.error('Error no se pudo obtener:', error)
             }
-        };
+        }
+
+        try {
+            fetchData()
+            fetchData1()
+            fetchData2()
+        } catch (error) {
+            console.error("Error CADEna:", error)
+        }
 
 
-        fetchData();
-        fetchData1();
-        fetchData2();
-
-    }, [usuarioId, puntosUser]);
+    }, [usuarioId, puntosUser])
 
 
 
@@ -125,20 +132,20 @@ const Checkout = () => {
                 const response = await fetch(`${URL}${usuarioId}`, {
                     method: "GET",
                     credentials: 'include',
-                });
+                })
 
                 if (!response.ok) {
-                    console.error('Error en la respuesta:', response.status, response.statusText);
-                    throw new Error('No se pudo obtener la respuesta esperada');
+                    console.error('Error en la respuesta:', response.status, response.statusText)
+                    throw new Error('No se pudo obtener la respuesta esperada')
                 }
 
-                const data = await response.json();
-                setUserData(data);
+                const data = await response.json()
+                setUserData(data)
             } catch (error) {
-                console.error('Error no se pudo obtener:', error);
+                console.error('Error no se pudo obtener:', error)
             }
-        };
-        fetchData();
+        }
+        fetchData()
     }, [usuarioId])
 
     useEffect(() => {
@@ -149,22 +156,22 @@ const Checkout = () => {
                 const response = await fetch(`${URL}`, {
                     method: "GET",
                     credentials: 'include',
-                });
+                })
 
                 if (!response.ok) {
-                    console.error('Error en la respuesta:', response.status, response.statusText);
-                    throw new Error('No se pudo obtener la respuesta esperada');
+                    console.error('Error en la respuesta:', response.status, response.statusText)
+                    throw new Error('No se pudo obtener la respuesta esperada')
                 }
 
-                const data = await response.json();
-                setData(data);
+                const data = await response.json()
+                setData(data)
 
             } catch (error) {
-                console.error('Error no se pudo obtener:', error);
+                console.error('Error no se pudo obtener:', error)
             }
-        };
-        fetchData();
-    }, [usuarioId]);
+        }
+        fetchData()
+    }, [usuarioId])
 
 
 
@@ -172,12 +179,12 @@ const Checkout = () => {
         const obtenerProductosEnCarrito = () => {
             // Filtrar los productos que coinciden con la condición
             const productosEnCarrito = data.map(producto => {
-                const carritoItem = bagDropdown.find(item => item.productoId === producto._id);
-                return carritoItem ? { ...producto, quantity: carritoItem.quantity, productoId: carritoItem.productoId, usuarioId: carritoItem.usuarioId } : null;
-            }).filter(Boolean);
+                const carritoItem = bagDropdown.find(item => item.productoId === producto._id)
+                return carritoItem ? { ...producto, quantity: carritoItem.quantity, productoId: carritoItem.productoId, usuarioId: carritoItem.usuarioId } : null
+            }).filter(Boolean)
 
             // Actualizar el estado con la información de los productos en el carrito
-            setPreCarrito(productosEnCarrito);
+            setPreCarrito(productosEnCarrito)
 
             console.log(productosEnCarrito)
 
@@ -191,23 +198,23 @@ const Checkout = () => {
                 newPrice: item.valorProducto * item.quantity,
                 stock: item.stockProducto,
                 quantity: item.quantity,
-            }));
+            }))
             setCarrito(updatedData0)
-        };
+        }
 
         // Llama a la función en el lugar adecuado de tu código
-        obtenerProductosEnCarrito();
-    }, [data, bagDropdown]);
+        obtenerProductosEnCarrito()
+    }, [data, bagDropdown])
 
     useEffect(() => {
-        const newSubTotalPrice = carrito.reduce((total, item) => total + (item.price * item.quantity), 0);
+        const newSubTotalPrice = carrito.reduce((total, item) => total + (item.price * item.quantity), 0)
 
         const TotalPrice = newSubTotalPrice - (newSubTotalPrice * (descuento / 100)) + (checkboxSeleccionado ? delivery : 0)
-        setSubTotalPrice(newSubTotalPrice);
+        setSubTotalPrice(newSubTotalPrice)
         setTotalPrice(TotalPrice)
 
 
-    }, [carrito, descuento, checkboxSeleccionado]);
+    }, [carrito, descuento, checkboxSeleccionado])
 
     useEffect(() => {
         fetch('http://localhost:5172/api/menu/obtenerCupones', {
@@ -216,9 +223,9 @@ const Checkout = () => {
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('no se conecto');
+                    throw new Error('no se conecto')
                 }
-                return response.json();
+                return response.json()
             })
             .then(data => {
 
@@ -233,13 +240,13 @@ const Checkout = () => {
                         stars: item.stars,
                         discount: item.discount,
                         colorTicket: item.colorTicket,
-                    }));
+                    }))
 
                 setTextDropdown(updatedData1)
 
             })
-            .catch(error => console.error('Error no se pudo obtener:', error)); // Manejo de errores en caso de falla en la solicitud
-    }, [puntosUser]);
+            .catch(error => console.error('Error no se pudo obtener:', error)) // Manejo de errores en caso de falla en la solicitud
+    }, [puntosUser])
 
     const insertaCupon = async () => {
         try {
@@ -247,25 +254,25 @@ const Checkout = () => {
             const response = await fetch(`${URL}${selectedOption.value}`, {
                 method: "POST",
                 credentials: 'include',
-            });
+            })
 
             if (!response.ok) {
-                console.error('Error en la respuesta:', response.status, response.statusText);
-                throw new Error('No se pudo obtener la respuesta esperada');
+                console.error('Error en la respuesta:', response.status, response.statusText)
+                throw new Error('No se pudo obtener la respuesta esperada')
             }
 
-            const data = await response.json();
+            const data = await response.json()
 
         } catch (error) {
-            console.error('Error no se pudo obtener:', error);
+            console.error('Error no se pudo obtener:', error)
         }
     }
 
     const handleChange = selectedOption => {
         setSelectedOption(selectedOption)
-        setDescuento(() => selectedOption.discount);
+        setDescuento(() => selectedOption.discount)
 
-    };
+    }
 
     const SelectCupon = () => {
         return (
@@ -274,96 +281,123 @@ const Checkout = () => {
                 value={selectedOption}
                 onChange={handleChange}
             />
-        );
-    };
-
-
-
-
-    const checkOut = async () => {
-        //Borra productos userId de base de dato
-
-        // try {
-        //     const URL = "http://localhost:5172/api/menu/eliminarCarritoUser/"; // Reemplaza con la ruta correcta
-        //     const response = await fetch(`${URL}${usuarioId}`, { 
-        //         method: "DELETE",
-        //         credentials: 'include',
-        //     });
-
-        //     if (!response.ok) {
-        //         console.error('Error en la respuesta:', response.status, response.statusText);
-        //         throw new Error('No se pudo agregar al carrito');
-        //     }
-
-        //     // Manejar la respuesta del backend si es necesario
-        //     const responseData = await response.json();
-        //     console.log(responseData);
-        // } catch (error) {
-        //     console.error('Error al agregar al carrito:', error);
-        // }
-
-        //Reorganiza datos
-        console.log("entro")
-        const Data = carrito.map(item => ({
-            productoId: item.productoId,
-            usuarioId: item.usuarioId,
-            quantity: item.quantity,
-        }));
-
-
-        Data.forEach(async (element) => {
-            // Pushea datos finales a carrito userId base de dato
-            try {
-                const URL = "http://localhost:5172/api/menu/compraFinalizada"; // Reemplaza con la ruta correcta
-                const response = await fetch(URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        usuarioId: element.usuarioId,
-                        carritoId: idCanastaProducto,
-                        productoId: element.productoId,
-                        quantity: element.quantity,
-                        delivery,
-                        option:false,
-                    }),
-                });
-
-                if (!response.ok) {
-                    console.error('Error en la respuesta:', response.status, response.statusText);
-                    throw new Error('No se pudo agregar al carrito');
-                }
-
-                // Manejar la respuesta del backend si es necesario
-                const responseData = await response.json();
-                console.log(responseData);
-            } catch (error) {
-                console.error('Error al agregar al carrito:', error);
-            }
-        });
+        )
     }
 
 
+    const pagar = async () => {
+        //Borra productos userId de base de dato
+        try {
+            const URL = "http://localhost:5172/api/menu/eliminarCarritoUser/"; // Reemplaza con la ruta correcta
+            const response = await fetch(URL, {
+                method: "DELETE",
+                credentials: "include",
+            });
+
+            if (!response.ok) {
+                console.error('Error en la respuesta:', response.status, response.statusText);
+                throw new Error('No se pudo agregar al carrito');
+            }
+
+            // Manejar la respuesta del backend si es necesario
+            const responseData = await response.json();
+            console.log(responseData);
+        } catch (error) {
+            console.error('Error al agregar al carrito:', error);
+        }
+
+
+
+
+        // const URL = "http://localhost:5172/api/menu/finalizarCompra";
+        // const desc= (checkboxSeleccionado ? delivery :  0)
+        // const del= desc > 0 ? true : false
+        // const price =  totalPrice - desc
+        // console.log(usuarioId)
+        // console.log(idCanastaProducto._idUnicaProducto)
+        // console.log(Data)
+        // console.log(del)
+        // console.log(price)
+        // console.log(desc)
+        // console.log(selectedOption ? selectedOption.value:"SinCupon")
+
+
+        // const response = await fetch(URL, {
+        //     method: "POST",
+        //     credentials: 'include',
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //         usuarioId,
+        //         carritoId: idCanastaProducto._idUnicaProducto,
+        //         carritoProductos: Data,
+        //         delivery: del,
+        //         pagado:price,
+        //         descuento: desc,
+        //         cupon: selectedOption ? selectedOption.value:"SinCupon",  
+        //     }),
+        // });
+
+        const Data = carrito.map(item => ({
+            usuarioId: item.usuarioId,
+            productoId: item.productoId,
+            quantity: item.quantity,
+        }))
+
+
+        try {
+
+            const URL = "http://localhost:5172/api/menu/finalizarCompra"
+            const response = await fetch(URL, {
+                method: "POST",
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    usuarioId,
+                    carritoId: idCanastaProducto._idUnicaProducto,
+                    carritoProductos: Data,
+                    delivery: (checkboxSeleccionado ? delivery : 0) > 0 ? true : false
+                }),
+            })
+            if (!response.ok) {
+                console.error('Error en la respuesta:', response.status, response.statusText)
+                throw new Error('No se pudo agregar al carrito')
+            }
+
+            const responseData = await response.json()
+            console.log(responseData)
+
+        } catch (error) {
+            console.error('Error al agregar al carrito:', error)
+        }
+
+
+    }
+
+
+
     const handleQuantityChange = (index, newQuantity, basePrice, operation) => {
-        console.log(index, newQuantity);
-        newQuantity = Math.max(1, newQuantity);
+        console.log(index, newQuantity)
+        newQuantity = Math.max(1, newQuantity)
 
         if (operation === "-") {
-            newQuantity--;
+            newQuantity--
         } else {
-            newQuantity++;
+            newQuantity++
         }
 
         const newPrice = basePrice * newQuantity
 
         setCarrito(prevBagDropdown => {
-            const updatedBagDropdown = [...prevBagDropdown];
-            updatedBagDropdown[index].quantity = newQuantity;
-            updatedBagDropdown[index].newPrice = newPrice;
-            return updatedBagDropdown;
-        });
-    };
+            const updatedBagDropdown = [...prevBagDropdown]
+            updatedBagDropdown[index].quantity = newQuantity
+            updatedBagDropdown[index].newPrice = newPrice
+            return updatedBagDropdown
+        })
+    }
 
     const eliminarDeCarrito = (index, id) => {
         const nuevoCarrito = carrito.filter(item => item.id !== id)
@@ -373,8 +407,8 @@ const Checkout = () => {
 
 
     const handleCheckboxChange = () => {
-        setCheckboxSeleccionado(!checkboxSeleccionado);
-    };
+        setCheckboxSeleccionado(!checkboxSeleccionado)
+    }
 
     const enviarFormulario = async () => {
         console.log(userData)
@@ -393,20 +427,20 @@ const Checkout = () => {
                     commentOrder: userData.commentOrder,
                     email: userData.email,
                 }),
-            });
+            })
 
             // Manejar la respuesta según sea necesario
             if (response.ok) {
                 // Éxito
-                console.log('Solicitud enviada con éxito');
+                console.log('Solicitud enviada con éxito')
             } else {
                 // Manejar errores
-                console.error('Error al enviar la solicitud:', response.statusText);
+                console.error('Error al enviar la solicitud:', response.statusText)
             }
         } catch (error) {
-            console.error('Error:', error.message);
+            console.error('Error:', error.message)
         }
-    };
+    }
 
 
 
@@ -414,21 +448,15 @@ const Checkout = () => {
         fetch('Json/Data.json')
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('no se conecto');
+                    throw new Error('no se conecto')
                 }
-                return response.json();
+                return response.json()
             })
             .then(data => {
-                setDataText(data['checkout'][0]);
+                setDataText(data['checkout'][0])
             })
-            .catch(error => console.error('Error no se pudo obtener:', error)); // Manejo de errores en caso de falla en la solicitud
-    }, []);
-
-    async function pagar() {
-        alert("¡Hola, esto es un mensaje de alerta1!");
-        await insertaCupon()
-        await checkOut()
-    }
+            .catch(error => console.error('Error no se pudo obtener:', error)) // Manejo de errores en caso de falla en la solicitud
+    }, [])
 
     return (
         <>
@@ -472,7 +500,7 @@ const Checkout = () => {
                                     <input type="text" id="cardholderName" name="cardholderName" className="mt-1 p-2 w-full border rounded-md" />
                                 </div>
 
-                                <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" onClick={()=>pagar()}>Pagar</button>
+                                <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" onClick={() => pagar()}>Pagar</button>
 
                             </form>
 
