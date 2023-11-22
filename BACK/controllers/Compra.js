@@ -1,9 +1,8 @@
 const db_compras = require('../models/Compra')
 
 const finalizarCompra = async (req, res) => {
-    console.log("entro")
-    const { usuarioId, carritoId, carritoProductos, delivery } = req.body;
-    console.log("entro: ",usuarioId, carritoId, carritoProductos, delivery)
+
+    const { usuarioId, carritoId, carritoProductos, delivery, pagado, descuento, cupon } = req.body;
     let datosVacios = [];
 
     if (!usuarioId) {
@@ -17,6 +16,13 @@ const finalizarCompra = async (req, res) => {
     }
     if (!delivery) {
         datosVacios.push("delivery");
+    }
+    if (!pagado) {
+        datosVacios.push("pagado");
+    }
+
+    if (!cupon) {
+        datosVacios.push("cupon");
     }
 
     if (datosVacios.length > 0) {
@@ -32,10 +38,13 @@ const finalizarCompra = async (req, res) => {
             usuarioId,
             carritoId,
             carritoProductos,
-            delivery
+            delivery,
+            pagado,
+            descuento,
+            cupon,
         }
         )
-        res.status(200).json(resultado)
+        res.status(200).json("Subida la compra")
     }
     catch (error) {
         res.status(400).json({ error: error.message })
@@ -45,7 +54,7 @@ const finalizarCompra = async (req, res) => {
 
 module.exports = {
 
-    finalizarCompra,
+    finalizarCompra
 
 }
 

@@ -17,8 +17,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-
-
 const NavBar = () => {
   const [carrito, setCarrito] = useState([]);
   const [usuarioId, setUsuarioId] = useState("");
@@ -81,12 +79,12 @@ const NavBar = () => {
 
 
   const loginLogout = async () => {
+    console.log(usuarioId == "")
     if (usuarioId == "") {
-
     } else {
       try {
         const URL = "http://localhost:5172/api/menu/logOut"
-        const response = await fetch(`${URL}`, {
+        const response = await fetch(URL, {
           method: "POST",
           credentials: 'include',
         });

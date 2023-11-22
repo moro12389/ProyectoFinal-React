@@ -108,9 +108,9 @@ router.post('/login', cors({
     credentials: true,
 }), login)
 
-router.get('/userId', logOut)
+router.get('/userId', verifyToken, logOut)
 
-router.post('/agregarCuponUsado/:cuponId', actualizarCuponUsado)
+router.post('/agregarCuponUsado/:cuponId',verifyToken, actualizarCuponUsado)
 
 // Cupons
 

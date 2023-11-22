@@ -72,7 +72,10 @@ const BagDropdown = () => {
     const fetchData = async () => {
       try {
         const URL = "http://localhost:5172/api/menu/obtenerProductos"
-        const response = await fetch(`${URL}`);
+        const response = await fetch(`${URL}`,{ 
+          method:"GET",
+          credentials: "include",
+        });
 
         if (!response.ok) {
           console.error('Error en la respuesta:', response.status, response.statusText);
@@ -130,11 +133,7 @@ const BagDropdown = () => {
       }).filter(Boolean);
 
       // Actualizar el estado con la información de los productos en el carrito
-      setPreCarrito(productosEnCarrito);
-
-      console.log(productosEnCarrito)
-
-      const updatedData0 = preCarrito.map(item => ({
+      const updatedData0 = productosEnCarrito.map(item => ({
         id: item._id,
         productoId: item.productoId,
         usuarioId: item.usuarioId,
@@ -155,6 +154,7 @@ const BagDropdown = () => {
 
   const checkOut = async () => {
     //Borra productos userId de base de dato
+    event.preventDefault
     try {
       const URL = "http://localhost:5172/api/menu/eliminarCarritoUser/"; // Reemplaza con la ruta correcta
       const response = await fetch(URL,{ 
@@ -190,6 +190,7 @@ const BagDropdown = () => {
         const URL = "http://localhost:5172/api/menu/cargarCarrito"; // Reemplaza con la ruta correcta
         const response = await fetch(URL, {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -275,7 +276,7 @@ const BagDropdown = () => {
               ))}
               <div className='flex flex-col justify-center items-center'>
                 <button
-                  onClick={async() =>{await checkOut()}}
+                  onClick={() =>{checkOut()}}
                   className='px-4 py-2 bg-yellow-300 rounded-xl'>
                   Checkout
                 </button>

@@ -20,8 +20,6 @@ const Checkout = () => {
     const [descuento, setDescuento] = useState(0)
     const [subTotalPrice, setSubTotalPrice] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0)
-
-    const [preCarrito, setPreCarrito] = useState([])
     const [carrito, setCarrito] = useState([])
     const [data, setData] = useState([])
     const [bagDropdown, setBagDropdown] = useState([])
@@ -50,6 +48,162 @@ const Checkout = () => {
     const [compraArray, setCompraArray] = useState([])
 
 
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const URL = "http://localhost:5172/api/menu/userId"
+    //             const response = await fetch(`${URL}`, {
+    //                 method: "GET",
+    //                 credentials: 'include',
+    //             })
+
+    //             if (!response.ok) {
+    //                 console.error('Error en la respuesta:', response.status, response.statusText)
+    //                 throw new Error('No se pudo obtener la respuesta esperada')
+    //             }
+    //             const data = await response.json()
+    //             setUsuarioId(data.usuario.userId)
+    //         } catch (error) {
+    //             console.error('Error no se pudo obtener:', error)
+    //         }
+    //     }
+    //     const fetchData1 = async () => {
+    //         try {
+    //             const URL = "http://localhost:5172/api/menu/obtenerCarrito/"
+    //             const response = await fetch(`${URL}${usuarioId}`, {
+    //                 method: "GET",
+    //                 credentials: 'include',
+    //             })
+
+    //             if (!response.ok) {
+    //                 console.error('Error en la respuesta:', response.status, response.statusText)
+    //                 throw new Error('No se pudo obtener la respuesta esperada')
+    //             }
+
+    //             const data = await response.json()
+    //             setBagDropdown(data)
+    //             console.log(data)
+    //         } catch (error) {
+    //             console.error('Error no se pudo obtener:', error)
+    //         }
+    //     }
+    //     const fetchData2 = async () => {
+    //         try {
+    //             const URL = "http://localhost:5172/api/menu/registerUser_getOne/"
+    //             const response = await fetch(`${URL}${usuarioId}`, {
+    //                 method: "GET",
+    //                 credentials: 'include',
+    //             })
+
+    //             if (!response.ok) {
+    //                 console.error('Error en la respuesta:', response.status, response.statusText)
+    //                 throw new Error('No se pudo obtener la respuesta esperada')
+    //             }
+
+    //             const data = await response.json()
+    //             setPuntosUser(data.puntosCompras)
+    //             setCuponesUsados(data.cuponesUsados)
+    //         } catch (error) {
+    //             console.error('Error no se pudo obtener:', error)
+    //         }
+    //     }
+
+
+        
+
+    //     const fetchData3 = async () => {
+    //         try {
+    //             const URL = "http://localhost:5172/api/menu/registerUser_getOne/"
+    //             const response = await fetch(`${URL}${usuarioId}`, {
+    //                 method: "GET",
+    //                 credentials: 'include',
+    //             })
+
+    //             if (!response.ok) {
+    //                 console.error('Error en la respuesta:', response.status, response.statusText)
+    //                 throw new Error('No se pudo obtener la respuesta esperada')
+    //             }
+
+    //             const data = await response.json()
+    //             setUserData(data)
+    //         } catch (error) {
+    //             console.error('Error no se pudo obtener:', error)
+    //         }
+    //     }
+        
+    //     const fetchData4 = async () => {
+    //         try {
+    //             const URL = "http://localhost:5172/api/menu/obtenerProductos"
+    //             const response = await fetch(`${URL}`, {
+    //                 method: "GET",
+    //                 credentials: 'include',
+    //             })
+
+    //             if (!response.ok) {
+    //                 console.error('Error en la respuesta:', response.status, response.statusText)
+    //                 throw new Error('No se pudo obtener la respuesta esperada')
+    //             }
+
+    //             const data = await response.json()
+    //             setData(data)
+
+    //         } catch (error) {
+    //             console.error('Error no se pudo obtener:', error)
+    //         }
+    //     }
+
+    //     const obtenerProductosEnCarrito = async () => {
+    //         console.log(data)
+    //         console.log(bagDropdown)
+    //         // Filtrar los productos que coinciden con la condición
+    //         const productosEnCarrito = data.map(producto => {
+    //             const carritoItem = bagDropdown.find(item => item.productoId === producto._id)
+    //             return carritoItem ? { ...producto, quantity: carritoItem.quantity, productoId: carritoItem.productoId, usuarioId: carritoItem.usuarioId } : null
+    //         }).filter(Boolean)
+
+    //         // Actualizar el estado con la información de los productos en el carrito
+
+    //         const updatedData0 = productosEnCarrito.map(item => ({
+    //             id: item._id,
+    //             productoId: item.productoId,
+    //             usuarioId: item.usuarioId,
+    //             image: item.imgUrlProducto,
+    //             title: item.nombreProducto,
+    //             price: item.valorProducto,
+    //             newPrice: item.valorProducto * item.quantity,
+    //             stock: item.stockProducto,
+    //             quantity: item.quantity,
+    //         }))
+    //         setCarrito(updatedData0)
+    //         console.log(carrito)
+    //     }
+
+
+
+    //     fetchData()
+    //     .then(() => console.log("paso0",usuarioId))
+    //     .then(async()=> await fetchData1())
+
+       
+    //     .then(() => console.log("paso1",bagDropdown))
+    //     .then(async()=> await fetchData2())
+
+       
+    //     .then(() => console.log("paso2",puntosUser,cuponesUsados))
+    //     .then(async()=>await fetchData3())
+
+        
+    //     .then(() => console.log("paso3",userData))
+    //     .then(async()=>await fetchData4())
+
+        
+    //     .then(() => console.log("paso4",data))
+    //     .then(async()=>obtenerProductosEnCarrito())
+        
+    //     .then(() => console.log("paso4",carrito))
+    //     .catch((error) => console.log(error))
+
+    // }, [])
 
 
     useEffect(() => {
@@ -146,7 +300,7 @@ const Checkout = () => {
             }
         }
         fetchData()
-    }, [usuarioId])
+    }, [usuarioId,puntosUser])
 
     useEffect(() => {
 
@@ -171,12 +325,14 @@ const Checkout = () => {
             }
         }
         fetchData()
-    }, [usuarioId])
+    }, [usuarioId,puntosUser])
 
 
 
     useEffect(() => {
-        const obtenerProductosEnCarrito = () => {
+        const obtenerProductosEnCarrito = async () => {
+            console.log(data)
+            console.log(bagDropdown)
             // Filtrar los productos que coinciden con la condición
             const productosEnCarrito = data.map(producto => {
                 const carritoItem = bagDropdown.find(item => item.productoId === producto._id)
@@ -184,11 +340,8 @@ const Checkout = () => {
             }).filter(Boolean)
 
             // Actualizar el estado con la información de los productos en el carrito
-            setPreCarrito(productosEnCarrito)
 
-            console.log(productosEnCarrito)
-
-            const updatedData0 = preCarrito.map(item => ({
+            const updatedData0 = productosEnCarrito.map(item => ({
                 id: item._id,
                 productoId: item.productoId,
                 usuarioId: item.usuarioId,
@@ -199,12 +352,13 @@ const Checkout = () => {
                 stock: item.stockProducto,
                 quantity: item.quantity,
             }))
-            setCarrito(updatedData0)
+            await setCarrito(updatedData0)
+            console.log(carrito)
         }
 
         // Llama a la función en el lugar adecuado de tu código
         obtenerProductosEnCarrito()
-    }, [data, bagDropdown])
+    }, [data, bagDropdown,puntosUser])
 
     useEffect(() => {
         const newSubTotalPrice = carrito.reduce((total, item) => total + (item.price * item.quantity), 0)
@@ -248,25 +402,7 @@ const Checkout = () => {
             .catch(error => console.error('Error no se pudo obtener:', error)) // Manejo de errores en caso de falla en la solicitud
     }, [puntosUser])
 
-    const insertaCupon = async () => {
-        try {
-            const URL = "http://localhost:5172/api/menu/agregarCuponUsado/"
-            const response = await fetch(`${URL}${selectedOption.value}`, {
-                method: "POST",
-                credentials: 'include',
-            })
 
-            if (!response.ok) {
-                console.error('Error en la respuesta:', response.status, response.statusText)
-                throw new Error('No se pudo obtener la respuesta esperada')
-            }
-
-            const data = await response.json()
-
-        } catch (error) {
-            console.error('Error no se pudo obtener:', error)
-        }
-    }
 
     const handleChange = selectedOption => {
         setSelectedOption(selectedOption)
@@ -285,8 +421,7 @@ const Checkout = () => {
     }
 
 
-    const pagar = async () => {
-        //Borra productos userId de base de dato
+    const eliminaCarrito = async () => {
         try {
             const URL = "http://localhost:5172/api/menu/eliminarCarritoUser/"; // Reemplaza con la ruta correcta
             const response = await fetch(URL, {
@@ -299,46 +434,36 @@ const Checkout = () => {
                 throw new Error('No se pudo agregar al carrito');
             }
 
-            // Manejar la respuesta del backend si es necesario
             const responseData = await response.json();
             console.log(responseData);
+            window.location.href = '/';
         } catch (error) {
             console.error('Error al agregar al carrito:', error);
         }
+    }
+
+    const insertaCupon = async () => {
+        try {
+            const URL = "http://localhost:5172/api/menu/agregarCuponUsado/"
+            const response = await fetch(`${URL}${selectedOption.value}`, {
+                method: "POST",
+                credentials: 'include',
+            })
+
+            if (!response.ok) {
+                console.error('Error en la respuesta:', response.status, response.statusText)
+                throw new Error('No se pudo obtener la respuesta esperada')
+            }
+
+            const data = await response.json()
 
 
+        } catch (error) {
+            console.error('Error no se pudo obtener:', error)
+        }
+    }
 
-
-        // const URL = "http://localhost:5172/api/menu/finalizarCompra";
-        // const desc= (checkboxSeleccionado ? delivery :  0)
-        // const del= desc > 0 ? true : false
-        // const price =  totalPrice - desc
-        // console.log(usuarioId)
-        // console.log(idCanastaProducto._idUnicaProducto)
-        // console.log(Data)
-        // console.log(del)
-        // console.log(price)
-        // console.log(desc)
-        // console.log(selectedOption ? selectedOption.value:"SinCupon")
-
-
-        // const response = await fetch(URL, {
-        //     method: "POST",
-        //     credentials: 'include',
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         usuarioId,
-        //         carritoId: idCanastaProducto._idUnicaProducto,
-        //         carritoProductos: Data,
-        //         delivery: del,
-        //         pagado:price,
-        //         descuento: desc,
-        //         cupon: selectedOption ? selectedOption.value:"SinCupon",  
-        //     }),
-        // });
-
+    const guardaDatosProductoComprado = async () => {
         const Data = carrito.map(item => ({
             usuarioId: item.usuarioId,
             productoId: item.productoId,
@@ -347,8 +472,21 @@ const Checkout = () => {
 
 
         try {
-
             const URL = "http://localhost:5172/api/menu/finalizarCompra"
+            const valorDelivery = (checkboxSeleccionado ? delivery : 0)
+            const del = valorDelivery > 0 ? true : false
+            const price = totalPrice - valorDelivery
+            const descontadoCupon = selectedOption ? selectedOption.discount : 0
+
+            // console.log(descontadoCupon)
+            // console.log(usuarioId)
+            // console.log(idCanastaProducto._idUnicaProducto)
+            // console.log(Data)
+            // console.log(del)
+            // console.log(price)
+            // console.log(desc)
+            // console.log(selectedOption ? selectedOption.value:"SinCupon")
+
             const response = await fetch(URL, {
                 method: "POST",
                 credentials: 'include',
@@ -359,7 +497,10 @@ const Checkout = () => {
                     usuarioId,
                     carritoId: idCanastaProducto._idUnicaProducto,
                     carritoProductos: Data,
-                    delivery: (checkboxSeleccionado ? delivery : 0) > 0 ? true : false
+                    delivery: del,
+                    pagado: price,
+                    descuento: descontadoCupon,
+                    cupon: selectedOption ? selectedOption.value : "SinCupon",
                 }),
             })
             if (!response.ok) {
@@ -368,12 +509,29 @@ const Checkout = () => {
             }
 
             const responseData = await response.json()
-            console.log(responseData)
 
         } catch (error) {
             console.error('Error al agregar al carrito:', error)
         }
 
+    }
+
+    const pagar = async () => {
+
+        //guarda la compra realizada
+        guardaDatosProductoComprado()
+            .then(() => console.log("paso1"))
+            .then(() =>  insertaCupon())
+        //Agrega al usuario el cupon usado
+        insertaCupon()
+            .then(() => console.log("paso2"))
+            .catch((error) => console.log(error))
+
+        eliminaCarrito()
+            .then(() => console.log("paso3"))
+            .catch((error) => console.log(error))
+        
+        
 
     }
 
