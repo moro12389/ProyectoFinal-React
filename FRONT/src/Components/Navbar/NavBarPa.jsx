@@ -8,7 +8,9 @@ import { Icon } from '@iconify/react';
 import { motion } from 'framer-motion'
 import BagDropdown from './BagDropdownPa';
 
-import { Link,useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import { useSelector, useDispatch } from 'react-redux';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -18,12 +20,20 @@ const NavBar = () => {
   const [carrito, setCarrito] = useState([]);
   const [usuarioId, setUsuarioId] = useState("");
   const [dropdownClick, setdropdownClick] = useState(false);
+  const [categorias, setCategorias] = useState([]);
+  const [isBagDropdownVisible, setIsBagDropdownVisible] = useState(false);
+  
+  //envio datos
+  const dispatch = useDispatch();
+  //recepcion datos
+  const act = useSelector((state) => state.changeNum)
+  
 
-  let location =useLocation();
-
+  // let location =useLocation();
   //actualiza num de carrito
-  const act=location.state
+  // const act=location.state
   console.log(act)
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,12 +81,40 @@ const NavBar = () => {
       }
     }
 
-    try {
-      fetchData()
-      fetchData2()
-    } catch (error) {
-      console.error("Error CADENA Nav:", error);
+    const fetchData3 = async () => {
+      try {
+        const URL = "http://localhost:5172/api/menu/obtenerCategorias"
+        const response = await fetch(URL, {
+          method: "GET",
+          credentials: 'include',
+        });
+
+        if (!response.ok) {
+          console.error('Error en la respuesta:', response.status, response.statusText);
+          throw new Error('No se pudo obtener la respuesta esperada');
+        }
+        const data = await response.json();
+        setCategorias(data);
+
+      } catch (error) {
+        console.error('Error no se pudo obtener:', error);
+      }
     }
+
+    // try {
+    //   fetchData()
+    //   fetchData2()
+    // } catch (error) {
+    //   console.error("Error CADENA Nav:", error);
+    // }
+
+    fetchData()
+    .then(() => console.log("paso0",))
+    .then(()=>fetchData2())
+    .then(() => console.log("paso1"))
+    .then(()=> fetchData3())
+    .then(() => console.log("paso2"))
+
     
   },[usuarioId,act]);
 
@@ -108,15 +146,18 @@ const NavBar = () => {
     setdropdownClick(!dropdownClick)
   }
 
-  const textDropdown = ["Shawarma", "Street Food", "Pizza", "East", "Drinks"]
-
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClickMenu = () => {
     setIsOpen(!isOpen)
   }
 
-  const [isBagDropdownVisible, setIsBagDropdownVisible] = useState(false);
+  
+
+  const cambiarCategoria=(idCategoria)=>{
+    setIsOpen(false)
+    dispatch({ type: 'CAMBIAR_SELECCION', payload: idCategoria })
+  }
 
   return (
     <>
@@ -158,8 +199,12 @@ const NavBar = () => {
             <hr className="my-2 border w-full border-gray-300" />
             <div className='grid grid-cols-2'>
               <div className='flex flex-col m-auto mr-24 list-none'>
-                {textDropdown.map((text, index) => (
-                  <li className='mb-2 font-roboto' key={index}>{text}</li>
+                {categorias.map((text, index) => (
+                  <Link className='mb-2 font-roboto' key={index}
+                    to="/submenu"
+                    onClick={()=>cambiarCategoria(text._id)}
+                  >{text.nombreCategoria}
+                  </Link>
                 ))}
               </div>
               <div>
@@ -213,18 +258,19 @@ const NavBar = () => {
               >
                 <Menu.Items className="absolute right-0 z-10 w-56 origin-top-right rounded-md bg-white">
                   <div className="py-1 ">
-                    {textDropdown.map((text, index) => (
+                    {categorias.map((text, index) => (
                       <Menu.Item key={index}>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <Link
+                            onClick={()=>cambiarCategoria(text._id)}
+                            to="/submenu"
                             className={classNames(
                               active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                               'block px-4 py-2 text-sm text-right'
                             )}
                           >
-                            {text}
-                          </a>
+                            {text.nombreCategoria}
+                          </Link>
                         )}
 
                       </Menu.Item>
@@ -247,17 +293,25 @@ const NavBar = () => {
               </Transition>
             </Menu>
             <li className='mx-16 py-2 text-sm font-semibold sm:mx-0 sm:mr-4 sm:whitespace-nowrap xl:block lg:hidden sm:hidden'>
-              <Link to={(window.location.pathname === '/cupons') ? "http://localhost:5173/#about" : "#about"}>
+              <Link to="/about">
                 About Us
               </Link>
             </li>
             <li className='py-2 text-sm font-semibold xl:block lg:hidden sm:hidden'>
-              Contacts
+            <Link to="/contact">
+                Contact
+              </Link>
             </li>
           </ul>
           <div className='flex flex-row py-2'>
-            <Icon icon="devicon:facebook" className='mr-4 xs:mr-1' width="30" />
-            <Icon icon="skill-icons:instagram" width="30" />
+            <Link to="/404">
+              <Icon icon="devicon:facebook" className='mr-4 xs:mr-1' width="30" />
+            </Link>
+            <Link to="/404">
+              <Icon icon="skill-icons:instagram" width="30" />
+            </Link>
+            
+            
           </div>
 
           <div className='flex flex-row items-center py-2 font-roboto'>

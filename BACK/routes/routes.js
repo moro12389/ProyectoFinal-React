@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const cors = require('cors')
 
+//Categorias
 const {
     obtenerCategorias,
     obtenerCategoria,
@@ -10,6 +11,7 @@ const {
     actualizarCategoria
 } = require('../controllers/Categorias')
 
+//Productos
 const {
     obtenerProductos,
     obtenerProductosIdCategoria,
@@ -18,6 +20,8 @@ const {
     eliminarProducto,
     actualizarProducto
 } = require('../controllers/Productos')
+
+//Carritos
 const {
     obtenerCarrito,
     cargarCarrito,
@@ -26,10 +30,12 @@ const {
     actualizarCarrito
 } = require('../controllers/Carrito')
 
+//Utilitario
 const {
     finalizarCompra
 } = require('../controllers/Compra')
 
+//Usuarios
 const {
     register_get,
     register_post,
@@ -41,7 +47,11 @@ const {
 
     verifyToken,
     userIdToken,
+
+    actualizarPass,
 } = require('../controllers/Users')
+
+//Cupones
 const {
     obtenerCupones,
     obtenerCupon,
@@ -49,6 +59,7 @@ const {
     eliminarCupon,
     actualizarCupon,
 } = require('../controllers/Cupons')
+
 
 // Categoria
 
@@ -110,7 +121,9 @@ router.post('/login', cors({
 
 router.get('/logout', verifyToken, logOut)
 
-router.post('/agregarCuponUsado/:cuponId',verifyToken, actualizarCuponUsado)
+router.post('/agregarCuponUsado',verifyToken, actualizarCuponUsado)
+
+router.post('/changePass', verifyToken, actualizarPass)
 
 // Cupons
 

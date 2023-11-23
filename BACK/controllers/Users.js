@@ -105,7 +105,7 @@ const register_post = async (req, res) => {
                 entrance: "",
                 commentOrder: "",
                 housePrivate: false,
-                puntosCompras: 0,
+                puntosCompras: 500,
                 cuponesUsados: []
             })
             res.status(201).json(user)
@@ -128,6 +128,7 @@ const login = async (req, res) => {
             return res.status(401).json({ mensaje: 'credenciales invalidas' })
         }
         const passwordValido = await bcrypt.compare(password, datos.password)
+
         if (!passwordValido) {
             return res.status(401).json({ mensaje: 'credenciales invalidas' })
         }
@@ -173,6 +174,27 @@ const verifyToken = (req, res, next) => {
     }
 };
 
+const actualizarPass = async (req, res) => {
+    const userId = req.user.userId;
+    const newPassword = req.body.password;
+
+    try {
+        const salt = await bcrypt.genSalt(5);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        const resultado = await db_users.findOneAndUpdate(
+            { _id: userId },
+            { $set: { password: hashedPassword } },
+            { new: true }
+        );
+
+        res.status(200).json(resultado);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
+
 
 const userIdToken = (req, res) => {
     const informacionUsuario = req.user;
@@ -181,21 +203,45 @@ const userIdToken = (req, res) => {
 
 const actualizarCuponUsado = async (req, res) => {
     const userId = req.user;
-    const { cuponId } = req.params
-    try {
-        const user = await db_users.findOneAndUpdate(
-            { _id: userId.userId },
-            {
-                $addToSet: {
-                    "cuponesUsados": cuponId
-                }
-            },
-            { new: true }
-        );
-        res.status(201).json(user)
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+    const { cuponId, puntosSumados } = req.body
+
+
+    if(cuponId!="nada"){
+        try {
+            const user = await db_users.findOneAndUpdate(
+                { _id: userId.userId },
+                {
+                    $addToSet: {
+                        "cuponesUsados": cuponId
+                    },
+                    $inc: {
+                        "puntosCompras": parseInt(puntosSumados, 10) || 0
+                    }
+                },
+                { new: true }
+            );
+            res.status(201).json(user)
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    } else {
+        try {
+            const user = await db_users.findOneAndUpdate(
+                { _id: userId.userId },
+                {
+
+                    $inc: {
+                        "puntosCompras": parseInt(puntosSumados, 10) || 0
+                    }
+                },
+                { new: true }
+            );
+            res.status(201).json(user)
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
     }
+   
 }
 
 module.exports = {
@@ -210,5 +256,7 @@ module.exports = {
 
     verifyToken,
     userIdToken,
+
+    actualizarPass,
 
 }

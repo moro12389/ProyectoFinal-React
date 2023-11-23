@@ -3,8 +3,7 @@ import {
   Link
 } from "react-router-dom";
 import { motion } from "framer-motion"
-import { Checkout } from '../CheckoutRam';
-
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const BagDropdown = () => {
@@ -17,7 +16,9 @@ const BagDropdown = () => {
   const [usuarioId, setUsuarioId] = useState("");
 
   const [cambio, setCambio] = useState([]);
+  const dispatch = useDispatch();
 
+  const act = useSelector((state) => state.changeNum)
 
   useEffect(() => {
     const fetchData = async() => {
@@ -66,7 +67,7 @@ const BagDropdown = () => {
       }
     };
     fetchData();
-  }, [usuarioId,cambio,cambio]);
+  }, [usuarioId,cambio,act]);
 
   useEffect(() => {
 
@@ -166,10 +167,10 @@ const BagDropdown = () => {
       const data = await response.json();
       setCambio(data)
       console.log(data)
-
     } catch (error) {
       console.error('Error al agregar al carrito:', error);
     }
+    dispatch({ type: 'ACTUALIZAR_NUM_CARRO', payload: id })
 
     // const nuevoCarrito = carrito.filter(item => item.id !== id)
     // setCarrito(nuevoCarrito)

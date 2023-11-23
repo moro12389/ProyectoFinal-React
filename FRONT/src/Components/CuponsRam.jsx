@@ -10,8 +10,9 @@ const Cupons = () => {
     const [points, setPoints] = useState(0);
     const [levels, setLevels] = useState([]);
     const [usuarioId, setUsuarioId] = useState("");
-
+    const [mostraPassword, setMostrarPassword] = useState(false)
     const [cuponesUsados, setCuponesUsados] = useState([]);
+    const [userData, setUserData] = useState([])
 
     useEffect(() => {
 
@@ -29,6 +30,7 @@ const Cupons = () => {
                 }
                 const data = await response.json();
                 setUsuarioId(data.usuario.userId)
+                setUserData(...userData,data.usuario.email)
             } catch (error) {
                 console.error('Error no se pudo obtener:', error);
             }
@@ -155,7 +157,82 @@ const Cupons = () => {
         return svgContent
     }
 
+    function verPassword(e) {
+        e.preventDefault()
+        setMostrarPassword(!mostraPassword)
+      }
 
+    const verify = (a,b)=>{
+        const response= (a===b)?true:false
+        return response
+    }
+
+    const login = async () => {
+        try {
+          const URL = "http://localhost:5172/api/menu/login";
+          const response = await fetch(URL, {
+            method: "POST",
+            body: JSON.stringify({
+              email: userData.email,
+              password: userData.passAntigua,
+            }),
+            headers: {
+              "Content-Type": "application/json"
+            },
+            credentials: 'include',
+          });
+      
+          if (!response.ok) {
+            console.error('Error en la respuesta:', response.status, response.statusText);
+            throw new Error('No se pudo iniciar sesión');
+            return false
+          }
+          return true
+      
+        } catch (error) {
+          console.error('Error al iniciar sesión:', error);
+          return false
+        }
+      };
+
+      const change = async () => {
+        try {
+          const URL = "http://localhost:5172/api/menu/changePass";
+          const response = await fetch(URL, {
+            method: "POST",
+            body: JSON.stringify({
+              password: userData.passNueva,
+            }),
+            headers: {
+              "Content-Type": "application/json"
+            },
+            credentials: 'include',
+          });
+      
+          if (!response.ok) {
+            console.error('Error en la respuesta:', response.status, response.statusText);
+            throw new Error('No se pudo iniciar sesión');
+            
+          }
+          return response.json();
+      
+        } catch (error) {
+          console.error('Error al iniciar sesión:', error);
+        }
+      };
+
+
+
+    const actualizarContra=async()=>{
+        event.preventDefault
+        console.log("hola")
+        
+        verify(userData.passNueva,userData.passDuplicada)&&login?
+        console.log("Correcto para cambio: >>> ",await change())
+        :
+        console.log("Algo de lo solicitado no concuerda con lo solicitado")
+        alert("hola")
+    }
 
     return (
         <>
@@ -187,12 +264,23 @@ const Cupons = () => {
                             <h3 className='text-2xl font-lobster text-gray-800 my-[1em]'>
                                 Change password
                             </h3>
+{/* 
+
+
+                            <input type={mostraPassword ? "text" : "password"} className='border-b-2  mb-2 w-full hover:border-yellow-400' placeholder='Password' name='password' onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
+               */}
+
+
+
 
                             <form action='' className='2xl:flex 2xl:flex-col 2xl:items-cente'>
-                                <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder='* Current password' />
-                                <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder='* New password' />
-                                <input className='2xl:w-full border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder='* Enter the new password again' />
-                                <button className='bg-gray-200 2xl:rounded-xl 2xl:h-[2.5em] 2xl:w-full my-[1em] shadow-md shadow-gray-600'>
+                                <input type={mostraPassword ? "text" : "password"} className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' name='passAntigua' onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })} placeholder='* Current password' />
+                                <input type={mostraPassword ? "text" : "password"} className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' name='passNueva' onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })} placeholder='* New password' />
+                                <input type={mostraPassword ? "text" : "password"} className='2xl:w-full border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' name='passDuplicada' onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })} placeholder='* Enter the new password again' />
+                                <button className='text-orange-400' onClick={verPassword}>{mostraPassword ? 'ocutar' : 'mostrar'} passwords</button>
+                                <button className='bg-gray-200 2xl:rounded-xl 2xl:h-[2.5em] 2xl:w-full my-[1em] shadow-md shadow-gray-600'
+                                onClick={()=>actualizarContra()}
+                                >
                                     Save edit
                                 </button>
                             </form>

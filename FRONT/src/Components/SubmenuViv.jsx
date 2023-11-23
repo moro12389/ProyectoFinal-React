@@ -3,15 +3,27 @@ import React, { useState, useEffect } from "react";
 import bolsitacompra from "/img/menu/icons-bolsitacompra.png";
 import { Link, useLocation } from "react-router-dom";
 
+import { useDispatch, useSelector } from 'react-redux';
 
 const Submenu = () => {
   const [botonClick, setBotonClick] = useState(false);
   const [data, setData] = useState([]);
   const [categoria, setCategoria] = useState("");
-  let location =useLocation();
+  
+  //envio datos
+  const dispatch = useDispatch();
 
-  //cambia el submenu CATEGORIA
-  const cat=location.state.id
+  //recepcion datos
+  const cat = useSelector((state) => state.actSeleccion)
+  if (cat === undefined) {
+    window.location.href = '/';
+  }
+
+  
+  
+  // //cambia el submenu CATEGORIA
+  let location =useLocation();
+  // const cat=location.state.id
 
   const [usuarioId, setUsuarioId] = useState("");
 
@@ -40,9 +52,10 @@ const Submenu = () => {
 
   
 
-
-
   const handleBotonClick = async(productoId, usuarioId, quantity) => {
+    if (botonClick) {
+      return; // Evitar múltiples clics simultáneos
+    }
     setBotonClick(true);
     setTimeout(() => {
       setBotonClick(false);
@@ -52,8 +65,6 @@ const Submenu = () => {
     if (img) {
       img.style.transform = 'translate(50vw, -50vh)';
     }
-
-    console.log(productoId," ", usuarioId," ", quantity)
 
 
     try {
@@ -81,8 +92,12 @@ const Submenu = () => {
       const responseData = await response.json();
       console.log(responseData);
     } catch (error) {
-      console.error('Error al agregar al carrito:', error);
+      console.error('Error al procesar la solicitud:', error)
+      res.status(500).json({ error: 'Error interno del servidor' })
     }
+
+    dispatch({ type: 'ACTUALIZAR_NUM_CARRO', payload: productoId })
+
   }
 
 
@@ -109,7 +124,7 @@ const Submenu = () => {
       }
     };
     fetchData(cat);
-  }, []);
+  }, [cat]);
     
     useEffect(() => {
     const fetchCategoria = async (cat) => {
@@ -136,7 +151,7 @@ const Submenu = () => {
 
     
     fetchCategoria(cat);
-  }, []);
+  }, [cat]);
 
 
   return (
@@ -170,8 +185,10 @@ const Submenu = () => {
               </p>
             </div>
             <Link className={`py-2 px-4 mt-10 inline-flex items-center font-sans text-xm text-black bg-white rounded-lg border-2 border-black transition duration-300 ${botonClick ? 'bg-orange-700' : 'hover:bg-yellow-400 '}`}
-              onClick={()=>{handleBotonClick(data._id, usuarioId,1)}} 
-              state={{dataChange: data._id}}
+              onClick={(e) => {
+                e.preventDefault(); // Evita la navegación predeterminada
+                handleBotonClick(data._id, usuarioId, 1)
+              }}
               >
               
               <img src={bolsitacompra} alt="" className="flex items-center p-1" />

@@ -11,6 +11,7 @@ import Footer from './Components/Footer';
 import About from './Components/About/About';
 import Login from './Components/Login';
 import Register from './Components/Register';
+import { NotFound } from './Components/NotFound';
 
 /* //import { Checkout } from './Components/CheckoutRam'; */
 
@@ -18,68 +19,93 @@ import Register from './Components/Register';
 function App() {
   return (
     <div className='App'>
-      
+
       <BrowserRouter>
         <Routes>
           <Route path='/' element={
             <div>
-              
-              <NavBar/>
-              <Hero/>
+
+              <NavBar />
+              <Hero />
               <Menu></Menu>
 
-              <About/>
+              <About />
 
-              <Contact/> 
+              <Contact />
 
-              <Footer/>
+              <Footer />
             </div>
-          }/>
+          } />
           <Route path='/login' element={
             <div>
-              <NavBar/>
-              <Login/>
-              <Footer/>
+              <NavBar />
+              <Login />
+              <Footer />
             </div>
 
 
-          }/>
+          } />
           <Route path='/register' element={
             <div>
-              <NavBar/>
-              <Register/>
-              <Footer/>
+              <NavBar />
+              <Register />
+              <Footer />
             </div>
 
 
-          }/>
+          } />
           <Route path='/cupons' element={
             <div>
-              <NavBar/>
-              <Cupons/>
-              <Footer/>
+              <NavBar />
+              <Cupons />
+              <Footer />
             </div>
 
 
-          }/>
+          } />
           <Route path='/submenu' element={
             <div>
-              <NavBar/>
-              <Submenu/>
-              <Footer/>
+              <NavBar />
+              <Submenu />
+              <Footer />
             </div>
 
-          }/>
+          } />
           <Route path='/checkout' element={
             <div>
-              <NavBar/>
-              <Checkout/>
-              <Footer/>
+              <NavBar />
+              <Checkout />
+              <Footer />
             </div>
-          }/>
+          } />
+
+          <Route path='/about' element={
+            <div>
+              <NavBar />
+              <About />
+              <Footer />
+            </div>
+          } />
+
+          <Route path='/contact' element={
+            <div>
+              <NavBar />
+              <Contact/>
+              <Footer />
+            </div>
+          } />
+
+        <Route path='/404' element={
+            <div>
+              <NavBar />
+              <NotFound/>
+              <Footer />
+            </div>
+          } />
 
         </Routes>
       </BrowserRouter>
+      
     </div>
 
 
