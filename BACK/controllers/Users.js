@@ -152,9 +152,9 @@ const login = async (req, res) => {
         res.status(500).json({ mensaje: 'error interno del servidor', })
     }
 }
-const logOut = () => {
+const logOut = (req, res) => {
     res.clearCookie("token-session")
-    res.json(sessionClose);
+    res.json("sessionClose");
 }
 
 const verifyToken = (req, res, next) => {

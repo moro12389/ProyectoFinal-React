@@ -521,18 +521,16 @@ const Checkout = () => {
         //guarda la compra realizada
         guardaDatosProductoComprado()
             .then(() => console.log("paso1"))
-            .then(() =>  insertaCupon())
+            .catch((error) => console.log(error))
         //Agrega al usuario el cupon usado
         insertaCupon()
             .then(() => console.log("paso2"))
             .catch((error) => console.log(error))
-
+        //Elimina carrito
         eliminaCarrito()
             .then(() => console.log("paso3"))
             .catch((error) => console.log(error))
         
-        
-
     }
 
 

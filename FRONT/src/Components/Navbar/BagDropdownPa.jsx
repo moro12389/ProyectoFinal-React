@@ -12,10 +12,11 @@ const BagDropdown = () => {
   const [bagDropdown, setBagDropdown] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const [preCarrito, setPreCarrito] = useState([]);
   const [carrito, setCarrito] = useState([]);
 
   const [usuarioId, setUsuarioId] = useState("");
+
+  const [cambio, setCambio] = useState([]);
 
 
   useEffect(() => {
@@ -65,7 +66,7 @@ const BagDropdown = () => {
       }
     };
     fetchData();
-  }, [usuarioId]);
+  }, [usuarioId,cambio,cambio]);
 
   useEffect(() => {
 
@@ -92,8 +93,8 @@ const BagDropdown = () => {
     fetchData();
   }, []);
 
-  const handleQuantityChange = (index, newQuantity, basePrice, operation) => {
-    console.log(index, newQuantity);
+  const handleQuantityChange = async(index, newQuantity, basePrice, id, operation) => {
+    console.log(index, newQuantity, basePrice, id, operation)
     newQuantity = Math.max(1, newQuantity);
 
     if (operation === "-") {
@@ -104,18 +105,75 @@ const BagDropdown = () => {
 
     const newPrice = basePrice * newQuantity
 
+
     setCarrito(prevBagDropdown => {
       const updatedBagDropdown = [...prevBagDropdown];
-      updatedBagDropdown[index].quantity = newQuantity;
       updatedBagDropdown[index].newPrice = newPrice;
       return updatedBagDropdown;
     });
+
+    try {
+      const URL = "http://localhost:5172/api/menu/actualizarCarrito"; // Reemplaza con la ruta correcta
+      const response = await fetch(URL,{ 
+        method:"PATCH",
+        credentials: "include",
+        body: JSON.stringify({
+          usuarioId, 
+          productoId:id,
+          quantity:newQuantity
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        console.error('Error en la respuesta:', response.status, response.statusText);
+        throw new Error('No se pudo agregar al carrito');
+      }
+      const data = await response.json();
+      setCambio(data)
+      console.log(data)
+
+    } catch (error) {
+      console.error('Error al agregar al carrito:', error);
+    }
+
+
   };
 
-  const eliminarDeCarrito = (index, id) => {
-    const nuevoCarrito = carrito.filter(item => item.id !== id)
-    setCarrito(nuevoCarrito)
-    console.log('Elemento eliminado del carrito:', id)
+
+
+  const eliminarDeCarrito = async(index, id) => {
+    try {
+      const URL = "http://localhost:5172/api/menu/eliminarCarritoUserProducto/"; // Reemplaza con la ruta correcta
+      const response = await fetch(URL,{ 
+        method:"DELETE",
+        credentials: "include",
+        body: JSON.stringify({
+          usuarioId, 
+          productoId:id,
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        console.error('Error en la respuesta:', response.status, response.statusText);
+        throw new Error('No se pudo agregar al carrito');
+      }
+      const data = await response.json();
+      setCambio(data)
+      console.log(data)
+
+    } catch (error) {
+      console.error('Error al agregar al carrito:', error);
+    }
+
+    // const nuevoCarrito = carrito.filter(item => item.id !== id)
+    // setCarrito(nuevoCarrito)
+    // console.log('Elemento eliminado del carrito:', id)
   }
 
 
@@ -155,66 +213,64 @@ const BagDropdown = () => {
   const checkOut = async () => {
     //Borra productos userId de base de dato
     event.preventDefault
-    try {
-      const URL = "http://localhost:5172/api/menu/eliminarCarritoUser/"; // Reemplaza con la ruta correcta
-      const response = await fetch(URL,{ 
-        method:"DELETE",
-        credentials: "include",
-      });
+    // try {
+    //   const URL = "http://localhost:5172/api/menu/eliminarCarritoUser/"; // Reemplaza con la ruta correcta
+    //   const response = await fetch(URL,{ 
+    //     method:"DELETE",
+    //     credentials: "include",
+    //   });
 
-      if (!response.ok) {
-        console.error('Error en la respuesta:', response.status, response.statusText);
-        throw new Error('No se pudo agregar al carrito');
-      }
+    //   if (!response.ok) {
+    //     console.error('Error en la respuesta:', response.status, response.statusText);
+    //     throw new Error('No se pudo agregar al carrito');
+    //   }
 
-      // Manejar la respuesta del backend si es necesario
-      const responseData = await response.json();
-      console.log(responseData);
-    } catch (error) {
-      console.error('Error al agregar al carrito:', error);
-    }
+    // } catch (error) {
+    //   console.error('Error al agregar al carrito:', error);
+    // }
+
 
     //Reorganiza datos
-    const Data = carrito.map(item => ({
-      productoId: item.productoId,
-      usuarioId: item.usuarioId,
-      quantity: item.quantity,
-    }));
+    // const Data = carrito.map(item => ({
+    //   productoId: item.productoId,
+    //   usuarioId: item.usuarioId,
+    //   quantity: item.quantity,
+    // }));
 
-    console.log("datass",Data)
 
-    Data.forEach(async (element) => {
-      // Pushea datos finales a carrito userId base de dato
-      console.log("datass",Data)
-      try {
-        const URL = "http://localhost:5172/api/menu/cargarCarrito"; // Reemplaza con la ruta correcta
-        const response = await fetch(URL, {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            productoId: element.productoId,
-            usuarioId: element.usuarioId,
-            quantity: element.quantity,
-            option:true,
-          }),
-        });
+    // console.log("Data",Data)
 
-        if (!response.ok) {
-          console.error('Error en la respuesta:', response.status, response.statusText);
-          throw new Error('No se pudo agregar al carrito');
-        }
+    // Data.forEach(async (element) => {
+    //   // Pushea datos finales a carrito userId base de dato
+    //   try {
+    //     const URL = "http://localhost:5172/api/menu/cargarCarrito"; // Reemplaza con la ruta correcta
+    //     const response = await fetch(URL, {
+    //       method: "POST",
+    //       credentials: "include",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         productoId: element.productoId,
+    //         usuarioId: element.usuarioId,
+    //         quantity: element.quantity,
+    //         option:true,
+    //       }),
+    //     });
 
-        // Manejar la respuesta del backend si es necesario
-        const responseData = await response.json();
-        console.log(responseData);
-      } catch (error) {
-        console.error('Error al agregar al carrito:', error);
-      }
-    });
-    window.location.href = '/checkout';
+    //     if (!response.ok) {
+    //       console.error('Error en la respuesta:', response.status, response.statusText);
+    //       throw new Error('No se pudo agregar al carrito');
+    //     }
+
+    //     // Manejar la respuesta del backend si es necesario
+    //     const responseData = await response.json();
+    //     console.log(responseData);
+    //   } catch (error) {
+    //     console.error('Error al agregar al carrito:', error);
+    //   }
+    // });
+    window.location.href = '/checkout'
   }
 
 
@@ -234,11 +290,12 @@ const BagDropdown = () => {
 
                   <div className='flex'>
                     <img src={item.image} alt={item.title} className='w-16 h-16 rounded-full object-cover' />
-                    <button className='w-6 h-6 rounded-[50%] shadow-sm shadow-black border flex items-center justify-center relative left-36'
+                    <Link className='w-6 h-6 rounded-[50%] shadow-sm shadow-black border flex items-center justify-center relative left-36'
                       onClick={() => eliminarDeCarrito(index, item.id)}
+                      state={{dataChange1: item._id}}
                     >
                       x
-                    </button>
+                    </Link>
                   </div>
 
                   <div className='flex flex-col'>
@@ -249,7 +306,8 @@ const BagDropdown = () => {
                       {/* Botón para decrementar cantidad */}
                       <button
                         className='2xl:w-6 2xl:h-6 rounded-[50%] bg-gray-300 2xl:text-center 2xl:items-center content-center 2xl:text-xl'
-                        onClick={() => handleQuantityChange(index, item.quantity, item.price, "-")}
+                        onClick={() => handleQuantityChange(index, item.quantity, item.price, item.id, "-")}
+                        disabled={item.quantity==1 ? 'disable':''}
                       >
                         -
                       </button>
@@ -259,7 +317,7 @@ const BagDropdown = () => {
                       {/* Botón para incrementar cantidad */}
                       <button
                         className='2xl:w-6 2xl:h-6 rounded-[50%] bg-yellow-300 2xl:mr-2 2xl:text-center content-center 2xl:text-xl'
-                        onClick={() => handleQuantityChange(index, item.quantity, item.price, "+")}
+                        onClick={() => handleQuantityChange(index, item.quantity, item.price, item.id, "+")}
                       >
                         +
                       </button>

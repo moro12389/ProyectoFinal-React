@@ -5,13 +5,10 @@ import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
 import { Icon } from '@iconify/react';
-import {
-  Link
-} from "react-router-dom";
 import { motion } from 'framer-motion'
 import BagDropdown from './BagDropdownPa';
-import Cookies from 'js-cookie'
 
+import { Link,useLocation } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -21,6 +18,12 @@ const NavBar = () => {
   const [carrito, setCarrito] = useState([]);
   const [usuarioId, setUsuarioId] = useState("");
   const [dropdownClick, setdropdownClick] = useState(false);
+
+  let location =useLocation();
+
+  //actualiza num de carrito
+  const act=location.state
+  console.log(act)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,17 +78,16 @@ const NavBar = () => {
       console.error("Error CADENA Nav:", error);
     }
     
-  },[usuarioId]);
+  },[usuarioId,act]);
 
 
   const loginLogout = async () => {
-    console.log(usuarioId == "")
     if (usuarioId == "") {
     } else {
       try {
         const URL = "http://localhost:5172/api/menu/logOut"
         const response = await fetch(URL, {
-          method: "POST",
+          method: "GET",
           credentials: 'include',
         });
 
@@ -93,6 +95,7 @@ const NavBar = () => {
           console.error('Error en la respuesta:', response.status, response.statusText);
           throw new Error('No se pudo obtener la respuesta esperada');
         }
+        window.location.href = '/'
       } catch (error) {
         console.error('Error no se pudo obtener:', error);
       }

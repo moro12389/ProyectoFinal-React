@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 //import {motion} from "framer-motion";
 import bolsitacompra from "/img/menu/icons-bolsitacompra.png";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 
 const Submenu = () => {
@@ -9,6 +9,9 @@ const Submenu = () => {
   const [data, setData] = useState([]);
   const [categoria, setCategoria] = useState("");
   let location =useLocation();
+
+  //cambia el submenu CATEGORIA
+  const cat=location.state.id
 
   const [usuarioId, setUsuarioId] = useState("");
 
@@ -38,8 +41,6 @@ const Submenu = () => {
   
 
 
-  //cambia el submenu CATEGORIA
-  const cat=location.state.id
 
   const handleBotonClick = async(productoId, usuarioId, quantity) => {
     setBotonClick(true);
@@ -168,11 +169,14 @@ const Submenu = () => {
                 })}
               </p>
             </div>
-            <button className={`py-2 px-4 mt-10 inline-flex items-center font-sans text-xm text-black bg-white rounded-lg border-2 border-black transition duration-300 ${botonClick ? 'bg-orange-700' : 'hover:bg-yellow-400 '}`}
-              onClick={()=>{handleBotonClick(data._id, usuarioId,1)}} >
+            <Link className={`py-2 px-4 mt-10 inline-flex items-center font-sans text-xm text-black bg-white rounded-lg border-2 border-black transition duration-300 ${botonClick ? 'bg-orange-700' : 'hover:bg-yellow-400 '}`}
+              onClick={()=>{handleBotonClick(data._id, usuarioId,1)}} 
+              state={{dataChange: data._id}}
+              >
+              
               <img src={bolsitacompra} alt="" className="flex items-center p-1" />
-              <span >Add To Cart</span>
-            </button>
+              <span>Add To Cart</span>
+            </Link>
           </div>
         ))}
       </div>
