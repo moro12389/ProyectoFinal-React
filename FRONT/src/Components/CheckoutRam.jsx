@@ -318,7 +318,7 @@ const Checkout = () => {
             productoId: item.productoId,
             quantity: item.quantity,
         }))
-        
+
         const URL = "http://localhost:5172/api/menu/actualizarRestarStockProducto"
         try {
             const response = await fetch(`${URL}`, {
@@ -356,10 +356,9 @@ const Checkout = () => {
         try {
             const URL = "http://localhost:5172/api/menu/finalizarCompra"
             const valorDelivery = (checkboxSeleccionado ? delivery : 0)
-            const del = valorDelivery > 0 ? true : false
-            const price = totalPrice - valorDelivery
+            const del = (valorDelivery > 0) ? true : false
+            const price = (totalPrice - valorDelivery)
             const descontadoCupon = selectedOption ? selectedOption.discount : 0
-
 
             const response = await fetch(URL, {
                 method: "POST",
@@ -408,7 +407,7 @@ const Checkout = () => {
 
         //Elimina carrito
         eliminaCarrito()
-            .then(() => console.log("paso3"))
+            .then(() => console.log("paso4"))
             .catch((error) => console.log(error))
 
     }
@@ -552,7 +551,7 @@ const Checkout = () => {
                                 <strong className='text-orange-500'>{dataText.subtitle}</strong> <strong>{dataText.number}</strong>
                             </div>
                         </div>
-                        <div className='2xl:grid 2xl:grid-cols-2 2xl:gap-4 2xl:justify-center 2xl:p-[1em] 2xl:px-[10.5%]'>
+                        <div className='2xl:grid 2xl:grid-cols-2 sm:grid-cols-1 2xl:gap-4 2xl:justify-center 2xl:p-[1em] 2xl:px-[10.5%]'>
                             <div className='bg-[#050e28] 2xl:p-2 rounded-lg'>
                                 <div className='bg-white 2xl:p-4 rounded-lg'>
                                     <p>{dataText.deTitle}</p>
@@ -595,52 +594,62 @@ const Checkout = () => {
                             <div className='bg-gray-500 2xl:p-2 rounded-lg'>
                                 <div className='bg-white 2xl:p-3  2xl:flex 2xl:flex-col 2xl:justify-center 2xl:items-center rounded-lg'>
                                     {carrito.length > 0 && (
-                                        <div className='z-[0] max-h-[400px] w-full overflow-y-auto '>
+                                        <div className='max-h-[400px] min-w-[80%] overflow-y-auto'>
                                             {carrito.map((item, index) => (
-                                                <div key={index} className='flex flex-row'>
+                                                <div key={index} className='flex flex-row '>
 
-                                                    <div className='flex'>
+                                                    <div className='flex mr-8'>
                                                         <img src={item.image} alt={item.title} className='w-16 h-16 rounded-full object-cover' />
-                                                        <button className='w-6 h-6 rounded-[50%] shadow-sm shadow-black border flex items-center justify-center relative left-36'
-                                                            onClick={() => eliminarDeCarrito(index, item.id)}
-                                                        >
-                                                            x
-                                                        </button>
+
                                                     </div>
 
                                                     <div className='flex flex-col'>
                                                         <div>
                                                             <h4 className='mr-4'>{item.title}</h4>
                                                         </div>
-                                                        <div className='flex mt-3 mb-6'>
-                                                            {/* Botón para decrementar cantidad */}
-                                                            <button
-                                                                className='2xl:w-6 2xl:h-6 rounded-[50%] bg-gray-300 2xl:text-center 2xl:items-center content-center 2xl:text-xl'
-                                                                onClick={() => handleQuantityChange(index, item.quantity, item.price, "-")}
+                                                        <div className='flex mt-3 mb-6 '>
+                                                            <div className='w-36 flex'>
+                                                                {/* Botón para decrementar cantidad */}
+                                                                <button
+                                                                    className='2xl:w-6 2xl:h-6 rounded-[50%] bg-gray-300 2xl:text-center 2xl:items-center content-center 2xl:text-xl'
+                                                                    onClick={() => handleQuantityChange(index, item.quantity, item.price, item.id, "-")}
+                                                                    disabled={item.quantity == 1 ? 'disable' : ''}
+                                                                >
+                                                                    -
+                                                                </button>
+
+                                                                <span className='2xl:mx-2'>{item.quantity > 0 ? item.quantity : 1}</span>
+
+                                                                {/* Botón para incrementar cantidad */}
+                                                                <button
+                                                                    className='2xl:w-6 2xl:h-6 rounded-[50%] bg-yellow-300 2xl:mr-2 2xl:text-center content-center 2xl:text-xl'
+                                                                    onClick={() => handleQuantityChange(index, item.quantity, item.price, item.id, "+")}
+                                                                >
+                                                                    +
+                                                                </button>
+
+                                                                <span className=''>{item.newPrice.toLocaleString('es-ES', {
+                                                                    minimumFractionDigits: 2,
+                                                                    maximumFractionDigits: 2
+                                                                })}
+                                                                </span>
+                                                            </div>
+
+
+                                                            <button className='w-6 h-6 rounded-[50%] shadow-sm shadow-black border flex items-center justify-center left-15'
+                                                                onClick={() => eliminarDeCarrito(index, item.id)}
+                                                                state={{ dataChange1: item._id }}
                                                             >
-                                                                -
+                                                                x
                                                             </button>
 
-                                                            <span className='2xl:mx-2'>{item.quantity > 0 ? item.quantity : 1}</span>
-
-                                                            {/* Botón para incrementar cantidad */}
-                                                            <button
-                                                                className='2xl:w-6 2xl:h-6 rounded-[50%] bg-yellow-300 2xl:mr-2 2xl:text-center content-center 2xl:text-xl'
-                                                                onClick={() => handleQuantityChange(index, item.quantity, item.price, "+")}
-                                                            >
-                                                                +
-                                                            </button>
-
-                                                            <span className=''>{item.newPrice.toLocaleString('es-ES', {
-                                                                minimumFractionDigits: 2,
-                                                                maximumFractionDigits: 2
-                                                            })}
-
-                                                            </span>
                                                         </div>
+
                                                     </div>
                                                 </div>
+
                                             ))}
+                                            
                                         </div>
                                     )}
 

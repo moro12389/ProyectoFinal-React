@@ -168,29 +168,30 @@ const Submenu = () => {
               <div className="w-full h-px bg-gray-300 my-4"></div>
               <span className="">{data.ingredientesProducto}</span>
               <div className="w-full h-px bg-gray-300 my-4"></div>
-              <span className="text-2xl">{data.pesoProducto}</span>
+              <span className="text-2xl">{data.pesoProducto} g</span>
             </div>
             <div className=" absolute top-0 right-0 w-full p-2 bg-gray-800 rounded-xl text-white text-center hover:opacity-0">
               <img id="imageId" className={`w-40 h-40 rounded-full -mt-16 ml-8 ${botonClick ? 'transform transition-transform duration-700' : ''}`} src={data.imgUrlProducto} alt="" />
               <p className="mt-2 text-sm text-gray-400">{categoria.nombreCategoria}</p>
               <p className="text-2xl">{data.nombreProducto}</p>
               <p className="text-2xl pt-2" >
-                {data.valorProducto.toLocaleString('es-ES', {
+                ${data.valorProducto.toLocaleString('es-ES', {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
                 })}
               </p>
             </div>
-            <Link className={`py-2 px-4 mt-10 inline-flex items-center font-sans text-xm text-black bg-white rounded-lg border-2 border-black transition duration-300 ${botonClick ? 'bg-orange-700' : 'hover:bg-yellow-400 '}`}
+            <button className={`py-2 px-4 mt-10 inline-flex items-center font-sans text-xm text-black bg-white rounded-lg border-2 border-black transition duration-300 ${botonClick ? 'bg-orange-700' : 'hover:bg-yellow-400 '}`}
               onClick={(e) => {
                 e.preventDefault();
                 handleBotonClick(data._id, usuarioId, 1)
               }}
+              disabled={data.stockProducto <= 11 ? 'disable' : ''}
             >
 
               <img src={bolsitacompra} alt="" className="flex items-center p-1" />
-              <span>Add To Cart</span>
-            </Link>
+              <span>{data.stockProducto <= 10 ? <strong className="text-red-600">Sin Stock</strong> : 'Add To Cart'}</span>
+            </button>
           </div>
         ))}
       </div>

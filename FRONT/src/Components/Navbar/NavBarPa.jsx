@@ -177,10 +177,10 @@ const NavBar = () => {
         </div>
 
         {isOpen ? <motion.div initial={{ scale: 0, opacity: 0, x: "-50%", y: "-50%" }} animate={{ scale: 1, opacity: 1 }} className='w-full h-screen flex flex-col justify-between z-30 items-center
-	   fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark/90 rounded-lg backdrop backdrop-blur-md py-32'>
+	   fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-rounded-lg bg-white backdrop backdrop-blur-md py-32'>
           <nav className='flex items-center flex-col justify-center'>
             <div className="pt-2 absolute top-1 mx-auto text-gray-600">
-              <input className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none xs:px-3"
+              <input className="border-2 border-gray-300 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none xs:px-3"
                 type="search" name="search" placeholder="Search" />
               <button type="submit" className="absolute right-0 top-0 mt-5 mr-4">
                 <svg className="text-gray-600 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
@@ -276,10 +276,10 @@ const NavBar = () => {
 
                       </Menu.Item>
                     ))}
-                    <div className="pt-2 relative top-1 mx-auto text-gray-600">
-                      <input className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+                    <div className="pt-2 relative top-1 mx-auto text-gray-600 flex justify-center">
+                      <input className="border-2 border-gray-300 bg-white mb-2 rounded-lg text-sm focus:outline-none"
                         type="search" name="search" placeholder="Search" />
-                      <button type="submit" className="absolute right-0 top-0 mt-5 mr-4">
+                      <button type="submit" className="absolute right-0 top-0 mt-5 mr-6">
                         <svg className="text-gray-600 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
                           version="1.1" id="Capa_1" x="0px" y="0px"
                           viewBox="0 0 56.966 56.966"

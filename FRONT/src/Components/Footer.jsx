@@ -7,7 +7,7 @@ import creditCards from '/img/footer/creditcards.png'
 const Footer = () => {
   // const footerMenu = ["Home", "Menu", "About Us", "Contacts"]
 
-  const footerMenu = { "/": "Home", "/menu": "Menu", "/about": "About Us", "/contacts": "Contacts" }
+  const footerMenu = { "/": "Home", "/": "Menu", "/about": "About Us", "/contacts": "Contacts" }
 
   return (
     <>
