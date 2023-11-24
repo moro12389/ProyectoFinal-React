@@ -13,25 +13,13 @@ const ofertaProductosSchema=new mongoose.Schema({
         type:String,
         required:[true,'Por favor ingrese un los ingredientes'],
     },
-    detallesOferta:{
-        type:String,
-        required:[true,'Por favor ingrese un los ingredientes'],
-    },
     detallesContNegritaOferta:{
         type:String,
         required:[true,'Por favor ingrese un los ingredientes'],
     },
-    categoriaOferta:{
-        type:String,
-        required:[true,'Por favor ingrese una categoria del Oferta'],
-    },
     stockOferta:{
         type:Number,
         required:[true,'Por favor ingrese el número de Ofertas'],
-    },
-    pesoOferta:{
-        type:Number,
-        required:[true,'Por favor ingrese peso en Gramos del Oferta'],
     },
     valorOferta:{
         type:Number,

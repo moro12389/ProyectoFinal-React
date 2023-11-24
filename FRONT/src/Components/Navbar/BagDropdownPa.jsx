@@ -10,12 +10,10 @@ const BagDropdown = () => {
   const [data, setData] = useState([]);
   const [bagDropdown, setBagDropdown] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-
   const [carrito, setCarrito] = useState([]);
-
   const [usuarioId, setUsuarioId] = useState("");
-
   const [cambio, setCambio] = useState([]);
+
   const dispatch = useDispatch();
 
   const act = useSelector((state) => state.changeNum)

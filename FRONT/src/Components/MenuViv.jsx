@@ -34,6 +34,7 @@ const Menu = () => {
 
   const cambiarCategoria=(idCategoria)=>{
     dispatch({ type: 'CAMBIAR_SELECCION', payload: idCategoria })
+    localStorage.setItem('cachedData', JSON.stringify(idCategoria))
   }
 
   return (

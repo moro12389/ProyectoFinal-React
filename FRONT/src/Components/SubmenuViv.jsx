@@ -9,30 +9,27 @@ const Submenu = () => {
   const [botonClick, setBotonClick] = useState(false);
   const [data, setData] = useState([]);
   const [categoria, setCategoria] = useState("");
-  
+  const [usuarioId, setUsuarioId] = useState("");
   //envio datos
   const dispatch = useDispatch();
 
-  //recepcion datos
-  const cat = useSelector((state) => state.actSeleccion)
-  if (cat === undefined) {
-    window.location.href = '/';
-  }
 
-  
-  
+
+  const refresh = useSelector((state) => state.actSeleccion)
+  const cate = localStorage.getItem('cachedData')
+  const cat = cate.replace(/^"|"$/g, '');
+
   // //cambia el submenu CATEGORIA
-  let location =useLocation();
+  // let location =useLocation();
   // const cat=location.state.id
 
-  const [usuarioId, setUsuarioId] = useState("");
 
   useEffect(() => {
-    
-    const fetchData = async() => {
+
+    const fetchData = async () => {
       try {
         const URL = "http://localhost:5172/api/menu/userId"
-        const response = await fetch(`${URL}`,{ 
+        const response = await fetch(`${URL}`, {
           method: "GET",
           credentials: 'include',
         })
@@ -50,9 +47,9 @@ const Submenu = () => {
     fetchData();
   }, []);
 
-  
 
-  const handleBotonClick = async(productoId, usuarioId, quantity) => {
+
+  const handleBotonClick = async (productoId, usuarioId, quantity) => {
     if (botonClick) {
       return; // Evitar múltiples clics simultáneos
     }
@@ -79,7 +76,7 @@ const Submenu = () => {
           productoId,
           usuarioId,
           quantity,
-          option:true,
+          option: true,
         }),
       });
 
@@ -103,10 +100,10 @@ const Submenu = () => {
 
   useEffect(() => {
 
-    const fetchData = async(cat) => {
+    const fetchData = async (cat) => {
       try {
         const URL = "http://localhost:5172/api/menu/obtenerProductosCategoria/"
-        const response = await fetch(`${URL}${cat}`,{
+        const response = await fetch(`${URL}${cat}`, {
           method: 'GET',
           credentials: 'include',
         });
@@ -124,17 +121,17 @@ const Submenu = () => {
       }
     };
     fetchData(cat);
-  }, [cat]);
-    
-    useEffect(() => {
+  }, [refresh]);
+
+  useEffect(() => {
     const fetchCategoria = async (cat) => {
       try {
         const URL = "http://localhost:5172/api/menu/obtenerCategoria/"
-        
-        const response = await fetch(`${URL}${cat}`,{
+
+        const response = await fetch(`${URL}${cat}`, {
           method: "GET",
           credentials: 'include',
-      });
+        });
 
         if (!response.ok) {
           console.error('Error en la respuesta:', response.status, response.statusText);
@@ -149,9 +146,9 @@ const Submenu = () => {
       }
     };
 
-    
+
     fetchCategoria(cat);
-  }, [cat]);
+  }, [refresh]);
 
 
   return (
@@ -189,8 +186,8 @@ const Submenu = () => {
                 e.preventDefault(); // Evita la navegación predeterminada
                 handleBotonClick(data._id, usuarioId, 1)
               }}
-              >
-              
+            >
+
               <img src={bolsitacompra} alt="" className="flex items-center p-1" />
               <span>Add To Cart</span>
             </Link>

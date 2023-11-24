@@ -157,6 +157,7 @@ const NavBar = () => {
   const cambiarCategoria=(idCategoria)=>{
     setIsOpen(false)
     dispatch({ type: 'CAMBIAR_SELECCION', payload: idCategoria })
+    localStorage.setItem('cachedData', JSON.stringify(idCategoria))
   }
 
   return (
