@@ -108,7 +108,7 @@ const Hero = () => {
     }, [])
 
     useEffect(() => {
-        fetch('Json/Data.json')
+        fetch('http://localhost:5172/api/menu/obtenerOfertas')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('no se conecto');
@@ -116,8 +116,8 @@ const Hero = () => {
                 return response.json();
             })
             .then(data => {
-                setDescMenu(data['menu']);
-                setData(data['data'][0]);
+                setDescMenu(data);
+                /* setData(data['data'][0]); */
             })
 
             .catch(error => console.error('Error no se pudo obtener:', error)); // Manejo de errores en caso de falla en la solicitud
@@ -375,10 +375,10 @@ const Hero = () => {
                                 lg:bottom-[16em] lg:right-[29em] lg:h-10 lg:w-10 lg:invisible
                                 xl:bottom-[17em] xl:right-[39em] xl:h-10 xl:w-10 xl:visible
                                 2xl:bottom-[14em] 2xl:right-[45em] 2xl:h-10 2xl:w-10">
-                        <div className="absolute w-2 h-2 -bottom-8 -left-6 bg-gray-300 rounded-full "></div>
-                        <div className="absolute w-2 h-2 -bottom-5 -left-6 bg-gray-400 rounded-full opacity-50"></div>
-                        <div className="absolute w-2 h-2 -bottom-2 -left-6 bg-gray-500 rounded-full opacity-25"></div>
-                        <div className="absolute w-2 h-2 -bottom-8 -left-8 rounded-full">
+                        <div class="absolute w-2 h-2 -bottom-8 -left-6 bg-gray-300 rounded-full "></div>
+                        <div class="absolute w-2 h-2 -bottom-5 -left-6 bg-gray-400 rounded-full opacity-50"></div>
+                        <div class="absolute w-2 h-2 -bottom-2 -left-6 bg-gray-500 rounded-full opacity-25"></div>
+                        <div class="absolute w-2 h-2 -bottom-8 -left-8 rounded-full">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" stroke="currentColor" class="w-6 h-6 mx-auto text-white">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-9 9-9-9"></path>
                             </svg>
