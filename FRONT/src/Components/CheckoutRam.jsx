@@ -45,7 +45,7 @@ const Checkout = () => {
 
     const [pagoModal, setPagoModal] = useState(false)
 
-    const [puntos,setPuntos]=useState(0)
+    const [puntos, setPuntos] = useState(0)
 
 
     useEffect(() => {
@@ -142,7 +142,7 @@ const Checkout = () => {
             }
         }
         fetchData()
-    }, [usuarioId,puntosUser])
+    }, [usuarioId, puntosUser])
 
     useEffect(() => {
 
@@ -167,7 +167,7 @@ const Checkout = () => {
             }
         }
         fetchData()
-    }, [usuarioId,puntosUser])
+    }, [usuarioId, puntosUser])
 
 
 
@@ -193,7 +193,7 @@ const Checkout = () => {
                 newPrice: item.valorProducto * item.quantity,
                 stock: item.stockProducto,
                 quantity: item.quantity,
-                puntosProducto:item.pointProducto
+                puntosProducto: item.pointProducto
             }))
             await setCarrito(updatedData0)
             console.log(carrito)
@@ -201,7 +201,7 @@ const Checkout = () => {
 
         // Llama a la función en el lugar adecuado de tu código
         obtenerProductosEnCarrito()
-    }, [data, bagDropdown,puntosUser])
+    }, [data, bagDropdown, puntosUser])
 
     useEffect(() => {
         const newSubTotalPrice = carrito.reduce((total, item) => total + (item.price * item.quantity), 0)
@@ -248,48 +248,48 @@ const Checkout = () => {
 
 
     const handleChange = selectedOption => {
-        setSelectedOption(selectedOption);
-        setDescuento(selectedOption ? selectedOption.discount : 0);
-      };
-      
-      const SelectCupon = () => {
+        setSelectedOption(selectedOption)
+        setDescuento(selectedOption ? selectedOption.discount : 0)
+    }
+
+    const SelectCupon = () => {
         return (
-          <Select
-            options={textDropdown}
-            value={selectedOption}
-            onChange={handleChange}
-            placeholder="Selecciona un cupón"
-          />
-        );
-      };
+            <Select
+                options={textDropdown}
+                value={selectedOption}
+                onChange={handleChange}
+                placeholder="Selecciona un cupón"
+            />
+        )
+    }
 
 
     const eliminaCarrito = async () => {
         try {
-            const URL = "http://localhost:5172/api/menu/eliminarCarritoUser/"; // Reemplaza con la ruta correcta
+            const URL = "http://localhost:5172/api/menu/eliminarCarritoUser/" // Reemplaza con la ruta correcta
             const response = await fetch(URL, {
                 method: "DELETE",
                 credentials: "include",
-            });
+            })
 
             if (!response.ok) {
-                console.error('Error en la respuesta:', response.status, response.statusText);
-                throw new Error('No se pudo agregar al carrito');
+                console.error('Error en la respuesta:', response.status, response.statusText)
+                throw new Error('No se pudo agregar al carrito')
             }
 
-            const responseData = await response.json();
-            console.log(responseData);
-            window.location.href = '/';
+            const responseData = await response.json()
+            console.log(responseData)
+            window.location.href = '/'
         } catch (error) {
-            console.error('Error al agregar al carrito:', error);
+            console.error('Error al agregar al carrito:', error)
         }
     }
 
     const insertaCupon = async () => {
         try {
             const URL = "http://localhost:5172/api/menu/agregarCuponUsado"
-            const punto = await carrito.reduce((total, item) => total + (item.puntosProducto*item.quantity), 0)
-            
+            const punto = await carrito.reduce((total, item) => total + (item.puntosProducto * item.quantity), 0)
+
             const response = await fetch(URL, {
                 method: "POST",
                 credentials: 'include',
@@ -297,7 +297,7 @@ const Checkout = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    cuponId:selectedOption ? selectedOption.value : "nada",
+                    cuponId: selectedOption ? selectedOption.value : "nada",
                     puntosSumados: punto,
                 }),
             })
@@ -313,12 +313,45 @@ const Checkout = () => {
         }
     }
 
+    const quitarStock = async () => {
+        const obCanasta = carrito.map(item => ({
+            productoId: item.productoId,
+            quantity: item.quantity,
+        }))
+        
+        const URL = "http://localhost:5172/api/menu/actualizarRestarStockProducto"
+        try {
+            const response = await fetch(`${URL}`, {
+                method: "PATCH",
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    obCanasta
+                }),
+            })
+
+            if (!response.ok) {
+                console.error('Error en la respuesta:', response.status, response.statusText)
+                throw new Error('No se pudo obtener la respuesta esperada')
+            }
+
+            // const data = await response.json()
+            // console.log(data)
+
+        } catch (error) {
+            console.error('Error en la solicitud del producto:', error)
+        }
+    }
+
+
     const guardaDatosProductoComprado = async () => {
         const Data = carrito.map(item => ({
-              usuarioId: item.usuarioId,
-              productoId: item.productoId,
-              quantity: item.quantity,
-          }));
+            usuarioId: item.usuarioId,
+            productoId: item.productoId,
+            quantity: item.quantity,
+        }))
 
         try {
             const URL = "http://localhost:5172/api/menu/finalizarCompra"
@@ -366,7 +399,13 @@ const Checkout = () => {
         //Agrega al usuario el cupon usado
         insertaCupon()
             .then(() => console.log("paso2"))
-            // .catch((error) => console.log(error))
+            .catch((error) => console.log(error))
+
+        //Quita productos del stock
+        quitarStock()
+            .then(() => console.log("paso3"))
+            .catch((error) => console.log(error))
+
         //Elimina carrito
         eliminaCarrito()
             .then(() => console.log("paso3"))
@@ -460,7 +499,7 @@ const Checkout = () => {
                 <div className='2xl:p-4'>
                     back to <strong>Home</strong>
                 </div>
-                {pagoModal&&carrito.length>=1 ? (
+                {pagoModal && carrito.length >= 1 ? (
                     <div className="min-h-screen flex items-center justify-center">
 
                         {/* Fondo desenfocado */}

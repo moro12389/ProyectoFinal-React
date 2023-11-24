@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 //import {motion} from "framer-motion";
 import bolsitacompra from "/img/menu/icons-bolsitacompra.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -183,7 +183,7 @@ const Submenu = () => {
             </div>
             <Link className={`py-2 px-4 mt-10 inline-flex items-center font-sans text-xm text-black bg-white rounded-lg border-2 border-black transition duration-300 ${botonClick ? 'bg-orange-700' : 'hover:bg-yellow-400 '}`}
               onClick={(e) => {
-                e.preventDefault(); // Evita la navegación predeterminada
+                e.preventDefault();
                 handleBotonClick(data._id, usuarioId, 1)
               }}
             >

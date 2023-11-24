@@ -67,7 +67,6 @@ const cargarProducto = async (req, res) => {
         return res.status(400).json({ error: 'Por favor ingrese los datos de los campos ', datosVacios })
     }
 
-
     try {
         const resultado = await db_productos.create(
             { nombreProducto, categoriaProducto, ingredientesProducto, pesoProducto, valorProducto, ofertaDescuentoProducto, stockProducto, imgUrlProducto, pointProducto }
@@ -98,8 +97,29 @@ const actualizarProducto = async (req, res) => {
     const { id } = req.params
     const resultado = await db_productos.findOneAndUpdate({ _id: id }, { ...req.body })
     res.status(200).json(resultado)
-    console.log(resultado)
 }
+
+const actualizarStockProducto = async (req, res) => {
+    const obCanasta = req.body.obCanasta;
+    try {
+        for (const item of obCanasta) {
+            const resultado = await db_productos.findOneAndUpdate(
+                { _id: item.productoId },
+                {
+                    $inc: {
+                        "stockProducto": -parseInt(item.quantity, 10) || 0
+                    }
+                },
+                { new: true }
+            );
+            console.log('Stock actualizado: ' + item.productoId)
+        }
+        res.status(200).json({ mensaje: 'Stock actualizado correctamente' });
+    } catch (error) {
+        console.error('Error al actualizar el stock:', error);
+    }
+}
+
 
 module.exports = {
 
@@ -109,5 +129,6 @@ module.exports = {
     cargarProducto,
     eliminarProducto,
     actualizarProducto,
-    
+    actualizarStockProducto,
+
 }

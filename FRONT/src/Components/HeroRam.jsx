@@ -3,42 +3,109 @@ import fondo from '/otro2.svg'; // Asegúrate de que la ruta sea correcta
 import iconBolso from '/Icons/icons8-bolsa-de-compras-48.png'
 import iconDelivery from '/Icons/icons8-fast-delivery-64.png'
 
-import { motion } from "framer-motion"
+import { Link} from "react-router-dom";
 
+import { motion } from "framer-motion"
+import { useDispatch} from 'react-redux';
 
 
 const Hero = () => {
-    const [descMenu, setDescMenu] = useState([]); // Define un estado para almacenar la información de las tarjetas de trabajo
+    const [descMenu, setDescMenu] = useState([]);
+    const [categorias, setCategorias] = useState([]);
     const [data, setData] = useState({ number: '' });
     const [ofert, setOfert] = useState(0);
+    const [usuarioId, setUsuarioId] = useState("")
 
-// ///////////////////////
-//     const [miCookieValor, setMiCookieValor] = useState("");
+    const dispatch = useDispatch();
 
-//     useEffect(() => {
-//         const obtenerCookie = async (nombre) => {
-//             const cookies = await document.cookie.split(';');
-//             for (const cookie of cookies) {
-//                 const [clave, valor] = await cookie.trim().split('=');
-//                 if (clave === nombre) {
-//                     return valor;
-//                 }
-//             }
-//             return null;
-//         };
-//         (async () => {
-//             var token = await obtenerCookie('token-session')
-//             setMiCookieValor(token)
-//             console.log(token)
-//             setTimeout(()=>{if (miCookieValor == '' || miCookieValor == null) {
-//                 window.location.href = "/login"
-//             }}, 5000)
-//             token = await obtenerCookie('token-session')
-            
-//         })();
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const URL = "http://localhost:5172/api/menu/userId"
+            const response = await fetch(`${URL}`, {
+              method: "GET",
+              credentials: 'include',
+            })
+    
+            if (!response.ok) {
+              console.error('Error en la respuesta:', response.status, response.statusText);
+              throw new Error('No se pudo obtener la respuesta esperada');
+            }
+            const data = await response.json();
+            setUsuarioId(data.usuario.userId)
+          } catch (error) {
+            console.error('Error no se pudo obtener:', error);
+          }
+        };
+        fetchData();
+      }, [])
+
+    useEffect(() => {
+        const obtenerCategorias=async()=>{
+            await fetch('http://localhost:5172/api/menu/obtenerCategorias', {
+                method: "GET",
+                credentials: 'include',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('no se conecto')
+                    }
+                    return response.json()
+                })
+                .then(data => {
+    
+                    const updatedData = data
+                    setCategorias(updatedData);
+    
+    
+                })
+                .catch(error => console.error('Error no se pudo obtener:', error))
+        }
+
+        const obtenerProductos=async()=>{
+            await fetch('http://localhost:5172/api/menu/obtenerProductos', {
+                method: "GET",
+                credentials: 'include',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('no se conecto')
+                    }
+                    return response.json()
+                })
+                .then(data => {
+    
+                    const updatedData1 = data
+                        .filter(item => (item.ofertaDescuentoProducto > 0))
+                        .map(item => ({
+                            id: item._id,
+                            title: item.nombreProducto,
+                            // subtitle: categorias.filter(itemCat => item.categoriaProducto === itemCat._id).map(itemCat => itemCat.nombreCategoria),
+                            subtitle:item.detallesOferta,
+                            detail: item.ingredientesProducto,
+                            other: "Mr.Chef",
+                            image: item.imgUrlProducto,
+                            valor: item.valorProducto,
+                            descount: item.ofertaDescuentoProducto,
+                            stock: item.stockProducto,
+                            puntosOferta: item.pointProducto
+                        }))
+                    setDescMenu(updatedData1);
+    
+    
+                })
+                .catch(error => console.error('Error no se pudo obtener:', error))
+        }
         
-//     });
-// /////////////////////
+        obtenerCategorias()
+            .then(() => console.log("paso1"))
+            .catch((error) => console.log(error))
+        //Agrega al usuario el cupon usado
+        obtenerProductos()
+            .then(() => console.log("paso2"))
+            .catch((error) => console.log(error))
+
+    }, [])
 
     useEffect(() => {
         fetch('Json/Data.json')
@@ -57,6 +124,39 @@ const Hero = () => {
     }, []);
 
 
+    const handleBotonClick = async (productoId, usuarioId, quantity) => {
+        try {
+    
+          const URL = "http://localhost:5172/api/menu/cargarCarrito";
+          const response = await fetch(URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              productoId,
+              usuarioId,
+              quantity,
+              option: true,
+            }),
+          });
+    
+          if (!response.ok) {
+            console.error('Error en la respuesta:', response.status, response.statusText);
+            throw new Error('No se pudo agregar al carrito');
+          }
+    
+          // Manejar la respuesta del backend si es necesario
+          const responseData = await response.json();
+          console.log(responseData);
+        } catch (error) {
+          console.error('Error al procesar la solicitud:', error)
+          res.status(500).json({ error: 'Error interno del servidor' })
+        }
+    
+        dispatch({ type: 'ACTUALIZAR_NUM_CARRO', payload: productoId })
+    
+      }
 
     let valorDesc = descMenu[ofert]?.valor * (1 - (descMenu[ofert]?.descount / 100))
 
@@ -71,12 +171,14 @@ const Hero = () => {
         }
 
         async function ejemploEsperar() {
-            await esperar(4000); // Espera 4 segundos (4 Segundos)
+            await esperar(5000); // Espera 7 segundos (7 Segundos)
         }
 
         ejemploEsperar();
     }
     TiempoEspera()
+
+
 
     return (
         <div className='flex m-0 p-0'>
@@ -157,22 +259,29 @@ const Hero = () => {
                                                 2xl:w-[2em] 2xl:h-[2em]
                                 ' src={iconBolso} alt="" />
                                     </div>
-                                    <span className='ml-[1px]
+    
+                                    <Link className='ml-[1px]
                                             md:ml-2 md:text-base
                                             2xl:text-2xl
-                                            '>
+                                            '
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                handleBotonClick(descMenu[ofert]?.id, usuarioId, 1)
+                                              }}
+                                            >
                                         {data.boton1}
-                                    </span>
+                                    </Link>
                                 </button>
                             </div>
 
 
                             <div className='flex pt-2'>
-                                {descMenu.map((key) => (
+                                {descMenu.map((key, index) => (
                                     <div
                                         key={key}
-                                        className={`h-1 rounded-sm mr-2  ${ofert == key.id - 1 ? 'bg-orange-500 w-6' : 'bg-gray-500 w-2'}`}
+                                        className={`h-1 rounded-sm mr-2  ${ofert == index ? 'bg-orange-500 w-6' : 'bg-gray-500 w-2'}`}
                                     >
+                                        
                                     </div>
                                 ))}
                             </div>
@@ -260,16 +369,16 @@ const Hero = () => {
                             </span>
                         </button>
                     </div>
-                    <div class="absolute
+                    <div className="absolute
                                 xs:bottom-[11em] xs:right-[5em] xs:h-10 xs:w-10 
                                 md:bottom-[18em] md:right-[21em] md:h-10 md:w-10 
                                 lg:bottom-[16em] lg:right-[29em] lg:h-10 lg:w-10 lg:invisible
                                 xl:bottom-[17em] xl:right-[39em] xl:h-10 xl:w-10 xl:visible
                                 2xl:bottom-[14em] 2xl:right-[45em] 2xl:h-10 2xl:w-10">
-                        <div class="absolute w-2 h-2 -bottom-8 -left-6 bg-gray-300 rounded-full "></div>
-                        <div class="absolute w-2 h-2 -bottom-5 -left-6 bg-gray-400 rounded-full opacity-50"></div>
-                        <div class="absolute w-2 h-2 -bottom-2 -left-6 bg-gray-500 rounded-full opacity-25"></div>
-                        <div class="absolute w-2 h-2 -bottom-8 -left-8 rounded-full">
+                        <div className="absolute w-2 h-2 -bottom-8 -left-6 bg-gray-300 rounded-full "></div>
+                        <div className="absolute w-2 h-2 -bottom-5 -left-6 bg-gray-400 rounded-full opacity-50"></div>
+                        <div className="absolute w-2 h-2 -bottom-2 -left-6 bg-gray-500 rounded-full opacity-25"></div>
+                        <div className="absolute w-2 h-2 -bottom-8 -left-8 rounded-full">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" stroke="currentColor" class="w-6 h-6 mx-auto text-white">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-9 9-9-9"></path>
                             </svg>

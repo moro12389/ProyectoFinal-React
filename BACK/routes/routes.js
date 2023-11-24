@@ -18,7 +18,8 @@ const {
     obtenerProducto,
     cargarProducto,
     eliminarProducto,
-    actualizarProducto
+    actualizarProducto,
+    actualizarStockProducto
 } = require('../controllers/Productos')
 
 //Carritos
@@ -60,6 +61,27 @@ const {
     actualizarCupon,
 } = require('../controllers/Cupons')
 
+// //Ofertas
+// const {
+//     obtenerOfertas,
+//     obtenerOferta,
+//     cargarOferta,
+//     eliminarOferta,
+//     actualizarOferta,
+// } = require('../controllers/Ofertas')
+
+
+// // Ofertas
+
+// router.get('/obtenerOfertas', obtenerOfertas)
+
+// router.get('/obtenerOferta/:id', obtenerOferta)
+
+// router.post('/cargarOferta', cargarOferta)
+
+// router.delete('/eliminarOferta/:id', eliminarOferta)
+
+// router.patch('/actualizarOferta/:id', actualizarOferta)
 
 // Categoria
 
@@ -86,6 +108,8 @@ router.post('/cargarProducto', cargarProducto)
 router.delete('/eliminarProducto/:id', eliminarProducto)
 
 router.patch('/actualizarProducto/:id', actualizarProducto)
+
+router.patch('/actualizarRestarStockProducto', actualizarStockProducto)
 
 // Carrito
 

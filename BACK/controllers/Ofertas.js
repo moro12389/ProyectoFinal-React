@@ -1,4 +1,4 @@
-const db_ofertas = require('../models/ofertas')
+const db_ofertas = require('../models/Oferta')
 
 const obtenerOfertas = async (req, res) => {
     const resultado = await db_ofertas.find({})
@@ -19,32 +19,81 @@ const obtenerOferta = async (req, res) => {
 
 // Write
 const cargarOferta = async (req, res) => {
-    const { nombreoferta, imgUrloferta, activeCategory, iconUrloferta } = req.body
+    const { nombreoferta, subtituloOferta, detallesOferta, detallesConNegritaOferta, stockOferta, valorOferta, descuentoOferta, imgUrlOferta, pointOferta  } = req.body
     let datosVacios = []
 
     if (!nombreoferta) {
         datosVacios.push('nombreoferta')
     }
-    if (!imgUrloferta) {
-        datosVacios.push('imgUrloferta')
+    if (!subtituloOferta) {
+        datosVacios.push('subtituloOferta')
     }
-    if (!iconUrloferta) {
-        datosVacios.push('iconUrloferta')
+    if (!detallesOferta) {
+        datosVacios.push('detallesOferta')
     }
-    if (!activeCategory) {
-        datosVacios.push('activeCategory')
+    if (!detallesConNegritaOferta) {
+        datosVacios.push('detallesConNegritaOferta')
+    }
+    if (!stockOferta) {
+        datosVacios.push('stockOferta')
+    }
+    if (!valorOferta) {
+        datosVacios.push('valorOferta')
+    }
+    if (!descuentoOferta) {
+        datosVacios.push('descuentoOferta')
+    }
+    if (!imgUrlOferta) {
+        datosVacios.push('imgUrlOferta')
+    }
+    if (!pointOferta) {
+        datosVacios.push('pointOferta')
     }
 
-
-
-    if (datosVacios.length > 0) {
-        console.log(datosVacios)
-        return res.status(400).json({ error: 'Por favor ingrese los datos de los campos ', datosVacios })
-    }
-
+    // if (datosVacios.length > 0) {
+    //     console.log(datosVacios)
+    //     return res.status(400).json({ error: 'Por favor ingrese los datos de los campos ', datosVacios })
+    // }
 
     try {
-        const resultado = await db_ofertas.create({ nombreoferta, imgUrloferta, activeCategory, iconUrloferta })
+        const resultado = await db_ofertas.create(
+            // { nombreoferta, subtituloOferta, detallesOferta, detallesConNegritaOferta, stockOferta, valorOferta, descuentoOferta, imgUrlOferta, pointOferta }
+            
+            {
+                "nombreOferta": "Pizza Pollo",
+                "subtituloOferta": "With Special Cheese",
+                "detallesOferta": "Italian Pizza Pollo with special cheese is a favor can find only in",
+                "detallesConNegritaOferta": "Mr.Chef",
+                "stockOferta": 50,
+                "valorOferta": 6.50,
+                "descuentoOferta":15.4,
+                "imgUrlOferta": "/img/Products/platoPizza.png",
+                "pointOferta": 50
+              },
+              {
+                "nombreOferta": "French Fries",
+                "subtituloOferta": "50% Discount",
+                "detallesOferta": "Get a discount on french fries with purchases",
+                "detallesConNegritaOferta": "over $3",
+                "stockOferta": 50,
+                "valorOferta": 2,
+                "descuentoOferta":50,
+                "imgUrlOferta": "/img/Products/papaFrita.png",
+                "pointOferta":50
+              },
+              {
+                "nombreOferta": "Falafel on a plate",
+                "subtituloOferta": "With Special Spices",
+                "detallesOferta": "Unusual spices ordered by us straight from Israel will give you an unforgettable taste and aroma",
+                "detallesConNegritaOferta": "",
+                "stockOferta": 50,
+                "valorOferta": 4,
+                "descuentoOferta":5,
+                "imgUrlOferta": "/img/Products/platoVegetariano.png",
+                "pointOferta": 50
+                }
+
+            )
         res.status(200).json(resultado)
     }
     catch (error) {

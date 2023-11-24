@@ -11,11 +11,11 @@ const ofertaProductosSchema=new mongoose.Schema({
     },
     detallesOferta:{
         type:String,
-        required:[true,'Por favor ingrese un los ingredientes'],
+        required:[true,'Por favor ingrese detalle'],
     },
-    detallesContNegritaOferta:{
+    detallesConNegritaOferta:{
         type:String,
-        required:[true,'Por favor ingrese un los ingredientes'],
+        required:[false,'Por favor ingrese detalle negrita'],
     },
     stockOferta:{
         type:Number,
@@ -27,6 +27,7 @@ const ofertaProductosSchema=new mongoose.Schema({
     },
     descuentoOferta:{
         type:Number,
+        required:[false,'Por favor ingrese descuento'],
     },
     imgUrlOferta:{
         type:String,
@@ -34,7 +35,7 @@ const ofertaProductosSchema=new mongoose.Schema({
     },
     pointOferta:{
         type:Number,
-        required:[false,'Por favor ingrese punto por compra'],
+        required:[true,'Por favor ingrese punto por compra'],
     },
 }
 ,{
