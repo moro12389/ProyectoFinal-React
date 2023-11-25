@@ -61,29 +61,6 @@ const {
     actualizarCupon,
 } = require('../controllers/Cupons')
 
-// //Ofertas
-// const {
-//     obtenerOfertas,
-//     obtenerOferta,
-//     cargarOferta,
-//     eliminarOferta,
-//     actualizarOferta,
-// } = require('../controllers/Ofertas')
-
-
-// // Ofertas
-
-// router.get('/obtenerOfertas', obtenerOfertas)
-
-// router.get('/obtenerOferta/:id', obtenerOferta)
-
-// router.post('/cargarOferta', cargarOferta)
-
-// router.delete('/eliminarOferta/:id', eliminarOferta)
-
-// router.patch('/actualizarOferta/:id', actualizarOferta)
-
-// Categoria
 
 router.get('/obtenerCategorias', obtenerCategorias)
 

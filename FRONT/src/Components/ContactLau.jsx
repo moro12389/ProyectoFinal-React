@@ -20,6 +20,7 @@ const Contact = () => {
 
     return (
         <div 
+        id="contact" 
         // className="max-h-[40vh] mx-auto  bg-[url('./assets/wave.svg')] p-4 bg-no-repeat bg-cover font-roboto"
         className="w-full bg-[url('./assets/wave.svg')] p-4 bg-no-repeat bg-cover mt-16"
 

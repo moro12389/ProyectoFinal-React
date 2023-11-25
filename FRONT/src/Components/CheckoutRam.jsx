@@ -348,7 +348,6 @@ const Checkout = () => {
 
     const guardaDatosProductoComprado = async () => {
         const Data = carrito.map(item => ({
-            usuarioId: item.usuarioId,
             productoId: item.productoId,
             quantity: item.quantity,
         }))

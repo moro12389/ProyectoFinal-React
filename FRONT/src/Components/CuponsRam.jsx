@@ -231,7 +231,6 @@ const Cupons = () => {
         console.log("Correcto para cambio: >>> ",await change())
         :
         console.log("Algo de lo solicitado no concuerda con lo solicitado")
-        alert("hola")
     }
 
     return (

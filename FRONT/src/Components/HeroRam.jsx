@@ -201,8 +201,9 @@ const Hero = () => {
 
     return (
         <>
-
-            <div className='w-full h-[100vh] bg-gray-100 bg-fondoAzul bg-no-repeat bg-right
+            
+            <div id="hero"
+            className='w-full h-[100vh] bg-gray-100 bg-fondoAzul bg-no-repeat bg-right
          xll:bg-right-top xll:h-[60vh] lg:h-[70vh] lg:bg-right-top sm:bg-right-top sm:h-[50vh] sm:bg-fondoAzulSmall xs:h-[60vh]'>
 
                 <div className='flex flex-row justify-around items-center h-full lg:items-center sm:items-center sm:pl-2 '>

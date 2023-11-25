@@ -115,11 +115,11 @@ const Register = () => {
                 <input type="checkbox" className="mr-2" />
                 I accept Terms of Use
               </label>
-              <button className='whitespace-nowrap  border py-1 px-36 rounded-xl bg-gray-200 shadow-sm shadow-gray-500 xl:px-28 lg:px-24 sm:px-24' onClick={() => register()}>Register Now</button>
+              <Link to="/register" className='whitespace-nowrap  border py-1 px-36 rounded-xl bg-gray-200 shadow-sm shadow-gray-500 xl:px-28 lg:px-24 sm:px-24' onClick={() => register()}>Register Now</Link>
             </div>
           </form>
           <div>
-            <p className='text-blue-900 text-sm mt-4 text-center'><span className='text-orange-600'>-5% </span>on everything for registered users<br />Get a <span className='text-orange-600'>discount cupon</span> every month</p>
+            <p className='text-blue-900 text-sm mt-4 text-center'><span className='text-orange-600'>-5% </span>on everything for registered users<br />Get a <span className='text-orange-600'>discount cupon</span></p>
             <p className='text-blue-900 text-sm mt-4 text-center'><span className='text-orange-600'>GOOGLE</span></p>
           </div>
           <div className='flex justify-end pb-2 mr-2'>

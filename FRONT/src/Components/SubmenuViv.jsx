@@ -186,7 +186,7 @@ const Submenu = () => {
                 e.preventDefault();
                 handleBotonClick(data._id, usuarioId, 1)
               }}
-              disabled={data.stockProducto <= 11 ? 'disable' : ''}
+              disabled={data.stockProducto <= 10 ? 'disable' : ''}
             >
 
               <img src={bolsitacompra} alt="" className="flex items-center p-1" />

@@ -11,6 +11,8 @@ import BagDropdown from './BagDropdownPa';
 import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from 'react-redux';
+import NavPerfil from './NavPerfil';
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -22,12 +24,16 @@ const NavBar = () => {
   const [dropdownClick, setdropdownClick] = useState(false);
   const [categorias, setCategorias] = useState([]);
   const [isBagDropdownVisible, setIsBagDropdownVisible] = useState(false);
+  const [perfilVisible, setPerfilVisible] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchCampo, setSearchCampo] = useState("");
   
+
   //envio datos
   const dispatch = useDispatch();
   //recepcion datos
   const act = useSelector((state) => state.changeNum)
-  
+
 
   // let location =useLocation();
   //actualiza num de carrito
@@ -45,8 +51,6 @@ const NavBar = () => {
         });
 
         if (!response.ok) {
-          console.log(window.location.pathname)
-          console.log(!(window.location.pathname == '/login'))
           if (!(window.location.pathname == '/login')) {
             window.location.href = "/login"
           }
@@ -109,56 +113,52 @@ const NavBar = () => {
     // }
 
     fetchData()
-    .then(() => console.log("paso0",))
-    .then(()=>fetchData2())
-    .then(() => console.log("paso1"))
-    .then(()=> fetchData3())
-    .then(() => console.log("paso2"))
-
-    
-  },[usuarioId,act]);
+      .then(() => console.log("paso0",))
+      .then(() => fetchData2())
+      .then(() => console.log("paso1"))
+      .then(() => fetchData3())
+      .then(() => console.log("paso2"))
 
 
-  const loginLogout = async () => {
-    if (usuarioId == "") {
-    } else {
-      try {
-        const URL = "http://localhost:5172/api/menu/logOut"
-        const response = await fetch(URL, {
-          method: "GET",
-          credentials: 'include',
-        });
-
-        if (!response.ok) {
-          console.error('Error en la respuesta:', response.status, response.statusText);
-          throw new Error('No se pudo obtener la respuesta esperada');
-        }
-        window.location.href = '/'
-      } catch (error) {
-        console.error('Error no se pudo obtener:', error);
-      }
-    }
-  }
-
+  }, [usuarioId, act]);
 
 
   function handleClick() {
     setdropdownClick(!dropdownClick)
   }
 
-  const [isOpen, setIsOpen] = useState(false);
 
   const handleClickMenu = () => {
     setIsOpen(!isOpen)
   }
 
-  
 
-  const cambiarCategoria=(idCategoria)=>{
+
+  const cambiarCategoria = (idCategoria) => {
     setIsOpen(false)
     dispatch({ type: 'CAMBIAR_SELECCION', payload: idCategoria })
     localStorage.setItem('cachedData', JSON.stringify(idCategoria))
   }
+
+  const scrollToHome = (accion) => {
+    console.log(accion)
+
+    if (accion && (window.location.pathname == '/')) {
+      console.log(accion)
+      const homeElement = document.getElementById(`${accion}`);
+      if (homeElement) {
+        homeElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      window.location.href = `/${accion}`
+    }
+  }
+
+  const search = (data) => {
+    localStorage.setItem('cacheSearch', JSON.stringify(data))
+    window.location.href = `/search`
+  }
+
 
   return (
     <>
@@ -181,8 +181,10 @@ const NavBar = () => {
           <nav className='flex items-center flex-col justify-center'>
             <div className="pt-2 absolute top-1 mx-auto text-gray-600">
               <input className="border-2 border-gray-300 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none xs:px-3"
-                type="search" name="search" placeholder="Search" />
-              <button type="submit" className="absolute right-0 top-0 mt-5 mr-4">
+                type="search" name="search" placeholder="Search" onChange={(e) => setSearchCampo(e.target.value)} />
+
+
+              <button onClick={()=>{search(searchCampo)}} className="absolute right-0 top-0 mt-5 mr-4">
                 <svg className="text-gray-600 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
                   version="1.1" id="Capa_1" x="0px" y="0px"
                   viewBox="0 0 56.966 56.966"
@@ -191,6 +193,7 @@ const NavBar = () => {
                     d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
                 </svg>
               </button>
+
             </div>
             <div className='flex flex-row items-center mb-6 lg:hidden sm:flex xs:flex'>
               <Icon icon="iconoir:delivery-truck" hFlip={true} color="orange" width="40" />
@@ -203,7 +206,7 @@ const NavBar = () => {
                 {categorias.map((text, index) => (
                   <Link className='mb-2 font-roboto' key={index}
                     to="/submenu"
-                    onClick={()=>cambiarCategoria(text._id)}
+                    onClick={() => cambiarCategoria(text._id)}
                   >{text.nombreCategoria}
                   </Link>
                 ))}
@@ -213,8 +216,8 @@ const NavBar = () => {
               </div>
             </div>
             <div className='mt-6 font-roboto'>
-              <a href="" className='px-4 py-2 h-6 rounded-2xl bg-gray-200 mr-16'>About Us</a>
-              <a href="" className='px-4 py-2 h-6 rounded-2xl bg-gray-200'>Contacts</a>
+              <a onClick={() => { setIsOpen(false), scrollToHome("about") }} className='px-4 py-2 h-6 rounded-2xl bg-gray-200 mr-16'>About Us</a>
+              <a onClick={() => { setIsOpen(false), setIsOpen(scrollToHome("contact")) }} className='px-4 py-2 h-6 rounded-2xl bg-gray-200'>Contacts</a>
             </div>
           </nav>
         </motion.div>
@@ -263,7 +266,7 @@ const NavBar = () => {
                       <Menu.Item key={index}>
                         {({ active }) => (
                           <Link
-                            onClick={()=>cambiarCategoria(text._id)}
+                            onClick={() => cambiarCategoria(text._id)}
                             to="/submenu"
                             className={classNames(
                               active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -294,12 +297,12 @@ const NavBar = () => {
               </Transition>
             </Menu>
             <li className='mx-16 py-2 text-sm font-semibold sm:mx-0 sm:mr-4 sm:whitespace-nowrap xl:block lg:hidden sm:hidden'>
-              <Link to="/about">
+              <Link onClick={() => scrollToHome("about")}>
                 About Us
               </Link>
             </li>
             <li className='py-2 text-sm font-semibold xl:block lg:hidden sm:hidden'>
-            <Link to="/contact">
+              <Link onClick={() => scrollToHome("contact")}>
                 Contact
               </Link>
             </li>
@@ -311,12 +314,12 @@ const NavBar = () => {
             <Link to="/404">
               <Icon icon="skill-icons:instagram" width="30" />
             </Link>
-            
-            
+
+
           </div>
 
           <div className='flex flex-row items-center py-2 font-roboto'>
-            <Link onClick={() => loginLogout()} className='mr-4 border-2  border-gray-600 px-6 py-1 rounded-2xl sm:px-2 sm:mr-2 sm:ml-3 xs:ml-1 xs:mr-1'>{usuarioId == "" ? "Login" : "LogOut"}</Link>
+            <Link onClick={() => usuarioId !== "" && setPerfilVisible(!perfilVisible)} className='mr-4 border-2  border-gray-600 px-6 py-1 rounded-2xl sm:px-2 sm:mr-2 sm:ml-3 xs:ml-1 xs:mr-1'>{usuarioId == "" ? "Login" : "Perfil"}</Link>
 
             <div>
               <div className="relative" onClick={() => usuarioId !== "" && setIsBagDropdownVisible(!isBagDropdownVisible)}>
@@ -327,6 +330,7 @@ const NavBar = () => {
               </div>
 
               {isBagDropdownVisible && <BagDropdown />}
+              {perfilVisible && <NavPerfil />}
 
             </div>
           </div>

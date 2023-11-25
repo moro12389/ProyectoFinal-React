@@ -12,6 +12,7 @@ import About from './Components/About/About';
 import Login from './Components/Login';
 import Register from './Components/Register';
 import { NotFound } from './Components/NotFound';
+import { Search } from './Components/Search';
 
 /* //import { Checkout } from './Components/CheckoutRam'; */
 
@@ -90,23 +91,31 @@ function App() {
           <Route path='/contact' element={
             <div>
               <NavBar />
-              <Contact/>
+              <Contact />
+              <Footer />
+            </div>
+          } />
+
+          <Route path='/search' element={
+            <div>
+              <NavBar />
+              <Search/>
               <Footer />
             </div>
           } />
 
         <Route path='/404' element={
-            <div>
-              <NavBar />
-              <NotFound/>
-              <Footer />
-            </div>
-          } />
+          <div>
+            <NavBar />
+            <NotFound />
+            <Footer />
+          </div>
+        } />
 
-        </Routes>
-      </BrowserRouter>
+      </Routes>
+    </BrowserRouter>
       
-    </div>
+    </div >
 
 
   );

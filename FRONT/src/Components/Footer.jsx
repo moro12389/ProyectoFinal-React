@@ -5,9 +5,23 @@ import creditCards from '/img/footer/creditcards.png'
 
 
 const Footer = () => {
-  // const footerMenu = ["Home", "Menu", "About Us", "Contacts"]
 
-  const footerMenu = { "/": "Home", "/": "Menu", "/about": "About Us", "/contacts": "Contacts" }
+  const footerMenu = { "hero": "Home", "menu": "Menu", "about": "About Us", "contacts": "Contacts", }
+
+  const scrollToHome = (accion) => {
+    console.log(accion)
+    const [idEncontrado, labelEncontrado] = Object.entries(footerMenu).find(([id]) => accion === id) || [];
+
+    if (idEncontrado) {
+      const homeElement = document.getElementById(`${idEncontrado}`);
+      if (homeElement) {
+        homeElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      console.log(`No se encontró la acción "${accion}" en el menú.`);
+    }
+  }
+
 
   return (
     <>
@@ -15,10 +29,10 @@ const Footer = () => {
 
         <div className='flex flex-row items-center justify-between h-full mx-6 sm:mx-4'>
           <div className='sm:mt-4'>
-            {Object.entries(footerMenu).map(([key, value]) => (
-              <ul key={key}>
-                <a className='text-white mb-3 xs:mb-2' href={key}>{`${value}`}</a>
-              </ul>
+            {Object.entries(footerMenu).map(([path, label]) => (
+              <li key={path}>
+                <a className='text-white mb-3 xs:mb-2' onClick={() => scrollToHome(path)}>{label}</a>
+              </li>
             ))}
           </div>
           <div>
