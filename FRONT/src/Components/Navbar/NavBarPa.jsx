@@ -282,7 +282,7 @@ const NavBar = () => {
                     <div className="pt-2 relative top-1 mx-auto text-gray-600 flex justify-center">
                       <input className="border-2 border-gray-300 bg-white mb-2 rounded-lg text-sm focus:outline-none"
                         type="search" name="search" placeholder="Search" />
-                      <button type="submit" className="absolute right-0 top-0 mt-5 mr-6">
+                      <button onClick={()=>{search(searchCampo)}} className="absolute right-0 top-0 mt-5 mr-6">
                         <svg className="text-gray-600 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
                           version="1.1" id="Capa_1" x="0px" y="0px"
                           viewBox="0 0 56.966 56.966"

@@ -23,6 +23,8 @@ const Search = () => {
         const cacheFeo = localStorage.getItem('cacheSearch')
         const search = cacheFeo.replace(/^"|"$/g, '');
         setSearch(search)
+        console.log(search)
+
     }, []);
 
     for (var i = 0; i < 5; i++) {
@@ -75,35 +77,31 @@ const Search = () => {
         }
 
 
-            const fetchCategoria = async () => {
-              try {
+        const fetchCategoria = async () => {
+            try {
                 const URL = "http://localhost:5172/api/menu/obtenerCategorias"
-        
+
                 const response = await fetch(URL, {
-                  method: "GET",
-                  credentials: 'include',
+                    method: "GET",
+                    credentials: 'include',
                 });
-        
+
                 if (!response.ok) {
-                  console.error('Error en la respuesta:', response.status, response.statusText);
-                  throw new Error('No se pudo obtener la respuesta esperada');
+                    console.error('Error en la respuesta:', response.status, response.statusText);
+                    throw new Error('No se pudo obtener la respuesta esperada');
                 }
-        
+
                 const data = await response.json();
                 setCategoria(data);
-              } catch (error) {
+            } catch (error) {
                 console.error('Error no se pudo obtener:', error);
-              }
-            };
-        
-        
-            fetchCategoria();
+            }
+        };
 
-
-        const filtro = async (textoBusqueda) => {
-            console.log(textoBusqueda)
-            // const regex = new RegExp(textoBusqueda.replace(/\s+/g, '|'), 'i')
-            const regex = new RegExp(`\\b${textoBusqueda}\\b`, 'i');
+        const filtro = async (asd) => {
+            console.log(asd)
+            // const regex = new RegExp(search.replace(/\s+/g, '|'), 'i')
+            const regex = new RegExp(`\\b${asd}\\b`, 'i');
             // console.log(regex)
             const productosFiltrados = await productos.filter(producto =>
                 regex.test(producto.nombreProducto.toLowerCase()) ||
@@ -111,6 +109,7 @@ const Search = () => {
             )
             setProductosFiltrados(productosFiltrados)
         }
+
         const on = async () => {
 
             fetchData()
@@ -121,8 +120,12 @@ const Search = () => {
                 .then(() => console.log("paso2"))
                 .catch((error) => console.log(error))
 
-            filtro("pollo")
+            fetchCategoria()
                 .then(() => console.log("paso3"))
+                .catch((error) => console.log(error))
+
+            filtro(search)
+                .then(() => console.log("paso4"))
                 .catch((error) => console.log(error))
 
         }
@@ -131,6 +134,9 @@ const Search = () => {
 
 
     }, [mal])
+
+
+
 
 
 
@@ -182,12 +188,12 @@ const Search = () => {
 
     }
 
-    const categoriaNombre =(info)=>{
+    const categoriaNombre = (info) => {
         console.log(info)
         const cat = categoria.filter(data => data._id === info)
         return cat[0].nombreCategoria
     }
-    
+
 
     return (
         <>
