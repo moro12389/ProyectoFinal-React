@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 //import {motion} from "framer-motion";
-import bolsitacompra from "/img/menu/icons-bolsitacompra.png";
+import bolsitacompra from "/img/menu/icons-bolsitacompra.svg";
 import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
