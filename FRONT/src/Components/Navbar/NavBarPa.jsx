@@ -34,13 +34,6 @@ const NavBar = () => {
   //recepcion datos
   const act = useSelector((state) => state.changeNum)
 
-
-  // let location =useLocation();
-  //actualiza num de carrito
-  // const act=location.state
-  console.log(act)
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -105,12 +98,6 @@ const NavBar = () => {
       }
     }
 
-    // try {
-    //   fetchData()
-    //   fetchData2()
-    // } catch (error) {
-    //   console.error("Error CADENA Nav:", error);
-    // }
 
     fetchData()
       .then(() => console.log("paso0",))
@@ -216,8 +203,8 @@ const NavBar = () => {
               </div>
             </div>
             <div className='mt-6 font-roboto'>
-              <a onClick={() => { setIsOpen(false), scrollToHome("about") }} className='px-4 py-2 h-6 rounded-2xl bg-gray-200 mr-16'>About Us</a>
-              <a onClick={() => { setIsOpen(false), setIsOpen(scrollToHome("contact")) }} className='px-4 py-2 h-6 rounded-2xl bg-gray-200'>Contacts</a>
+              <a onClick={() => { setIsOpen(false), scrollToHome("about") }} className='px-4 py-2 h-6 rounded-2xl bg-gray-200 mr-16'>Sobre Nosotros</a>
+              <a onClick={() => { setIsOpen(false), setIsOpen(scrollToHome("contact")) }} className='px-4 py-2 h-6 rounded-2xl bg-gray-200'>Contactos</a>
             </div>
           </nav>
         </motion.div>
@@ -298,12 +285,12 @@ const NavBar = () => {
             </Menu>
             <li className='mx-16 py-2 text-sm font-semibold sm:mx-0 sm:mr-4 sm:whitespace-nowrap xl:block lg:hidden sm:hidden'>
               <Link onClick={() => scrollToHome("about")}>
-                About Us
+                Sobre Nosotros
               </Link>
             </li>
             <li className='py-2 text-sm font-semibold xl:block lg:hidden sm:hidden'>
               <Link onClick={() => scrollToHome("contact")}>
-                Contact
+                Contactos
               </Link>
             </li>
           </ul>

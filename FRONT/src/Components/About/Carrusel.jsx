@@ -5,6 +5,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Carrusel = ({ images }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000);
+  
+    return () => clearInterval(intervalId); // Limpiar el temporizador al desmontar el componente.
+  }, [currentImageIndex, setCurrentImageIndex, images]);
+
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
