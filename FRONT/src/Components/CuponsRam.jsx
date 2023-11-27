@@ -3,6 +3,7 @@ import './CuponsRam'
 import React, { useState, useEffect } from 'react';
 import iconOk from '/Icons/icons8-de-acuerdo.svg'
 import iconSinOk from '/Icons/iconSinOk.svg'
+import { Link } from 'react-router-dom';
 
 const Cupons = () => {
     const [data, setData] = useState({ owner: '' });
@@ -236,11 +237,14 @@ const Cupons = () => {
     return (
         <>
             <div className='2xl:p-4'>
-                back to <strong>Home</strong>
+                <Link to="/">
+                    Volver a <strong>Inicio</strong>
+                </Link>
+                
             </div>
             <div>
                 <h1 className='2xl:flex 2xl:justify-center 2xl:items-center 2xl:text-4xl font-lobster'>
-                    Welcome to {data.owner}
+                    Bienvenido a {data.owner}
                 </h1>
 
                 <div className=' bg-gray-300 w-[63%] m-auto 2xl:p-[1em] 2xl:justify-center 2xl:items-center 2xl:rounded-2xl 2xl:my-[2em] 2xl:font-roboto'>
@@ -252,35 +256,29 @@ const Cupons = () => {
 
                             <div className='space-y-4 text-gray-500'>
                                 <h3 className='text-2xl font-lobster text-gray-800'>
-                                    Contact Information
+                                    Informacion de contacto
                                 </h3>
 
-                                <p>Cabinet number: <strong className='text-gray-800'>4846</strong></p>
-                                <p>Date of registration: <strong className='text-gray-800'>20.02.2023</strong></p>
-                                <p>Phone number: <strong className='text-gray-800'>(063) 979-6123</strong></p>
+                                <p>Número de gabinete: <strong className='text-gray-800'>4846</strong></p>
+                                <p>Fecha de registro: <strong className='text-gray-800'>20.02.2023</strong></p>
+                                <p>Número de teléfono: <strong className='text-gray-800'>(063) 979-6123</strong></p>
                             </div>
 
                             <h3 className='text-2xl font-lobster text-gray-800 my-[1em]'>
-                                Change password
+                                Cambio de Contaseña
                             </h3>
-{/* 
-
-
-                            <input type={mostraPassword ? "text" : "password"} className='border-b-2  mb-2 w-full hover:border-yellow-400' placeholder='Password' name='password' onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
-               */}
-
 
 
 
                             <form action='' className='2xl:flex 2xl:flex-col 2xl:items-cente'>
-                                <input type={mostraPassword ? "text" : "password"} className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' name='passAntigua' onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })} placeholder='* Current password' />
-                                <input type={mostraPassword ? "text" : "password"} className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' name='passNueva' onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })} placeholder='* New password' />
-                                <input type={mostraPassword ? "text" : "password"} className='2xl:w-full border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' name='passDuplicada' onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })} placeholder='* Enter the new password again' />
-                                <button className='text-orange-400' onClick={verPassword}>{mostraPassword ? 'ocutar' : 'mostrar'} passwords</button>
+                                <input type={mostraPassword ? "text" : "password"} className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' name='passAntigua' onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })} placeholder='* Contraseña actual' />
+                                <input type={mostraPassword ? "text" : "password"} className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' name='passNueva' onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })} placeholder='* Nueva contraseña' />
+                                <input type={mostraPassword ? "text" : "password"} className='2xl:w-full border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' name='passDuplicada' onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })} placeholder='* Ingrese nuevamente' />
+                                <button className='text-orange-400' onClick={verPassword}>{mostraPassword ? 'ocutar' : 'mostrar'} Contraseñas</button>
                                 <button className='bg-gray-200 2xl:rounded-xl 2xl:h-[2.5em] 2xl:w-full my-[1em] shadow-md shadow-gray-600'
                                 onClick={()=>actualizarContra()}
                                 >
-                                    Save edit
+                                    Guardar Editado
                                 </button>
                             </form>
 
@@ -291,10 +289,10 @@ const Cupons = () => {
 
                             <div className='space-y-4'>
                                 <h3 className='text-2xl font-lobster text-gray-800'>
-                                    Buyer level
+                                    Nivel de Comprador
                                 </h3>
                                 <div className='flex'>
-                                    <p className='text-gray-600 2xl:w-[50%]'>Your level: <strong className='text-gray-800 mr-[1em]'>{Math.floor(points / 500)}</strong></p>
+                                    <p className='text-gray-600 2xl:w-[50%]'>Tu Nivel: <strong className='text-gray-800 mr-[1em]'>{Math.floor(points / 500)}</strong></p>
                                     <div class="w-full bg-gray-300 rounded-lg">
 
                                         <div class="h-full bg-orange-500  rounded-lg animate-waiting"
@@ -315,7 +313,7 @@ const Cupons = () => {
 
 
                             <h3 className='text-2xl font-lobster text-gray-800 my-[1em] mt-[4em]'>
-                                Awards
+                                Premios
                             </h3>
                             <div className="w-[100%] overflow-x-auto bg-gray-100 rounded-lg">
                                 <ul className="overflow-y-auto max-h-[190px] scrollbar-w-20 scrollbar-track-gray-100 scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full">
@@ -326,22 +324,17 @@ const Cupons = () => {
                                             ) : (
                                                 <img className="2xl:pr-3" src={iconSinOk} alt="" />
                                             )}
-                                            <p>Level {list.level}: {list.label}</p>
+                                            <p>Nivel {list.level}: {list.label}</p>
                                         </li>
                                     ))}
                                 </ul>
                             </div>
-
-
-
-
-
                         </div>
                     </div>
                 </div>
 
                 <h1 className='2xl:flex 2xl:justify-center 2xl:items-center 2xl:text-4xl font-lobster 2xl:pt-[3em]'>
-                    Yours coupons
+                    Tus cupones libres a usar
                 </h1>
                 <div className="overflow-y-auto max-h-[450px] scrollbar-w-200 scrollbar-track-gray-100 scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full">
                     <div className='2xl:grid 2xl:grid-cols-2 2xl:gap-4 2xl:justify-center 2xl:items-center 2xl:p-[1em] 2xl:px-[19.5%]'>
@@ -370,7 +363,7 @@ const Cupons = () => {
                                             </div>
                                             <div className='2xl:text-lg font-lobster text-white mt-[4px]'>
                                                 {card.discount === 100 || card.discount === 0 ? (
-                                                    <strong>Free</strong>
+                                                    <strong>Gratis</strong>
                                                 ) : (
                                                     <strong>-{card.discount}%</strong>
                                                 )}

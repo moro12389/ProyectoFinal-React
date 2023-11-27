@@ -190,7 +190,7 @@ const Submenu = () => {
             >
 
               <img src={bolsitacompra} alt="" className="flex items-center p-1" />
-              <span>{data.stockProducto <= 10 ? <strong className="text-red-600">Sin Stock</strong> : 'Add To Cart'}</span>
+              <span>{data.stockProducto <= 10 ? <strong className="text-red-600">Sin Stock</strong> : 'Agregar al carrito'}</span>
             </button>
           </div>
         ))}

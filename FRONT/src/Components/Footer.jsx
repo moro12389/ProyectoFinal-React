@@ -6,7 +6,12 @@ import creditCards from '/img/footer/creditcards.png'
 
 const Footer = () => {
 
-  const footerMenu = { "hero": "Home", "menu": "Menu", "about": "About Us", "contacts": "Contacts", }
+  const footerMenu = {
+    "hero": "Inicio",
+    "menu": "Menú",
+    "about": "Acerca de Nosotros",
+    "contacts": "Contactos"
+  }
 
   const scrollToHome = (accion) => {
     console.log(accion)

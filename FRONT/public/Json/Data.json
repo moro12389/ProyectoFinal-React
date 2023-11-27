@@ -1,267 +1,36 @@
 {
-  "RAMIRO": "",
-  "menu": [
-    {
-      "id": 1,
-      "title": "Pizza Pollo",
-      "subtitle": "With Special Cheese",
-      "detail": "Italian Pizza Pollo with special cheese is a favor can find only in",
-      "other": "Mr.Chef",
-      "image": "/img/Products/platoPizza.png",
-      "valor": 6.50,
-      "descount": 15.4
-    },
-    {
-      "id": 2,
-      "title": "French Fries",
-      "subtitle": "50% Discount",
-      "detail": "Get a discount on french fries with puchases",
-      "other": "over $3",
-      "image": "/img/Products/papaFrita.png",
-      "valor": 2,
-      "descount": 50
-    },
-    {
-      "id": 3,
-      "title": "Falafel on a plate",
-      "subtitle": "With Special Spices",
-      "detail": "Unusual spices ordered by us straight from Israel will give you an unforgettable taste and aroma",
-      "other": "",
-      "image": "/img/Products/platoVegetariano.png",
-      "valor": 4,
-      "descount": 5
-    },
-    {
-      "id": 4,
-      "title": "ssssssssssssssssssste",
-      "subtitle": "With Special Spices",
-      "detail": "Unusual spices ordered by us straight from Israel will give you an unforgettable taste and aroma",
-      "other": "",
-      "image": "/img/Products/platoVegetariano.png",
-      "valor": 4,
-      "descount": 50
-    },
-    {
-      "id": 5,
-      "title": "dddddddddddddddd",
-      "subtitle": "With Special Spices",
-      "detail": "Unusual spices ordered by us straight from Israel will give you an unforgettable taste and aroma",
-      "other": "",
-      "image": "/img/Products/platoVegetariano.png",
-      "valor": 4,
-      "descount": 75
-    }
-  ],
-  
   "data": [
     {
       "id": 1,
       "number": "+38 (063) 98-75-615",
-      "registerText": "Sing up and get",
-      "cuponText": "discount coupons!",
-      "boton1": "Buy Now",
-      "boton2": "Sing Up",
-      "owner": "Mr.Chef"
+      "registerText": "Regístrate y obtén",
+      "cuponText": "cupones de descuento",
+      "boton1": "Comprar ahora",
+      "boton2": "Registrarse",
+      "owner": "Sr. Chef"
     }
   ],
   "checkout": [
     {
       "id": 1,
       "number": "+38 (063) 98-75-615",
-      "title": "Checkout",
-      "subtitle": "For a quick order, simply call our office phone number",
-      "deTitle": "Delivery terms",
-      "deOp1": "Delivery",
-      "deOp2": "Pickup",
-      "adTitle": "Delivery address",
-      "adPhone": "Phone number",
-      "adStreet": "Street",
-      "adHouse": "House (apartment) number",
-      "adEntrance": "Entrance",
-      "adCheck": "Private House",
-      "adComment": "Comment to the Order",
-      "textDropTitle": "Choice a cupon",
-      "textDropTitleChange": "One Use",
-      "titlePay": "Terms of payment",
-      "payOp1": "Credit Card",
-      "payOp2": "Cash"
-    }
-  ],
-  "PABLO": "",
-  "carritoCompra": [
-    {
-      "id": 1,
-      "image": "/img/nav/shawarma-de-pollo.jpg",
-      "title": "Crazy Cheese",
-      "price": 3.95,
-      "stock": 40,
-      "quantity": 1
-    },
-    {
-      "id": 2,
-      "image": "/img/nav/pepsi.jpg",
-      "title": "Pepsi 354ml",
-      "price": 1.35,
-      "stock": 40,
-      "quantity": 1
-    },
-    {
-      "id": 3,
-      "image": "/img/nav/pepsi.jpg",
-      "title": "Pepsi 354ml",
-      "price": 1.35,
-      "stock": 40,
-      "quantity": 1
-    },
-    {
-      "id": 4,
-      "image": "/img/nav/pepsi.jpg",
-      "title": "Pepsi 354ml",
-      "price": 1.35,
-      "stock": 40,
-      "quantity": 1
-    }
-  ],
-  "VIVIANA": "",
-  "categoryProduct": [
-    [
-      {
-        "_id": "654e6b09bbe177b7c9bf40fa",
-        "nombreCategoria": "New",
-        "imgUrlCategoria": "/img/nav/pepsi.jpg",
-        "activeCategory": true,
-        "createdAt": "2023-11-10T17:40:25.165Z",
-        "updatedAt": "2023-11-10T17:40:25.165Z",
-        "__v": 0
-      },
-      {
-        "_id": "654e6b3abbe177b7c9bf40fc",
-        "nombreCategoria": "Shaguarma",
-        "imgUrlCategoria": "/img/nav/pepsi.jpg",
-        "activeCategory": true,
-        "createdAt": "2023-11-10T17:41:14.968Z",
-        "updatedAt": "2023-11-10T17:41:14.968Z",
-        "__v": 0
-      },
-      {
-        "_id": "654e6b43bbe177b7c9bf40fe",
-        "nombreCategoria": "Street Food",
-        "imgUrlCategoria": "/img/nav/pepsi.jpg",
-        "activeCategory": true,
-        "createdAt": "2023-11-10T17:41:23.137Z",
-        "updatedAt": "2023-11-10T17:41:23.137Z",
-        "__v": 0
-      },
-      {
-        "_id": "654e6b54bbe177b7c9bf4100",
-        "nombreCategoria": "Pizza",
-        "imgUrlCategoria": "/img/nav/pepsi.jpg",
-        "activeCategory": true,
-        "createdAt": "2023-11-10T17:41:40.054Z",
-        "updatedAt": "2023-11-10T17:41:40.054Z",
-        "__v": 0
-      },
-      {
-        "_id": "654e6b5abbe177b7c9bf4102",
-        "nombreCategoria": "Fast",
-        "imgUrlCategoria": "/img/nav/pepsi.jpg",
-        "activeCategory": true,
-        "createdAt": "2023-11-10T17:41:46.835Z",
-        "updatedAt": "2023-11-10T17:41:46.835Z",
-        "__v": 0
-      },
-      {
-        "_id": "654e6b5ebbe177b7c9bf4104",
-        "nombreCategoria": "Drinks",
-        "imgUrlCategoria": "/img/nav/pepsi.jpg",
-        "activeCategory": true,
-        "createdAt": "2023-11-10T17:41:50.900Z",
-        "updatedAt": "2023-11-10T17:41:50.900Z",
-        "__v": 0
-      }
-    ]
-  ],
-  "producto": [
-    
-    {
-      "nombreProducto": "Shawarma de Pollo",
-      "categoriaProducto": "654e6b3abbe177b7c9bf40fc",
-      "ingredientesProducto": "pollo, ajo, yogur, limón, comino",
-      "pesoProducto": 250,
-      "valorProducto": 7.99,
-      "ofertaDescuentoProducto": 10,
-      "stockProducto": 15,
-      "imgUrlProducto": "/img/menu/shawarma1.jpeg"
-    },
-    {
-      "nombreProducto": "Shawarma de Ternera",
-      "categoriaProducto": "654e6b3abbe177b7c9bf40fc",
-      "ingredientesProducto": "ternera, cebolla, tahini, perejil",
-      "pesoProducto": 250,
-      "valorProducto": 8.5,
-      "ofertaDescuentoProducto": 5,
-      "stockProducto": 12,
-      "imgUrlProducto": "/img/menu/shawarma1.jpeg"
-    },
-    {
-      "nombreProducto": "Shawarma de Cordero",
-      "categoriaProducto": "654e6b3abbe177b7c9bf40fc",
-      "ingredientesProducto": "cordero, ajo, yogur, menta",
-      "pesoProducto": 250,
-      "valorProducto": 9.95,
-      "ofertaDescuentoProducto": 0,
-      "stockProducto": 10,
-      "imgUrlProducto": "/img/menu/shawarma1.jpeg"
-    },
-    {
-      "nombreProducto": "Shawarma Vegetariano",
-      "categoriaProducto": "654e6b3abbe177b7c9bf40fc",
-      "ingredientesProducto": "falafel, hummus, ensaladas",
-      "pesoProducto": 250,
-      "valorProducto": 6.99,
-      "ofertaDescuentoProducto": 15,
-      "stockProducto": 18,
-      "imgUrlProducto": "/img/menu/shawarma1.jpeg"
-    },
-    {
-      "nombreProducto": "Shawarma de Pescado",
-      "categoriaProducto": "654e6b3abbe177b7c9bf40fc",
-      "ingredientesProducto": "pescado, limón, salsa tzatziki",
-      "pesoProducto": 250,
-      "valorProducto": 10.5,
-      "ofertaDescuentoProducto": 8,
-      "stockProducto": 8,
-      "imgUrlProducto": "/img/menu/shawarma1.jpeg"
-    },
-    {
-      "nombreProducto": "Shawarma de Falafel",
-      "categoriaProducto": "654e6b3abbe177b7c9bf40fc",
-      "ingredientesProducto": "falafel, tomate, lechuga",
-      "pesoProducto": 250,
-      "valorProducto": 6.5,
-      "ofertaDescuentoProducto": 12,
-      "stockProducto": 20,
-      "imgUrlProducto": "/img/menu/shawarma1.jpeg"
-    },
-    {
-      "nombreProducto": "Shawarma Mixto",
-      "categoriaProducto": "654e6b3abbe177b7c9bf40fc",
-      "ingredientesProducto": "pollo, ternera, cordero, salsa especial",
-      "pesoProducto": 250,
-      "valorProducto": 12.99,
-      "ofertaDescuentoProducto": 0,
-      "stockProducto": 10,
-      "imgUrlProducto": "/img/menu/shawarma1.jpeg"
-    },
-    {
-      "nombreProducto": "Shawarma Picante",
-      "categoriaProducto": "654e6b3abbe177b7c9bf40fc",
-      "ingredientesProducto": "carne, jalapeños, salsa picante",
-      "pesoProducto": 250,
-      "valorProducto": 8.99,
-      "ofertaDescuentoProducto": 5,
-      "stockProducto": 15,
-      "imgUrlProducto": "/img/menu/shawarma1.jpeg"
+      "title": "Pagar",
+      "subtitle": "Para un pedido rápido, simplemente llame a nuestro número de teléfono de oficina",
+      "deTitle": "Condiciones de entrega",
+      "deOp1": "Entrega",
+      "deOp2": "Pasar a Retirar",
+      "adTitle": "Dirección de entrega",
+      "adPhone": "Número de teléfono",
+      "adStreet": "Calle",
+      "adHouse": "Número de casa (apartamento)",
+      "adEntrance": "Entrada",
+      "adCheck": "Casa privada",
+      "adComment": "Comentario para el pedido",
+      "textDropTitle": "Elegir un cupón",
+      "textDropTitleChange": "De un solo uso",
+      "titlePay": "Condiciones de pago",
+      "payOp1": "Tarjeta de crédito",
+      "payOp2": "Efectivo"
     }
   ]
 }

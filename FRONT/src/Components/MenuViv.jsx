@@ -39,9 +39,9 @@ const Menu = () => {
 
   return (
     <>
-      <div id="menu"
-      className="text-center text-4xl sm:text-2xl p-4 sm:p-1">
-        Dur Menu
+      <div id="menu">
+      <h3 className='text-center text-5xl font-lobster text-blue-950 mt-4 sm:text-3xl'>Nuestro Menu</h3>
+        
       </div>
       <div className="grid grid-cols-3 sm:grid-cols-2 gap-2 sm:gap-1 m-3 mt-8">
         {data.map((card, key) => (

@@ -25,7 +25,7 @@ const Contact = () => {
         className="w-full bg-[url('./assets/wave.svg')] p-4 bg-no-repeat bg-cover mt-16"
 
         >
-            <h2 className='text-center font-lobster text-blue-950 text-4xl mb-2'>Contacts</h2>
+            <h2 className='text-center font-lobster text-blue-950 text-4xl mb-2'>Contactos</h2>
 
             <div className="flex items-center justify-evenly bg-contact bg-cover bg-no-repeat w-full h-auto px-4 sm:flex-col sm:bg-center">
 

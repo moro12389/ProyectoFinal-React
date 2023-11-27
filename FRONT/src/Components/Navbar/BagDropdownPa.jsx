@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Link
-} from "react-router-dom";
+
 import { motion } from "framer-motion"
 import { useDispatch, useSelector } from 'react-redux';
-
 
 const BagDropdown = () => {
   const [data, setData] = useState([]);
@@ -59,7 +56,6 @@ const BagDropdown = () => {
 
         const data = await response.json();
         setBagDropdown(data);
-        console.log(data)
       } catch (error) {
         console.error('Error no se pudo obtener:', error);
       }
@@ -84,7 +80,6 @@ const BagDropdown = () => {
 
         const data = await response.json();
         setData(data);
-        console.log(data)
       } catch (error) {
         console.error('Error no se pudo obtener:', error);
       }
@@ -169,10 +164,6 @@ const BagDropdown = () => {
       console.error('Error al agregar al carrito:', error);
     }
     dispatch({ type: 'ACTUALIZAR_NUM_CARRO', payload: id })
-
-    // const nuevoCarrito = carrito.filter(item => item.id !== id)
-    // setCarrito(nuevoCarrito)
-    // console.log('Elemento eliminado del carrito:', id)
   }
 
 
@@ -210,71 +201,11 @@ const BagDropdown = () => {
 
 
   const checkOut = async () => {
-    //Borra productos userId de base de dato
     event.preventDefault
-    // try {
-    //   const URL = "http://localhost:5172/api/menu/eliminarCarritoUser/"; // Reemplaza con la ruta correcta
-    //   const response = await fetch(URL,{ 
-    //     method:"DELETE",
-    //     credentials: "include",
-    //   });
-
-    //   if (!response.ok) {
-    //     console.error('Error en la respuesta:', response.status, response.statusText);
-    //     throw new Error('No se pudo agregar al carrito');
-    //   }
-
-    // } catch (error) {
-    //   console.error('Error al agregar al carrito:', error);
-    // }
-
-
-    //Reorganiza datos
-    // const Data = carrito.map(item => ({
-    //   productoId: item.productoId,
-    //   usuarioId: item.usuarioId,
-    //   quantity: item.quantity,
-    // }));
-
-
-    // console.log("Data",Data)
-
-    // Data.forEach(async (element) => {
-    //   // Pushea datos finales a carrito userId base de dato
-    //   try {
-    //     const URL = "http://localhost:5172/api/menu/cargarCarrito"; // Reemplaza con la ruta correcta
-    //     const response = await fetch(URL, {
-    //       method: "POST",
-    //       credentials: "include",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({
-    //         productoId: element.productoId,
-    //         usuarioId: element.usuarioId,
-    //         quantity: element.quantity,
-    //         option:true,
-    //       }),
-    //     });
-
-    //     if (!response.ok) {
-    //       console.error('Error en la respuesta:', response.status, response.statusText);
-    //       throw new Error('No se pudo agregar al carrito');
-    //     }
-
-    //     // Manejar la respuesta del backend si es necesario
-    //     const responseData = await response.json();
-    //     console.log(responseData);
-    //   } catch (error) {
-    //     console.error('Error al agregar al carrito:', error);
-    //   }
-    // });
+ 
     window.location.href = '/checkout'
   }
 
-
-
-  // console.log("Carrito: ", carrito)
 
   return (
     <motion.div className='bg-white z-[3] max-h-[400px] overflow-y-auto w-1/5 border shadow-xl absolute right-40 xll:w-1/3 xll:right-20 xl:w-1/3 xl:right-12 lg:w-1/2 lg:right-6 sm:w-[100%] sm:right-0 rounded-lg'
@@ -342,7 +273,7 @@ const BagDropdown = () => {
                 <button
                   onClick={() => { checkOut() }}
                   className='px-4 py-2 bg-yellow-300 rounded-xl'>
-                  Checkout
+                  Finalizar compra
                 </button>
 
 
