@@ -357,11 +357,11 @@ const Cupons = () => {
                                             ))}
                                         </div>
 
-                                        <div className=' 2xl:w-[100%] 2xl:flex-col 2xl:justify-center 2xl:items-center 2xl:text-center'>
+                                        <div className='2xl:w-[100%] 2xl:flex-col 2xl:justify-center 2xl:items-center 2xl:text-center'>
                                             <div className='2xl:text-lg font-lobster text-white uppercase'>
                                                 <strong>{card.label}</strong>
                                             </div>
-                                            <div className='2xl:text-lg font-lobster text-white mt-[4px]'>
+                                            <div className='2xl:text-lg font-lobster text-white mt-[2px]'>
                                                 {card.discount === 100 || card.discount === 0 ? (
                                                     <strong>Gratis</strong>
                                                 ) : (
