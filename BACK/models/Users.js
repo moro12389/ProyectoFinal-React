@@ -46,14 +46,22 @@ const userSchema=new mongoose.Schema({
         type:Boolean,
         required:[false,'Por favor seleccione si es propiedad privada'],
     },
+    puntosCompras:{
+        type:Number,
+        required:[false,'Por favor seleccione puntos de compras'],
+    },
+    cuponesUsados:{
+        type:Array,
+        required:[false,'Por favor seleccione cupones usados'],
+    }
+},{
+    timestamps:true
 })
 
 userSchema.pre('save', async function(next){
     try {
         const salt = await bcrypt.genSalt(5);
-        console.log(salt);
         this.password = await bcrypt.hash(this.password, salt);
-        console.log(this.password);
         next();
     } catch (error) {
         next(error);

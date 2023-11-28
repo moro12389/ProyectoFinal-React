@@ -1,39 +1,87 @@
 import React, { useState, useEffect } from "react";
 //import {motion} from "framer-motion";
-import bolsitacompra from "/img/menu/icons-bolsitacompra.png";
-import { useLocation } from "react-router-dom";
+import bolsitacompra from "/img/menu/icons-bolsitacompra.svg";
+import { Link } from "react-router-dom";
 
+import { useDispatch, useSelector } from 'react-redux';
 
 const Submenu = () => {
   const [botonClick, setBotonClick] = useState(false);
   const [data, setData] = useState([]);
   const [categoria, setCategoria] = useState("");
+  const [usuarioId, setUsuarioId] = useState("");
+  //envio datos
+  const dispatch = useDispatch();
 
-  let location =useLocation();
 
-  //user
-  const usuarioId = location.state.userId
 
-  //cambia el submenu CATEGORIA
-  const cat=location.state.id
+  const refresh = useSelector((state) => state.actSeleccion)
+  const cate = localStorage.getItem('cachedData')
+  const cat = cate.replace(/^"|"$/g, '');
 
-  const handleBotonClick = async(productoId, usuarioId, quantity) => {
+  // //cambia el submenu CATEGORIA
+  // let location =useLocation();
+  // const cat=location.state.id
+
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      try {
+        const URL = "http://localhost:5172/api/menu/userId"
+        const response = await fetch(`${URL}`, {
+          method: "GET",
+          credentials: 'include',
+        })
+
+        if (!response.ok) {
+          console.error('Error en la respuesta:', response.status, response.statusText);
+          throw new Error('No se pudo obtener la respuesta esperada');
+        }
+        const data = await response.json();
+        setUsuarioId(data.usuario.userId)
+      } catch (error) {
+        console.error('Error no se pudo obtener:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+
+
+  const handleBotonClick = async (key, productoId, usuarioId, quantity) => {
+    if (botonClick) {
+      return; // Evitar múltiples clics simultáneos
+    }
     setBotonClick(true);
     setTimeout(() => {
       setBotonClick(false);
     }, 1000);
 
-    const img = document.getElementById('imageId');
+    const img = document.getElementById(key);
     if (img) {
-      img.style.transform = 'translate(50vw, -50vh)';
+      const carrito = document.getElementById('carritoBolsa');
+      const rectProducto = img.getBoundingClientRect();
+      const rectCarrito = carrito.getBoundingClientRect();
+
+      const traslacionX = rectCarrito.left - rectProducto.left;
+      const traslacionY = rectCarrito.top - rectProducto.top;
+      console.log(traslacionX, traslacionY)
+
+      img.style.transform = `translate(${traslacionX}vw, ${traslacionY}vh)`;
+      img.style.opacity = '0.5';
+      img.style.scale = '0.2';
     }
 
-    console.log(productoId," ", usuarioId," ", quantity)
-
+    setTimeout(() => {
+      img.style.transform = 'translate(0, 0)';
+      img.style.opacity = '1';
+      img.style.scale = '1';
+    }, 700)
 
     try {
 
-      const URL = "https://back-ashy-sigma.vercel.app/api/menu/cargarCarrito"; // Reemplaza con la ruta correcta
+      const URL = "http://localhost:5172/api/menu/cargarCarrito";
       const response = await fetch(URL, {
         method: "POST",
         headers: {
@@ -43,7 +91,7 @@ const Submenu = () => {
           productoId,
           usuarioId,
           quantity,
-          option:true,
+          option: true,
         }),
       });
 
@@ -56,17 +104,24 @@ const Submenu = () => {
       const responseData = await response.json();
       console.log(responseData);
     } catch (error) {
-      console.error('Error al agregar al carrito:', error);
+      console.error('Error al procesar la solicitud:', error)
+      res.status(500).json({ error: 'Error interno del servidor' })
     }
+
+    dispatch({ type: 'ACTUALIZAR_NUM_CARRO', payload: productoId })
+
   }
 
 
   useEffect(() => {
 
-    const fetchData = async(cat) => {
+    const fetchData = async (cat) => {
       try {
-        const URL = "https://back-ashy-sigma.vercel.app/api/menu/obtenerProductosCategoria/"
-        const response = await fetch(`${URL}${cat}`);
+        const URL = "http://localhost:5172/api/menu/obtenerProductosCategoria/"
+        const response = await fetch(`${URL}${cat}`, {
+          method: 'GET',
+          credentials: 'include',
+        });
 
         if (!response.ok) {
           console.error('Error en la respuesta:', response.status, response.statusText);
@@ -81,14 +136,17 @@ const Submenu = () => {
       }
     };
     fetchData(cat);
-  }, []);
-    
-    useEffect(() => {
+  }, [refresh]);
+
+  useEffect(() => {
     const fetchCategoria = async (cat) => {
       try {
-        const URL = "https://back-ashy-sigma.vercel.app/api/menu/obtenerCategoria/"
-        
-        const response = await fetch(`${URL}${cat}`);
+        const URL = "http://localhost:5172/api/menu/obtenerCategoria/"
+
+        const response = await fetch(`${URL}${cat}`, {
+          method: "GET",
+          credentials: 'include',
+        });
 
         if (!response.ok) {
           console.error('Error en la respuesta:', response.status, response.statusText);
@@ -103,18 +161,18 @@ const Submenu = () => {
       }
     };
 
-    
+
     fetchCategoria(cat);
-  }, []);
+  }, [refresh]);
 
 
   return (
     <>
-      <div className="text-center text-4xl p-4">
+      <div className="text-center text-4xl font-lobster p-4 mb-20 text-blue-950 mt-4 sm:text-3xl m-8">
         {categoria.nombreCategoria}
       </div>
 
-      <div className="grid grid-cols-4 gap-4 m-4 pt-6">
+      <div className="grid grid-cols-4 2xl:grid-cols-4 xl:grid-cols-3 xxl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8 pt-8 m-8">
         {data.map((data, key) => (
           <div
             key={key}
@@ -125,23 +183,29 @@ const Submenu = () => {
               <div className="w-full h-px bg-gray-300 my-4"></div>
               <span className="">{data.ingredientesProducto}</span>
               <div className="w-full h-px bg-gray-300 my-4"></div>
-              <span className="text-2xl">{data.pesoProducto}</span>
+              <span className="text-2xl">{data.pesoProducto} g</span>
             </div>
             <div className=" absolute top-0 right-0 w-full p-2 bg-gray-800 rounded-xl text-white text-center hover:opacity-0">
-              <img id="imageId" className={`w-40 h-40 rounded-full -mt-16 ml-8 ${botonClick ? 'transform transition-transform duration-700' : ''}`} src={data.imgUrlProducto} alt="" />
+              <img id={key} className={`w-40 h-40 rounded-full -mt-16 ml-8 ${botonClick ? 'transform transition-transform duration-700' : ''}`} src={data.imgUrlProducto} alt="" />
               <p className="mt-2 text-sm text-gray-400">{categoria.nombreCategoria}</p>
               <p className="text-2xl">{data.nombreProducto}</p>
               <p className="text-2xl pt-2" >
-                {data.valorProducto.toLocaleString('es-ES', {
+                ${data.valorProducto.toLocaleString('es-ES', {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
                 })}
               </p>
             </div>
             <button className={`py-2 px-4 mt-10 inline-flex items-center font-sans text-xm text-black bg-white rounded-lg border-2 border-black transition duration-300 ${botonClick ? 'bg-orange-700' : 'hover:bg-yellow-400 '}`}
-              onClick={()=>{handleBotonClick(data._id, usuarioId,1)}} >
+              onClick={(e) => {
+                e.preventDefault();
+                handleBotonClick(key, data._id, usuarioId, 1)
+              }}
+              disabled={data.stockProducto <= 10 ? 'disable' : ''}
+            >
+
               <img src={bolsitacompra} alt="" className="flex items-center p-1" />
-              <span >Add To Cart</span>
+              <span>{data.stockProducto <= 10 ? <strong className="text-red-600">Sin Stock</strong> : 'Agregar al carrito'}</span>
             </button>
           </div>
         ))}

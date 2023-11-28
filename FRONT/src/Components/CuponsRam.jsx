@@ -3,12 +3,83 @@ import './CuponsRam'
 import React, { useState, useEffect } from 'react';
 import iconOk from '/Icons/icons8-de-acuerdo.svg'
 import iconSinOk from '/Icons/iconSinOk.svg'
+import { Link } from 'react-router-dom';
 
 const Cupons = () => {
     const [data, setData] = useState({ owner: '' });
     const [cupons, setCupons] = useState([]);
     const [points, setPoints] = useState(0);
     const [levels, setLevels] = useState([]);
+    const [usuarioId, setUsuarioId] = useState("");
+    const [mostraPassword, setMostrarPassword] = useState(false)
+    const [cuponesUsados, setCuponesUsados] = useState([]);
+    const [userData, setUserData] = useState([])
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+            try {
+                const URL = "http://localhost:5172/api/menu/userId"
+                const response = await fetch(`${URL}`, {
+                    method: "GET",
+                    credentials: 'include',
+                });
+
+                if (!response.ok) {
+                    console.error('Error en la respuesta:', response.status, response.statusText);
+                    throw new Error('No se pudo obtener la respuesta esperada');
+                }
+                const data = await response.json();
+                setUsuarioId(data.usuario.userId)
+                setUserData(...userData,data.usuario.email)
+            } catch (error) {
+                console.error('Error no se pudo obtener:', error);
+            }
+        };
+        const fetchData1 = async () => {
+            try {
+                const URL = "http://localhost:5172/api/menu/registerUser_getOne/"
+                const response = await fetch(`${URL}${usuarioId}`, {
+                    method: "GET",
+                    credentials: 'include',
+                });
+
+                if (!response.ok) {
+                    console.error('Error en la respuesta:', response.status, response.statusText);
+                    throw new Error('No se pudo obtener la respuesta esperada');
+                }
+
+                const data = await response.json();
+                setPoints(data.puntosCompras)
+                console.log(data.puntosCompras)
+            } catch (error) {
+                console.error('Error no se pudo obtener:', error);
+            }
+        };
+
+        const fetchData2 = async () => {
+            try {
+                const URL = "http://localhost:5172/api/menu/registerUser_getOne/"
+                const response = await fetch(`${URL}${usuarioId}`, {
+                    method: "GET",
+                    credentials: 'include',
+                });
+
+                if (!response.ok) {
+                    console.error('Error en la respuesta:', response.status, response.statusText);
+                    throw new Error('No se pudo obtener la respuesta esperada');
+                }
+
+                const data = await response.json();
+                setCuponesUsados(data.cuponesUsados)
+            } catch (error) {
+                console.error('Error no se pudo obtener:', error);
+            }
+        };
+        fetchData();
+        fetchData1();
+        fetchData2();
+    }, [usuarioId]);
 
 
     useEffect(() => {
@@ -21,14 +92,60 @@ const Cupons = () => {
             })
             .then(data => {
                 setData(data['data'][0]);
-                setCupons(data['cupon']);
-                setPoints(data['points'][0]);
-                setLevels(data['levelsAwards']);
+
+
             })
 
 
             .catch(error => console.error('Error no se pudo obtener:', error)); // Manejo de errores en caso de falla en la solicitud
     }, []);
+
+
+
+    useEffect(() => {
+        fetch('http://localhost:5172/api/menu/obtenerCupones', {
+            method: "GET",
+            credentials: 'include',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('no se conecto');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const Data1 = data
+                    .map(item => ({
+                        value: item.id,
+                        level: item.level,
+                        label: item.title,
+                        used: item.used,
+                        unlock: item.unlock,
+                        stars: item.stars,
+                        discount: item.discount,
+                        colorTicket: item.colorTicket,
+                    }));
+
+                    //  
+                    const Data2 = data
+                        .filter(item => (!(cuponesUsados.includes(item._id))) &&(item.level <= (points / 500)))
+                        .map(item => ({
+                            value: item.id,
+                            level: item.level,
+                            label: item.title,
+                            used: item.used,
+                            unlock: item.unlock,
+                            stars: item.stars,
+                            discount: item.discount,
+                            colorTicket: item.colorTicket,
+                        }));
+
+                setLevels(Data1)
+                setCupons(Data2)
+
+            })
+            .catch(error => console.error('Error no se pudo obtener:', error)); // Manejo de errores en caso de falla en la solicitud
+    }, [changeColor]);
 
     // const color="rgb(235, 105, 23)"
     function changeColor(color) {
@@ -41,16 +158,93 @@ const Cupons = () => {
         return svgContent
     }
 
+    function verPassword(e) {
+        e.preventDefault()
+        setMostrarPassword(!mostraPassword)
+      }
 
-    console.log(cupons)
+    const verify = (a,b)=>{
+        const response= (a===b)?true:false
+        return response
+    }
+
+    const login = async () => {
+        try {
+          const URL = "http://localhost:5172/api/menu/login";
+          const response = await fetch(URL, {
+            method: "POST",
+            body: JSON.stringify({
+              email: userData.email,
+              password: userData.passAntigua,
+            }),
+            headers: {
+              "Content-Type": "application/json"
+            },
+            credentials: 'include',
+          });
+      
+          if (!response.ok) {
+            console.error('Error en la respuesta:', response.status, response.statusText);
+            throw new Error('No se pudo iniciar sesión');
+            return false
+          }
+          return true
+      
+        } catch (error) {
+          console.error('Error al iniciar sesión:', error);
+          return false
+        }
+      };
+
+      const change = async () => {
+        try {
+          const URL = "http://localhost:5172/api/menu/changePass";
+          const response = await fetch(URL, {
+            method: "POST",
+            body: JSON.stringify({
+              password: userData.passNueva,
+            }),
+            headers: {
+              "Content-Type": "application/json"
+            },
+            credentials: 'include',
+          });
+      
+          if (!response.ok) {
+            console.error('Error en la respuesta:', response.status, response.statusText);
+            throw new Error('No se pudo iniciar sesión');
+            
+          }
+          return response.json();
+      
+        } catch (error) {
+          console.error('Error al iniciar sesión:', error);
+        }
+      };
+
+
+
+    const actualizarContra=async()=>{
+        event.preventDefault
+        console.log("hola")
+        
+        verify(userData.passNueva,userData.passDuplicada)&&login?
+        console.log("Correcto para cambio: >>> ",await change())
+        :
+        console.log("Algo de lo solicitado no concuerda con lo solicitado")
+    }
+
     return (
         <>
             <div className='2xl:p-4'>
-                back to <strong>Home</strong>
+                <Link to="/">
+                    Volver a <strong>Inicio</strong>
+                </Link>
+                
             </div>
             <div>
                 <h1 className='2xl:flex 2xl:justify-center 2xl:items-center 2xl:text-4xl font-lobster'>
-                    Welcome to {data.owner}
+                    Bienvenido a {data.owner}
                 </h1>
 
                 <div className=' bg-gray-300 w-[63%] m-auto 2xl:p-[1em] 2xl:justify-center 2xl:items-center 2xl:rounded-2xl 2xl:my-[2em] 2xl:font-roboto'>
@@ -62,24 +256,29 @@ const Cupons = () => {
 
                             <div className='space-y-4 text-gray-500'>
                                 <h3 className='text-2xl font-lobster text-gray-800'>
-                                    Contact Information
+                                    Informacion de contacto
                                 </h3>
 
-                                <p>Cabinet number: <strong className='text-gray-800'>4846</strong></p>
-                                <p>Date of registration: <strong className='text-gray-800'>20.02.2023</strong></p>
-                                <p>Phone number: <strong className='text-gray-800'>(063) 979-6123</strong></p>
+                                <p>Número de gabinete: <strong className='text-gray-800'>4846</strong></p>
+                                <p>Fecha de registro: <strong className='text-gray-800'>20.02.2023</strong></p>
+                                <p>Número de teléfono: <strong className='text-gray-800'>(063) 979-6123</strong></p>
                             </div>
 
                             <h3 className='text-2xl font-lobster text-gray-800 my-[1em]'>
-                                Change password
+                                Cambio de Contaseña
                             </h3>
 
+
+
                             <form action='' className='2xl:flex 2xl:flex-col 2xl:items-cente'>
-                                <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder='* Current password' />
-                                <input className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder='* New password' />
-                                <input className='2xl:w-full border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' type='text' placeholder='* Enter the new password again' />
-                                <button className='bg-gray-200 2xl:rounded-xl 2xl:h-[2.5em] 2xl:w-full my-[1em] shadow-md shadow-gray-600'>
-                                    Save edit
+                                <input type={mostraPassword ? "text" : "password"} className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' name='passAntigua' onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })} placeholder='* Contraseña actual' />
+                                <input type={mostraPassword ? "text" : "password"} className='2xl:w-full 2xl:mb-4 border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' name='passNueva' onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })} placeholder='* Nueva contraseña' />
+                                <input type={mostraPassword ? "text" : "password"} className='2xl:w-full border-b bg-transparent focus:bg-transparent placeholder:text-gray-600' name='passDuplicada' onChange={(e) => setUserData({ ...userData, [e.target.name]: e.target.value })} placeholder='* Ingrese nuevamente' />
+                                <button className='text-orange-400' onClick={verPassword}>{mostraPassword ? 'ocutar' : 'mostrar'} Contraseñas</button>
+                                <button className='bg-gray-200 2xl:rounded-xl 2xl:h-[2.5em] 2xl:w-full my-[1em] shadow-md shadow-gray-600'
+                                onClick={()=>actualizarContra()}
+                                >
+                                    Guardar Editado
                                 </button>
                             </form>
 
@@ -90,23 +289,23 @@ const Cupons = () => {
 
                             <div className='space-y-4'>
                                 <h3 className='text-2xl font-lobster text-gray-800'>
-                                    Buyer level
+                                    Nivel de Comprador
                                 </h3>
                                 <div className='flex'>
-                                    <p className='text-gray-600 2xl:w-[50%]'>Your level: <strong className='text-gray-800 mr-[1em]'>{points.level}</strong></p>
+                                    <p className='text-gray-600 2xl:w-[50%]'>Tu Nivel: <strong className='text-gray-800 mr-[1em]'>{Math.floor(points / 500)}</strong></p>
                                     <div class="w-full bg-gray-300 rounded-lg">
 
                                         <div class="h-full bg-orange-500  rounded-lg animate-waiting"
-                                            style={{ width: `calc((${points.points} / 500) * 100%)` }}
+                                            style={{ width: `calc((${points - (500 * Math.floor(points / 500))} / 500) * 100%)` }}
                                         >
                                         </div>
                                         <div class="h-full flex justify-between">
-                                            <strong className='text-orange-500'>{points.points}</strong>
+                                            <strong className='text-orange-500'>{points - (500 * Math.floor(points / 500))}</strong>
                                             500
                                         </div>
 
                                     </div>
-                                    <strong className='text-gray-800 ml-[1em]'>{points.level + 1}</strong>
+                                    <strong className='text-gray-800 ml-[1em]'>{Math.floor(points / 500) + 1}</strong>
                                 </div>
 
 
@@ -114,80 +313,75 @@ const Cupons = () => {
 
 
                             <h3 className='text-2xl font-lobster text-gray-800 my-[1em] mt-[4em]'>
-                                Awards
+                                Premios
                             </h3>
                             <div className="w-[100%] overflow-x-auto bg-gray-100 rounded-lg">
                                 <ul className="overflow-y-auto max-h-[190px] scrollbar-w-20 scrollbar-track-gray-100 scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full">
                                     {levels.map((list, index) => (
                                         <li key={index} className="flex 2xl:py-1 2xl:px-1">
-                                            {list.level <= points.level ? (
+                                            {list.level <= Math.floor(points / 500) ? (
                                                 <img className="2xl:pr-3" src={iconOk} alt="" />
                                             ) : (
                                                 <img className="2xl:pr-3" src={iconSinOk} alt="" />
                                             )}
-                                            <p>Level {list.level}: {list.title}</p>
+                                            <p>Nivel {list.level}: {list.label}</p>
                                         </li>
                                     ))}
                                 </ul>
                             </div>
-
-
-
-
-
                         </div>
                     </div>
                 </div>
 
                 <h1 className='2xl:flex 2xl:justify-center 2xl:items-center 2xl:text-4xl font-lobster 2xl:pt-[3em]'>
-                    Yours coupons
+                    Tus cupones libres a usar
                 </h1>
+                <div className="overflow-y-auto max-h-[450px] scrollbar-w-200 scrollbar-track-gray-100 scrollbar-thumb-gray-600 scrollbar-thumb-rounded-full">
+                    <div className='2xl:grid 2xl:grid-cols-2 2xl:gap-4 2xl:justify-center 2xl:items-center 2xl:p-[1em] 2xl:px-[19.5%]'>
 
-                <div className='2xl:grid 2xl:grid-cols-2 2xl:gap-4 2xl:justify-center 2xl:items-center 2xl:p-[1em] 2xl:px-[19.5%]'>
+                        {cupons.map((card, index) => (
+                            <div>
+                                <div key={index} className='bg-green-600 2xl:h-[12em] 2xl:w-[30vw]' style={{
+                                    background: `url('data:image/svg+xml,${encodeURIComponent(changeColor(card.colorTicket))}')`,
+                                    backgroundSize: 'cover',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    paddingBottom: '1em'
 
-                    {cupons.map((card, index) => (
-                        <div key={index} className='bg-green-600 2xl:h-[12em] 2xl:w-[30vw]' style={{
-                            background: `url('data:image/svg+xml,${encodeURIComponent(changeColor(card.colorTicket))}')`,
-                            backgroundSize: 'cover',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            paddingBottom: '1em'
+                                }}>
+                                    <div className=' 2xl:h-[65%] 2xl:w-[50%] 2xl:flex 2xl:justify-center 2xl:items-center'>
+                                        <div className=' 2xl:text-sm'>
+                                            {Array.from({ length: card.stars }, (_, i) => (
+                                                <div key={i} className='2xl:text-white'>✰</div>
+                                            ))}
+                                        </div>
 
-                        }}>
-                            <div className=' 2xl:h-[65%] 2xl:w-[50%] 2xl:flex 2xl:justify-center 2xl:items-center'>
-                                <div className=' 2xl:text-sm'>
-                                    {Array.from({ length: card.stars }, (_, i) => (
-                                        <div key={i} className='2xl:text-white'>✰</div>
-                                    ))}
-                                </div>
+                                        <div className='2xl:w-[100%] 2xl:flex-col 2xl:justify-center 2xl:items-center 2xl:text-center'>
+                                            <div className='2xl:text-lg font-lobster text-white uppercase'>
+                                                <strong>{card.label}</strong>
+                                            </div>
+                                            <div className='2xl:text-lg font-lobster text-white mt-[2px]'>
+                                                {card.discount === 100 || card.discount === 0 ? (
+                                                    <strong>Gratis</strong>
+                                                ) : (
+                                                    <strong>-{card.discount}%</strong>
+                                                )}
+                                            </div>
+                                        </div>
 
-                                <div className=' 2xl:w-[100%] 2xl:flex-col 2xl:justify-center 2xl:items-center 2xl:text-center'>
-                                    <div className='2xl:text-lg font-lobster text-white uppercase'>
-                                        <strong>{card.title}</strong>
+                                        <div className='2xl:text-sm'>
+                                            {Array.from({ length: card.stars }, (_, i) => (
+                                                <div key={i} className='2xl:text-white'>✰</div>
+                                            ))}
+                                        </div>
                                     </div>
-                                    <div className='2xl:text-2xl font-lobster text-white mt-[4px]'>
-                                        {card.descount === 100 ? (
-                                            <strong>Free</strong>
-                                        ) : (
-                                            <strong>-{card.descount}%</strong>
-                                        )}
-                                    </div>
-                                    <div className='2xl:text-[10px] text-white'>
-                                        <strong>{card.subtitle}</strong>
-                                    </div>
-                                </div>
-
-                                <div className='2xl:text-sm'>
-                                    {Array.from({ length: card.stars }, (_, i) => (
-                                        <div key={i} className='2xl:text-white'>✰</div>
-                                    ))}
                                 </div>
                             </div>
+                        ))}
 
+                    </div>
 
-                        </div>
-                    ))}
 
                 </div>
 

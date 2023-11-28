@@ -1,24 +1,43 @@
 import React from 'react'
 import { Icon } from '@iconify/react';
-import footerLogo from '/img/footer/logofooter.png'
-import creditCards from '/img/footer/creditcards.png'
+import footerLogo from '/img/footer/logofooter.webp'
+import creditCards from '/img/footer/creditcards.webp'
 
 
 const Footer = () => {
-  // const footerMenu = ["Home", "Menu", "About Us", "Contacts"]
 
-  const footerMenu = { "/": "Home", "/menu": "Menu", "/about": "About Us", "/contacts": "Contacts" }
+  const footerMenu = {
+    "hero": "Inicio",
+    "menu": "Menú",
+    "about": "Acerca de Nosotros",
+    "contacts": "Contactos"
+  }
+
+  const scrollToHome = (accion) => {
+    console.log(accion)
+    const [idEncontrado, labelEncontrado] = Object.entries(footerMenu).find(([id]) => accion === id) || [];
+
+    if (idEncontrado) {
+      const homeElement = document.getElementById(`${idEncontrado}`);
+      if (homeElement) {
+        homeElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      console.log(`No se encontró la acción "${accion}" en el menú.`);
+    }
+  }
+
 
   return (
     <>
-      <footer className='bg-black w-full h-64 bg-footerBg flex flex-col xxl:bg-posright xl:bg-footerBgXl sm:bg-center'>
+      <footer className='bg-black w-full h-auto bg-footerBg bg-center py-3 flex flex-col xxl:bg-posright xl:bg-footerBgXl sm:bg-center'>
 
         <div className='flex flex-row items-center justify-between h-full mx-6 sm:mx-4'>
-          <div className='sm:mt-4'>
-            {Object.entries(footerMenu).map(([key, value]) => (
-              <ul key={key}>
-                <a className='text-white mb-3 xs:mb-2' href={key}>{`${value}`}</a>
-              </ul>
+          <div className='mb-4 sm:mt-4'>
+            {Object.entries(footerMenu).map(([path, label]) => (
+              <li key={path} className='list-none'>
+                <a className='text-white mb-3 xs:mb-2' onClick={() => scrollToHome(path)}>{label}</a>
+              </li>
             ))}
           </div>
           <div>
