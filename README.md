@@ -3,7 +3,7 @@
 ### Link
 
 - Link API: https://api-ventacomida.vercel.app/
-- Link Web: https://proyecto-final-react-ventacomida.vercel.app/
+- Link Web: https://proyecto-final-react-ventacomida.vercel.app/ (NO FUNCIONA AL 100%!!)
 
 ### Recomendación
 
@@ -25,7 +25,8 @@ Datos:
 ### Usuarios Test
 - Email: Kuspita20@gmail.com
 - Password: 123456
-- Todo usuario creado
+- Todo usuario a crear
+  
 ### Diseño Front
 
 - NAVBAR - Login -Register -Carrito/Bolso -Perfil (Pablo)
